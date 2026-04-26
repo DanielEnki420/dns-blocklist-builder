@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Conspiracy Theories
+# Category: conspiracy
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 8kun.top
+0.0.0.0 abundanthope.net
+0.0.0.0 activistpost.com
+0.0.0.0 ascensionwithearth.com
+0.0.0.0 beforeitsnews.com
+0.0.0.0 coreysdigs.com
+0.0.0.0 dinar-guru.com
+0.0.0.0 dinardetectives.com
+0.0.0.0 dinarrecaps.com
+0.0.0.0 discernreport.com
+0.0.0.0 forbiddenknowledgetv.net
+0.0.0.0 fourwinds10.com
+0.0.0.0 gaia.com
+0.0.0.0 henrymakow.com
+0.0.0.0 inteldinarchronicles.blogspot.com
+0.0.0.0 investmentwatchblog.com
+0.0.0.0 naturalnews.com
+0.0.0.0 operationdisclosureofficial.com
+0.0.0.0 patriotsnet.com
+0.0.0.0 prepareforchange.net
+0.0.0.0 prepperwebsite.com
+0.0.0.0 qagg.news
+0.0.0.0 qalerts.app
+0.0.0.0 qanon.pub
+0.0.0.0 qmap.pub
+0.0.0.0 rense.com
+0.0.0.0 resistthemainstream.com
+0.0.0.0 revival-news.com
+0.0.0.0 rumormillnews.com
+0.0.0.0 sgtreport.com
+0.0.0.0 slaynews.com
+0.0.0.0 stillnessinthestorm.com
+0.0.0.0 thenewamerican.com
+0.0.0.0 thestorm.pub
+0.0.0.0 ufosightingsdaily.com
+0.0.0.0 uncensored.co.nz
+0.0.0.0 verdensalt.dk
+0.0.0.0 whatdoesitmean.com
+0.0.0.0 worldtruth.tv
+0.0.0.0 zerohedge.com

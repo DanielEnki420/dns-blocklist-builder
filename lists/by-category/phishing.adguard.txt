@@ -1,0 +1,38 @@
+# ============================================================
+# DNS Blocklist Builder – Investment Fraud & Crypto Scam
+# Category: phishing
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 30
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||binance-support-center.com^
+||bit-index-ai.com^
+||bitcoin-buyer.app^
+||bitcoin-era.app^
+||bitcoin-evolution.com^
+||bitcoin-loophole.io^
+||bitcoin-prime.app^
+||bitcoin-revolution.com^
+||bitcoin-up.live^
+||bitql.io^
+||brexit-millionaire.com^
+||coinbase-wallet-verify.com^
+||crypto-bank.io^
+||crypto-genius.app^
+||crypto-profit.app^
+||ethereum-trader.app^
+||immediate-edge.co^
+||immediate-iplex.com^
+||immediateprofit.org^
+||kraken-verify.com^
+||ledger-recovery.io^
+||metamask-recovery.net^
+||nft-profit.app^
+||oil-profit.app^
+||phantom-wallet-support.com^
+||profit-edge.com^
+||quantum-ai.app^
+||tesler.app^
+||the-news-spy.com^
+||trust-wallet-support.com^

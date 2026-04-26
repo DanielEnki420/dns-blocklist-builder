@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Anti-Vax / Medical Disinfo
+# Category: antivax
+# Format: Pi-hole adlist
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+aerzte-fuer-aufklaerung.de
+ageofautism.com
+childrenshealthdefense.org
+corona-blog.net
+corona-doku.de
+covidvaccineinjuries.com
+covidvax.live
+dailyexpose.uk
+deswegen.net
+drrobertyoung.com
+endthevax.com
+exposenews.co.uk
+greenmedinfo.com
+healthimpactnews.com
+humansarefree.com
+impfen-nein-danke.de
+impfkritik.de
+infokrieg.tv
+jabs.news
+kla.tv
+mercola.com
+mwgfd.org
+nvic.org
+panda-online.org
+questioningcovid.com
+stoppt-die-impfung.de
+stopworldcontrol.com
+tele.bio
+the-highwire.com
+thinktwice.com
+ukcolumn.org
+ukdeclaration.org
+vaccinationinformationnetwork.com
+vaccine-injury.info
+vaccinedamage.news
+vaccineimpact.com
+vaxtruth.org
+vaxxed.com
+whale.to
+worlddoctorsalliance.com

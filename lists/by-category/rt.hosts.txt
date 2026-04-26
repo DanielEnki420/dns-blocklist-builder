@@ -1,0 +1,69 @@
+# ============================================================
+# DNS Blocklist Builder – Russian Propaganda
+# Category: rt
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 61
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 anna-news.info
+0.0.0.0 baltnews.com
+0.0.0.0 cont.ws
+0.0.0.0 de.rt.com
+0.0.0.0 e-news.su
+0.0.0.0 eurasia.expert
+0.0.0.0 fondsk.ru
+0.0.0.0 geopolitika.news
+0.0.0.0 globalresearch.ca
+0.0.0.0 imperiya.by
+0.0.0.0 inforeactor.ru
+0.0.0.0 inotv.rt.com
+0.0.0.0 katehon.com
+0.0.0.0 life.ru
+0.0.0.0 nahnews.org
+0.0.0.0 news-front.info
+0.0.0.0 odnarodyna.org
+0.0.0.0 orientalreview.org
+0.0.0.0 polit.info
+0.0.0.0 politros.com
+0.0.0.0 realtribune.ru
+0.0.0.0 regnum.ru
+0.0.0.0 ren.tv
+0.0.0.0 rg.ru
+0.0.0.0 ria.ru
+0.0.0.0 riafan.ru
+0.0.0.0 rianovosti.pro
+0.0.0.0 rt.com
+0.0.0.0 rt.de
+0.0.0.0 rt.es
+0.0.0.0 rt.fr
+0.0.0.0 rt.ru
+0.0.0.0 rt.uk
+0.0.0.0 rubaltic.ru
+0.0.0.0 rusnext.ru
+0.0.0.0 rusplt.ru
+0.0.0.0 russia-feed.com
+0.0.0.0 russia-insider.com
+0.0.0.0 russland.news
+0.0.0.0 rusvesna.su
+0.0.0.0 slavyangrad.org
+0.0.0.0 southfront.org
+0.0.0.0 sputnik-news.de
+0.0.0.0 sputnik.by
+0.0.0.0 sputnikglobe.com
+0.0.0.0 sputniknews.com
+0.0.0.0 sputniknews.fr
+0.0.0.0 sputniknews.it
+0.0.0.0 sputniknews.lat
+0.0.0.0 stalkerzone.org
+0.0.0.0 strategic-culture.org
+0.0.0.0 svpressa.ru
+0.0.0.0 tass.com
+0.0.0.0 tass.ru
+0.0.0.0 thedailybeast.ru
+0.0.0.0 topwar.ru
+0.0.0.0 tsargrad.tv
+0.0.0.0 ukraina.ru
+0.0.0.0 vesti.ru
+0.0.0.0 voiceofeurope.com
+0.0.0.0 warfiles.ru

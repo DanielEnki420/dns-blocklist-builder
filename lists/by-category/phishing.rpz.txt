@@ -1,0 +1,38 @@
+# ============================================================
+# DNS Blocklist Builder – Investment Fraud & Crypto Scam
+# Category: phishing
+# Format: RPZ (BIND9)
+# Generated: 2026-04-26
+# Domains: 30
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+binance-support-center.com. CNAME .
+bit-index-ai.com. CNAME .
+bitcoin-buyer.app. CNAME .
+bitcoin-era.app. CNAME .
+bitcoin-evolution.com. CNAME .
+bitcoin-loophole.io. CNAME .
+bitcoin-prime.app. CNAME .
+bitcoin-revolution.com. CNAME .
+bitcoin-up.live. CNAME .
+bitql.io. CNAME .
+brexit-millionaire.com. CNAME .
+coinbase-wallet-verify.com. CNAME .
+crypto-bank.io. CNAME .
+crypto-genius.app. CNAME .
+crypto-profit.app. CNAME .
+ethereum-trader.app. CNAME .
+immediate-edge.co. CNAME .
+immediate-iplex.com. CNAME .
+immediateprofit.org. CNAME .
+kraken-verify.com. CNAME .
+ledger-recovery.io. CNAME .
+metamask-recovery.net. CNAME .
+nft-profit.app. CNAME .
+oil-profit.app. CNAME .
+phantom-wallet-support.com. CNAME .
+profit-edge.com. CNAME .
+quantum-ai.app. CNAME .
+tesler.app. CNAME .
+the-news-spy.com. CNAME .
+trust-wallet-support.com. CNAME .

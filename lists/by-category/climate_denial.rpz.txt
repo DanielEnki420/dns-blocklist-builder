@@ -1,0 +1,38 @@
+# ============================================================
+# DNS Blocklist Builder – Climate Change Denial
+# Category: climate_denial
+# Format: RPZ (BIND9)
+# Generated: 2026-04-26
+# Domains: 30
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+c3headlines.com. CNAME .
+cfact.org. CNAME .
+climate.news. CNAME .
+climateaudit.org. CNAME .
+climatechangedispatch.com. CNAME .
+climateconversation.wordpress.com. CNAME .
+climatedepot.com. CNAME .
+climaterealism.com. CNAME .
+climaterealismblogs.com. CNAME .
+climatesciencenews.com. CNAME .
+co2coalition.org. CNAME .
+co2is.life. CNAME .
+co2science.org. CNAME .
+drroyspencer.com. CNAME .
+eike-klima-energie.eu. CNAME .
+friendsofscience.org. CNAME .
+globalwarmingpolicy.org. CNAME .
+globalwarmingpolicyfoundation.org. CNAME .
+heartland.org. CNAME .
+hockeyschtick.blogspot.com. CNAME .
+joannenova.com.au. CNAME .
+noclimate.org. CNAME .
+notalotofpeopleknowthat.wordpress.com. CNAME .
+notrickszone.com. CNAME .
+nzcpr.com. CNAME .
+principia-scientific.com. CNAME .
+rclutz.com. CNAME .
+realclimatescience.com. CNAME .
+thegwpf.com. CNAME .
+wattsupwiththat.com. CNAME .

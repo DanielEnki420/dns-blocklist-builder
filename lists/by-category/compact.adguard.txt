@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Far-Right (DACH)
+# Category: compact
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||achgut.com^
+||alles-schallundrauch.blogspot.com^
+||ansage.org^
+||apolut.net^
+||auf1.info^
+||auf1.tv^
+||blu-news.org^
+||compact-online.de^
+||corona-transition.org^
+||demokratischer-widerstand.de^
+||der-dritte-weg.de^
+||ef-magazin.de^
+||eigentumlich-frei.de^
+||eingeschenkt.tv^
+||exxpress.at^
+||freie-sachsen.de^
+||freie-welt.net^
+||heimatkurier.at^
+||hintergrund.de^
+||identitaere.at^
+||journalistenwatch.com^
+||junge-freiheit.de^
+||kenfm.de^
+||kopp-online.com^
+||kopp-verlag.de^
+||legitim.ch^
+||m-online.net^
+||michael-mannheimer.net^
+||mmnews.de^
+||multipolar-magazin.de^
+||nachdenkseiten.de^
+||neue-debatte.com^
+||neulandrebellen.de^
+||opposition24.com^
+||philosophia-perennis.com^
+||pi-news.net^
+||politikstube.de^
+||qpress.de^
+||querdenken-711.de^
+||reitschuster.de^
+||report24.news^
+||rubikon.news^
+||schweizerzeit.ch^
+||tagesstimme.com^
+||tichyseinblick.de^
+||tkp.at^
+||transition-news.org^
+||uncut-news.ch^
+||unzensuriert.de^
+||wochenblick.at^

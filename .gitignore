@@ -1,0 +1,2 @@
+# ETag/domain cache for fetch-domains.js (persisted in CI via actions/cache)
+.cache/

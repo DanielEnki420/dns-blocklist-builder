@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Far-Right (DACH)
+# Category: compact
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 achgut.com
+0.0.0.0 alles-schallundrauch.blogspot.com
+0.0.0.0 ansage.org
+0.0.0.0 apolut.net
+0.0.0.0 auf1.info
+0.0.0.0 auf1.tv
+0.0.0.0 blu-news.org
+0.0.0.0 compact-online.de
+0.0.0.0 corona-transition.org
+0.0.0.0 demokratischer-widerstand.de
+0.0.0.0 der-dritte-weg.de
+0.0.0.0 ef-magazin.de
+0.0.0.0 eigentumlich-frei.de
+0.0.0.0 eingeschenkt.tv
+0.0.0.0 exxpress.at
+0.0.0.0 freie-sachsen.de
+0.0.0.0 freie-welt.net
+0.0.0.0 heimatkurier.at
+0.0.0.0 hintergrund.de
+0.0.0.0 identitaere.at
+0.0.0.0 journalistenwatch.com
+0.0.0.0 junge-freiheit.de
+0.0.0.0 kenfm.de
+0.0.0.0 kopp-online.com
+0.0.0.0 kopp-verlag.de
+0.0.0.0 legitim.ch
+0.0.0.0 m-online.net
+0.0.0.0 michael-mannheimer.net
+0.0.0.0 mmnews.de
+0.0.0.0 multipolar-magazin.de
+0.0.0.0 nachdenkseiten.de
+0.0.0.0 neue-debatte.com
+0.0.0.0 neulandrebellen.de
+0.0.0.0 opposition24.com
+0.0.0.0 philosophia-perennis.com
+0.0.0.0 pi-news.net
+0.0.0.0 politikstube.de
+0.0.0.0 qpress.de
+0.0.0.0 querdenken-711.de
+0.0.0.0 reitschuster.de
+0.0.0.0 report24.news
+0.0.0.0 rubikon.news
+0.0.0.0 schweizerzeit.ch
+0.0.0.0 tagesstimme.com
+0.0.0.0 tichyseinblick.de
+0.0.0.0 tkp.at
+0.0.0.0 transition-news.org
+0.0.0.0 uncut-news.ch
+0.0.0.0 unzensuriert.de
+0.0.0.0 wochenblick.at

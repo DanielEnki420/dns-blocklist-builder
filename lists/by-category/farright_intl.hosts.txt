@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Far-Right (International)
+# Category: farright_intl
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 100percentfedup.com
+0.0.0.0 americafirstpolicy.com
+0.0.0.0 americanthinker.com
+0.0.0.0 amren.com
+0.0.0.0 bigleaguepolitics.com
+0.0.0.0 breitbart.com
+0.0.0.0 churchmilitant.com
+0.0.0.0 conservativetreehouse.com
+0.0.0.0 counter-currents.com
+0.0.0.0 dailystormer.name
+0.0.0.0 dailystormer.su
+0.0.0.0 dailywire.com
+0.0.0.0 fulcrumnews.com
+0.0.0.0 hannity.com
+0.0.0.0 humansofwoke.com
+0.0.0.0 infowars.com
+0.0.0.0 infowars.net
+0.0.0.0 lifesitenews.com
+0.0.0.0 lifezette.com
+0.0.0.0 nationalfile.com
+0.0.0.0 nationalvanguard.org
+0.0.0.0 neonnettle.com
+0.0.0.0 newsmax.com
+0.0.0.0 newspunch.com
+0.0.0.0 oann.com
+0.0.0.0 occidentaldissent.com
+0.0.0.0 patriotpulse.net
+0.0.0.0 pjmedia.com
+0.0.0.0 prisonplanet.com
+0.0.0.0 radixjournal.com
+0.0.0.0 realamericasvoice.com
+0.0.0.0 realnews24.com
+0.0.0.0 realnewsrightnow.com
+0.0.0.0 redstate.com
+0.0.0.0 stormfront.org
+0.0.0.0 takimag.com
+0.0.0.0 theblaze.com
+0.0.0.0 thefederalist.com
+0.0.0.0 thegatewaypundit.com
+0.0.0.0 thenationalpulse.com
+0.0.0.0 thepostmillennial.com
+0.0.0.0 therightstuff.biz
+0.0.0.0 townhall.com
+0.0.0.0 tpusa.com
+0.0.0.0 trumpist.com
+0.0.0.0 unz.com
+0.0.0.0 vdare.com
+0.0.0.0 westernjournal.com
+0.0.0.0 wnd.com
+0.0.0.0 yournewswire.com
