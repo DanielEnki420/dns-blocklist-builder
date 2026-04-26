@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Far-Right (International)
+# Category: farright_intl
+# Format: Pi-hole adlist
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+100percentfedup.com
+americafirstpolicy.com
+americanthinker.com
+amren.com
+bigleaguepolitics.com
+breitbart.com
+churchmilitant.com
+conservativetreehouse.com
+counter-currents.com
+dailystormer.name
+dailystormer.su
+dailywire.com
+fulcrumnews.com
+hannity.com
+humansofwoke.com
+infowars.com
+infowars.net
+lifesitenews.com
+lifezette.com
+nationalfile.com
+nationalvanguard.org
+neonnettle.com
+newsmax.com
+newspunch.com
+oann.com
+occidentaldissent.com
+patriotpulse.net
+pjmedia.com
+prisonplanet.com
+radixjournal.com
+realamericasvoice.com
+realnews24.com
+realnewsrightnow.com
+redstate.com
+stormfront.org
+takimag.com
+theblaze.com
+thefederalist.com
+thegatewaypundit.com
+thenationalpulse.com
+thepostmillennial.com
+therightstuff.biz
+townhall.com
+tpusa.com
+trumpist.com
+unz.com
+vdare.com
+westernjournal.com
+wnd.com
+yournewswire.com

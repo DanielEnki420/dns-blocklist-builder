@@ -21,8 +21,24 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Restore ETag cache
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: source-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            source-cache-${{ runner.os }}-
+
       - name: Fetch new domains from external sources
-        run: node fetch-domains.js
+        # Run --cleanup on the first Monday of each month (day 1-7) to remove dead domains
+        run: |
+          DAY=$(date +%d)
+          if [ "$DAY" -le 7 ]; then
+            echo "First Monday of month — running with --cleanup"
+            node fetch-domains.js --cleanup
+          else
+            node fetch-domains.js
+          fi
 
       - name: Generate blocklist files
         run: node generate-lists.js

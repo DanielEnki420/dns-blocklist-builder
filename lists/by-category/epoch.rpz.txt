@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Epoch Times / Falun Gong
+# Category: epoch
+# Format: RPZ (BIND9)
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+clearwisdom.net. CNAME .
+de.minghui.org. CNAME .
+en.minghui.org. CNAME .
+epochtimes.ca. CNAME .
+epochtimes.co.il. CNAME .
+epochtimes.co.uk. CNAME .
+epochtimes.com. CNAME .
+epochtimes.com.au. CNAME .
+epochtimes.com.br. CNAME .
+epochtimes.de. CNAME .
+epochtimes.es. CNAME .
+epochtimes.fr. CNAME .
+epochtimes.it. CNAME .
+epochtimes.jp. CNAME .
+epochtimes.nl. CNAME .
+epochtimes.pl. CNAME .
+epochtimes.ru. CNAME .
+epochtimes.se. CNAME .
+epochweekly.com. CNAME .
+es.minghui.org. CNAME .
+falundafa.org. CNAME .
+fr.minghui.org. CNAME .
+hk.epochtimes.com. CNAME .
+minghui.org. CNAME .
+ntd.com. CNAME .
+ntd.tv. CNAME .
+ntdtv.com. CNAME .
+ntdtvusa.com. CNAME .
+pt.minghui.org. CNAME .
+pureinsight.org. CNAME .
+soundofhope.org. CNAME .
+thebl.com. CNAME .
+thebl.tv. CNAME .
+theepochtimes.com. CNAME .
+theepochtimes.fr. CNAME .
+tw.epochtimes.com. CNAME .
+visiontimes.com. CNAME .
+visiontimes.de. CNAME .
+visiontimes.fr. CNAME .
+zhengjian.org. CNAME .

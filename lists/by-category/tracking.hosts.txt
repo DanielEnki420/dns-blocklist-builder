@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Ad Tracking & Data Brokers
+# Category: tracking
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 33across.com
+0.0.0.0 addthis.com
+0.0.0.0 adform.net
+0.0.0.0 adnxs.com
+0.0.0.0 adsafeprotected.com
+0.0.0.0 adsrvr.org
+0.0.0.0 advertising.com
+0.0.0.0 amazon-adsystem.com
+0.0.0.0 appnexus.com
+0.0.0.0 bidswitch.net
+0.0.0.0 bluekai.com
+0.0.0.0 casalemedia.com
+0.0.0.0 contextweb.com
+0.0.0.0 criteo.com
+0.0.0.0 criteo.net
+0.0.0.0 doubleclick.net
+0.0.0.0 doubleverify.com
+0.0.0.0 everesttech.net
+0.0.0.0 exelator.com
+0.0.0.0 google-analytics.com
+0.0.0.0 googleadservices.com
+0.0.0.0 googlesyndication.com
+0.0.0.0 indexexchange.com
+0.0.0.0 krxd.net
+0.0.0.0 lijit.com
+0.0.0.0 liveintent.com
+0.0.0.0 lotame.com
+0.0.0.0 mathtag.com
+0.0.0.0 mediamath.com
+0.0.0.0 moatads.com
+0.0.0.0 openx.net
+0.0.0.0 outbrain.com
+0.0.0.0 pubmatic.com
+0.0.0.0 quantserve.com
+0.0.0.0 rhythmone.com
+0.0.0.0 rlcdn.com
+0.0.0.0 rubiconproject.com
+0.0.0.0 scorecardresearch.com
+0.0.0.0 sharethrough.com
+0.0.0.0 smartadserver.com
+0.0.0.0 sonobi.com
+0.0.0.0 sovrn.com
+0.0.0.0 spotx.tv
+0.0.0.0 taboola.com
+0.0.0.0 teads.tv
+0.0.0.0 triplelift.com
+0.0.0.0 turn.com
+0.0.0.0 vidoomy.com
+0.0.0.0 yieldmo.com
+0.0.0.0 zemanta.com

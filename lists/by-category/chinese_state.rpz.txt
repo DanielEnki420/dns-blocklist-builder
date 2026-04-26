@@ -1,0 +1,42 @@
+# ============================================================
+# DNS Blocklist Builder – Chinese State Propaganda
+# Category: chinese_state
+# Format: RPZ (BIND9)
+# Generated: 2026-04-26
+# Domains: 35
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+81.cn. CNAME .
+cctv.com. CNAME .
+cctv.net. CNAME .
+cgtn.com. CNAME .
+cgtn.eu. CNAME .
+chinadaily.com.cn. CNAME .
+chinafocus.com. CNAME .
+chinamil.com.cn. CNAME .
+chinanews.com.cn. CNAME .
+cri.cn. CNAME .
+ecns.cn. CNAME .
+globaltimes.cn. CNAME .
+guancha.cn. CNAME .
+hkcd.com. CNAME .
+huanqiu.com. CNAME .
+legaldaily.com.cn. CNAME .
+mod.gov.cn. CNAME .
+news.cn. CNAME .
+pandaily.com. CNAME .
+people.cn. CNAME .
+people.com.cn. CNAME .
+pladaily.com.cn. CNAME .
+qstheory.cn. CNAME .
+radii.co. CNAME .
+shine.cn. CNAME .
+sixthtone.com. CNAME .
+stdaily.com. CNAME .
+takungpao.com. CNAME .
+thepaper.cn. CNAME .
+wenweipo.com. CNAME .
+xhpfmapi.com. CNAME .
+xinhua.net. CNAME .
+xinhuanet.com. CNAME .
+xuexi.cn. CNAME .

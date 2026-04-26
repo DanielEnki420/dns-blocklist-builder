@@ -49,3 +49,32 @@ for (const [filename, { fmt, fn }] of Object.entries(files)) {
 }
 
 console.log(`\nDone: ${allDomains.length} domains, ${CATS.length} categories, ${Object.keys(files).length} formats`);
+
+// ── Per-category lists ────────────────────────────────────────────────────────
+const byCatDir = path.join(listsDir, 'by-category');
+if (!fs.existsSync(byCatDir)) fs.mkdirSync(byCatDir);
+
+const catHeader = (cat, fmt) => [
+  '# ============================================================',
+  `# DNS Blocklist Builder – ${cat.name.en}`,
+  `# Category: ${cat.id}`,
+  `# Format: ${fmt}`,
+  `# Generated: ${date}`,
+  `# Domains: ${cat.domains.length}`,
+  `# Source: https://github.com/DanielEnki420/dns-blocklist-builder`,
+  '# ============================================================',
+  ''
+].join('\n');
+
+let fileCount = 0;
+for (const cat of CATS) {
+  const domains = [...new Set(cat.domains)].sort();
+  for (const [allFile, { fmt, fn }] of Object.entries(files)) {
+    // e.g. 'blocklist-all.pihole.txt' → 'tracking.pihole.txt'
+    const ext      = allFile.replace('blocklist-all.', '');
+    const filename = `${cat.id}.${ext}`;
+    fs.writeFileSync(path.join(byCatDir, filename), catHeader(cat, fmt) + domains.map(fn).join('\n') + '\n');
+    fileCount++;
+  }
+}
+console.log(`✓ by-category/ (${CATS.length} cats × 6 formats = ${fileCount} files)`);

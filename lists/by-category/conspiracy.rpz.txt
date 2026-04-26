@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Conspiracy Theories
+# Category: conspiracy
+# Format: RPZ (BIND9)
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+8kun.top. CNAME .
+abundanthope.net. CNAME .
+activistpost.com. CNAME .
+ascensionwithearth.com. CNAME .
+beforeitsnews.com. CNAME .
+coreysdigs.com. CNAME .
+dinar-guru.com. CNAME .
+dinardetectives.com. CNAME .
+dinarrecaps.com. CNAME .
+discernreport.com. CNAME .
+forbiddenknowledgetv.net. CNAME .
+fourwinds10.com. CNAME .
+gaia.com. CNAME .
+henrymakow.com. CNAME .
+inteldinarchronicles.blogspot.com. CNAME .
+investmentwatchblog.com. CNAME .
+naturalnews.com. CNAME .
+operationdisclosureofficial.com. CNAME .
+patriotsnet.com. CNAME .
+prepareforchange.net. CNAME .
+prepperwebsite.com. CNAME .
+qagg.news. CNAME .
+qalerts.app. CNAME .
+qanon.pub. CNAME .
+qmap.pub. CNAME .
+rense.com. CNAME .
+resistthemainstream.com. CNAME .
+revival-news.com. CNAME .
+rumormillnews.com. CNAME .
+sgtreport.com. CNAME .
+slaynews.com. CNAME .
+stillnessinthestorm.com. CNAME .
+thenewamerican.com. CNAME .
+thestorm.pub. CNAME .
+ufosightingsdaily.com. CNAME .
+uncensored.co.nz. CNAME .
+verdensalt.dk. CNAME .
+whatdoesitmean.com. CNAME .
+worldtruth.tv. CNAME .
+zerohedge.com. CNAME .

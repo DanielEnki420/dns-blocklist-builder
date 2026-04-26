@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Anti-Vax / Medical Disinfo
+# Category: antivax
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 aerzte-fuer-aufklaerung.de
+0.0.0.0 ageofautism.com
+0.0.0.0 childrenshealthdefense.org
+0.0.0.0 corona-blog.net
+0.0.0.0 corona-doku.de
+0.0.0.0 covidvaccineinjuries.com
+0.0.0.0 covidvax.live
+0.0.0.0 dailyexpose.uk
+0.0.0.0 deswegen.net
+0.0.0.0 drrobertyoung.com
+0.0.0.0 endthevax.com
+0.0.0.0 exposenews.co.uk
+0.0.0.0 greenmedinfo.com
+0.0.0.0 healthimpactnews.com
+0.0.0.0 humansarefree.com
+0.0.0.0 impfen-nein-danke.de
+0.0.0.0 impfkritik.de
+0.0.0.0 infokrieg.tv
+0.0.0.0 jabs.news
+0.0.0.0 kla.tv
+0.0.0.0 mercola.com
+0.0.0.0 mwgfd.org
+0.0.0.0 nvic.org
+0.0.0.0 panda-online.org
+0.0.0.0 questioningcovid.com
+0.0.0.0 stoppt-die-impfung.de
+0.0.0.0 stopworldcontrol.com
+0.0.0.0 tele.bio
+0.0.0.0 the-highwire.com
+0.0.0.0 thinktwice.com
+0.0.0.0 ukcolumn.org
+0.0.0.0 ukdeclaration.org
+0.0.0.0 vaccinationinformationnetwork.com
+0.0.0.0 vaccine-injury.info
+0.0.0.0 vaccinedamage.news
+0.0.0.0 vaccineimpact.com
+0.0.0.0 vaxtruth.org
+0.0.0.0 vaxxed.com
+0.0.0.0 whale.to
+0.0.0.0 worlddoctorsalliance.com

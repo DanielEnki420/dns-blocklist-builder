@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Epoch Times / Falun Gong
+# Category: epoch
+# Format: hosts (/etc/hosts)
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+0.0.0.0 clearwisdom.net
+0.0.0.0 de.minghui.org
+0.0.0.0 en.minghui.org
+0.0.0.0 epochtimes.ca
+0.0.0.0 epochtimes.co.il
+0.0.0.0 epochtimes.co.uk
+0.0.0.0 epochtimes.com
+0.0.0.0 epochtimes.com.au
+0.0.0.0 epochtimes.com.br
+0.0.0.0 epochtimes.de
+0.0.0.0 epochtimes.es
+0.0.0.0 epochtimes.fr
+0.0.0.0 epochtimes.it
+0.0.0.0 epochtimes.jp
+0.0.0.0 epochtimes.nl
+0.0.0.0 epochtimes.pl
+0.0.0.0 epochtimes.ru
+0.0.0.0 epochtimes.se
+0.0.0.0 epochweekly.com
+0.0.0.0 es.minghui.org
+0.0.0.0 falundafa.org
+0.0.0.0 fr.minghui.org
+0.0.0.0 hk.epochtimes.com
+0.0.0.0 minghui.org
+0.0.0.0 ntd.com
+0.0.0.0 ntd.tv
+0.0.0.0 ntdtv.com
+0.0.0.0 ntdtvusa.com
+0.0.0.0 pt.minghui.org
+0.0.0.0 pureinsight.org
+0.0.0.0 soundofhope.org
+0.0.0.0 thebl.com
+0.0.0.0 thebl.tv
+0.0.0.0 theepochtimes.com
+0.0.0.0 theepochtimes.fr
+0.0.0.0 tw.epochtimes.com
+0.0.0.0 visiontimes.com
+0.0.0.0 visiontimes.de
+0.0.0.0 visiontimes.fr
+0.0.0.0 zhengjian.org

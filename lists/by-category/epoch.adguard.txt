@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Epoch Times / Falun Gong
+# Category: epoch
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||clearwisdom.net^
+||de.minghui.org^
+||en.minghui.org^
+||epochtimes.ca^
+||epochtimes.co.il^
+||epochtimes.co.uk^
+||epochtimes.com^
+||epochtimes.com.au^
+||epochtimes.com.br^
+||epochtimes.de^
+||epochtimes.es^
+||epochtimes.fr^
+||epochtimes.it^
+||epochtimes.jp^
+||epochtimes.nl^
+||epochtimes.pl^
+||epochtimes.ru^
+||epochtimes.se^
+||epochweekly.com^
+||es.minghui.org^
+||falundafa.org^
+||fr.minghui.org^
+||hk.epochtimes.com^
+||minghui.org^
+||ntd.com^
+||ntd.tv^
+||ntdtv.com^
+||ntdtvusa.com^
+||pt.minghui.org^
+||pureinsight.org^
+||soundofhope.org^
+||thebl.com^
+||thebl.tv^
+||theepochtimes.com^
+||theepochtimes.fr^
+||tw.epochtimes.com^
+||visiontimes.com^
+||visiontimes.de^
+||visiontimes.fr^
+||zhengjian.org^

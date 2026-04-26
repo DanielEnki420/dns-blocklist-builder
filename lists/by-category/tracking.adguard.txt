@@ -1,0 +1,58 @@
+# ============================================================
+# DNS Blocklist Builder – Ad Tracking & Data Brokers
+# Category: tracking
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 50
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||33across.com^
+||addthis.com^
+||adform.net^
+||adnxs.com^
+||adsafeprotected.com^
+||adsrvr.org^
+||advertising.com^
+||amazon-adsystem.com^
+||appnexus.com^
+||bidswitch.net^
+||bluekai.com^
+||casalemedia.com^
+||contextweb.com^
+||criteo.com^
+||criteo.net^
+||doubleclick.net^
+||doubleverify.com^
+||everesttech.net^
+||exelator.com^
+||google-analytics.com^
+||googleadservices.com^
+||googlesyndication.com^
+||indexexchange.com^
+||krxd.net^
+||lijit.com^
+||liveintent.com^
+||lotame.com^
+||mathtag.com^
+||mediamath.com^
+||moatads.com^
+||openx.net^
+||outbrain.com^
+||pubmatic.com^
+||quantserve.com^
+||rhythmone.com^
+||rlcdn.com^
+||rubiconproject.com^
+||scorecardresearch.com^
+||sharethrough.com^
+||smartadserver.com^
+||sonobi.com^
+||sovrn.com^
+||spotx.tv^
+||taboola.com^
+||teads.tv^
+||triplelift.com^
+||turn.com^
+||vidoomy.com^
+||yieldmo.com^
+||zemanta.com^

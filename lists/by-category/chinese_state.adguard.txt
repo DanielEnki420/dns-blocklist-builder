@@ -1,0 +1,42 @@
+# ============================================================
+# DNS Blocklist Builder – Chinese State Propaganda
+# Category: chinese_state
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 35
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||81.cn^
+||cctv.com^
+||cctv.net^
+||cgtn.com^
+||cgtn.eu^
+||chinadaily.com.cn^
+||chinafocus.com^
+||chinamil.com.cn^
+||chinanews.com.cn^
+||cri.cn^
+||ecns.cn^
+||globaltimes.cn^
+||guancha.cn^
+||hkcd.com^
+||huanqiu.com^
+||legaldaily.com.cn^
+||mod.gov.cn^
+||news.cn^
+||pandaily.com^
+||people.cn^
+||people.com.cn^
+||pladaily.com.cn^
+||qstheory.cn^
+||radii.co^
+||shine.cn^
+||sixthtone.com^
+||stdaily.com^
+||takungpao.com^
+||thepaper.cn^
+||wenweipo.com^
+||xhpfmapi.com^
+||xinhua.net^
+||xinhuanet.com^
+||xuexi.cn^

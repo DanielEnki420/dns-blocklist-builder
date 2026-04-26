@@ -1,0 +1,48 @@
+# ============================================================
+# DNS Blocklist Builder – Conspiracy Theories
+# Category: conspiracy
+# Format: AdGuard Home
+# Generated: 2026-04-26
+# Domains: 40
+# Source: https://github.com/DanielEnki420/dns-blocklist-builder
+# ============================================================
+||8kun.top^
+||abundanthope.net^
+||activistpost.com^
+||ascensionwithearth.com^
+||beforeitsnews.com^
+||coreysdigs.com^
+||dinar-guru.com^
+||dinardetectives.com^
+||dinarrecaps.com^
+||discernreport.com^
+||forbiddenknowledgetv.net^
+||fourwinds10.com^
+||gaia.com^
+||henrymakow.com^
+||inteldinarchronicles.blogspot.com^
+||investmentwatchblog.com^
+||naturalnews.com^
+||operationdisclosureofficial.com^
+||patriotsnet.com^
+||prepareforchange.net^
+||prepperwebsite.com^
+||qagg.news^
+||qalerts.app^
+||qanon.pub^
+||qmap.pub^
+||rense.com^
+||resistthemainstream.com^
+||revival-news.com^
+||rumormillnews.com^
+||sgtreport.com^
+||slaynews.com^
+||stillnessinthestorm.com^
+||thenewamerican.com^
+||thestorm.pub^
+||ufosightingsdaily.com^
+||uncensored.co.nz^
+||verdensalt.dk^
+||whatdoesitmean.com^
+||worldtruth.tv^
+||zerohedge.com^
