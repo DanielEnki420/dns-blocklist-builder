@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Ad Tracking & Data Brokers
 # Category: tracking
 # Format: RPZ (BIND9)
-# Generated: 2026-04-26
-# Domains: 50
+# Generated: 2026-04-27
+# Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 33across.com. CNAME .
@@ -15,26 +15,35 @@ adsrvr.org. CNAME .
 advertising.com. CNAME .
 amazon-adsystem.com. CNAME .
 appnexus.com. CNAME .
+appsflyer.com. CNAME .
+apsalar.com. CNAME .
 bidswitch.net. CNAME .
+bkrtx.com. CNAME .
 bluekai.com. CNAME .
 casalemedia.com. CNAME .
+chartboost.com. CNAME .
 contextweb.com. CNAME .
+crashlytics.com. CNAME .
 criteo.com. CNAME .
 criteo.net. CNAME .
 doubleclick.net. CNAME .
 doubleverify.com. CNAME .
 everesttech.net. CNAME .
 exelator.com. CNAME .
+flurry.com. CNAME .
 google-analytics.com. CNAME .
 googleadservices.com. CNAME .
 googlesyndication.com. CNAME .
 indexexchange.com. CNAME .
+inmobi.com. CNAME .
+jumptap.com. CNAME .
 krxd.net. CNAME .
 lijit.com. CNAME .
 liveintent.com. CNAME .
 lotame.com. CNAME .
 mathtag.com. CNAME .
 mediamath.com. CNAME .
+mixpanel.com. CNAME .
 moatads.com. CNAME .
 openx.net. CNAME .
 outbrain.com. CNAME .
@@ -50,9 +59,11 @@ sonobi.com. CNAME .
 sovrn.com. CNAME .
 spotx.tv. CNAME .
 taboola.com. CNAME .
+tapjoy.com. CNAME .
 teads.tv. CNAME .
 triplelift.com. CNAME .
 turn.com. CNAME .
 vidoomy.com. CNAME .
+vungle.com. CNAME .
 yieldmo.com. CNAME .
 zemanta.com. CNAME .

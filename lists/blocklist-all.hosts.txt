@@ -1,12 +1,112 @@
 # ============================================================
 # DNS Blocklist Builder – All Categories
 # Format: hosts (/etc/hosts)
-# Generated: 2026-04-26
+# Generated: 2026-04-27
 # Categories: 11
-# Domains: 455
+# Domains: 566
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # Issues: https://github.com/DanielEnki420/dns-blocklist-builder/issues
 # ============================================================
+0.0.0.0 0-230-23.rest
+0.0.0.0 00-202828spas.cfd
+0.0.0.0 00-coopb144.com
+0.0.0.0 00-lhvpromt.com
+0.0.0.0 00-resgate-pontos.v6.rocks
+0.0.0.0 00000.uno
+0.0.0.0 00002555-coi2.cfd
+0.0.0.0 001975421.icu
+0.0.0.0 00366291.euro-maconnerie.fr
+0.0.0.0 0039keh.icu
+0.0.0.0 00466628383.click
+0.0.0.0 004783942.click
+0.0.0.0 005382.vu
+0.0.0.0 0066mtddd.com
+0.0.0.0 007mailbox.com
+0.0.0.0 00925552.liftmyresume.com
+0.0.0.0 00983.click
+0.0.0.0 0099866g8g.click
+0.0.0.0 00o0o00o0o.skapi.com
+0.0.0.0 00ts7.shop
+0.0.0.0 00uu00.top
+0.0.0.0 0104-progress.pro
+0.0.0.0 010404.cyou
+0.0.0.0 010904.click
+0.0.0.0 010hetong.com
+0.0.0.0 0121.click
+0.0.0.0 0129xjaz.icu
+0.0.0.0 0133be5b.liftmyresume.com
+0.0.0.0 014e479b-9b17-403a-ae26-a569d23f7e11-00-3vqkbom6kua7b.pike.replit.dev
+0.0.0.0 0155681.click
+0.0.0.0 017.65c.mytemp.website
+0.0.0.0 0171-binance.com
+0.0.0.0 01715577021.icu
+0.0.0.0 017342.pl
+0.0.0.0 01827667.euro-maconnerie.fr
+0.0.0.0 018760220.icu
+0.0.0.0 01909726.icu
+0.0.0.0 019125961.cfd
+0.0.0.0 019298929.lol
+0.0.0.0 01960123.cfd
+0.0.0.0 019601307.icu
+0.0.0.0 019602106.icu
+0.0.0.0 01960231.icu
+0.0.0.0 01960235.cfd
+0.0.0.0 01960723.cfd
+0.0.0.0 019659721.cfd
+0.0.0.0 019689211.icu
+0.0.0.0 01969792.icu
+0.0.0.0 019cb848-22df-7f62-aecf-088237139825.mochausercontent.com
+0.0.0.0 01f23dwf.lat
+0.0.0.0 01gt4q.lat
+0.0.0.0 01hgtw.lat
+0.0.0.0 01hs7819681bdh1973891.cfd
+0.0.0.0 01jw63g.lol
+0.0.0.0 01r9181r1or18.cfd
+0.0.0.0 01u26wge.lat
+0.0.0.0 0208420-390.icu
+0.0.0.0 021934.cyou
+0.0.0.0 021qsbjgs.com
+0.0.0.0 0229972.cfd
+0.0.0.0 0230g034139.cfd
+0.0.0.0 0234783753.lol
+0.0.0.0 0239898982.click
+0.0.0.0 0239t9g00.lol
+0.0.0.0 023f0dc5.diabetes-bewegung.de
+0.0.0.0 023ugete.lat
+0.0.0.0 023yt5e.lol
+0.0.0.0 0248442-232.icu
+0.0.0.0 0264etffw.lat
+0.0.0.0 02681245.kbh-services.fr
+0.0.0.0 026hwbki.sbs
+0.0.0.0 027gwtf.lat
+0.0.0.0 027tehet.lat
+0.0.0.0 0283-binance.com
+0.0.0.0 028731.lol
+0.0.0.0 028d2h1884jdi2074d3.sbs
+0.0.0.0 029281251-53293828.cfd
+0.0.0.0 02982r772-f.sbs
+0.0.0.0 02988-092020soi.icu
+0.0.0.0 0298peyamzv.sbs
+0.0.0.0 029ajjkz-05958z.cfd
+0.0.0.0 02cb810a.diabetes-bewegung.de
+0.0.0.0 02g3802g9g.cfd
+0.0.0.0 02i7wu.lat
+0.0.0.0 02ip.ru
+0.0.0.0 02jnwh.icu
+0.0.0.0 02kjw5.lol
+0.0.0.0 02kjwt2.lol
+0.0.0.0 02ky6e3.lat
+0.0.0.0 02n76w.icu
+0.0.0.0 02nj6e3.lat
+0.0.0.0 02review-at0.online
+0.0.0.0 02tsb5h.lol
+0.0.0.0 02uu02.top
+0.0.0.0 02uu05.top
+0.0.0.0 02uwye.lat
+0.0.0.0 030455.click
+0.0.0.0 0321-binance.com
+0.0.0.0 03247893426758.lol
+0.0.0.0 032cb4db.diabetes-bewegung.de
 0.0.0.0 100percentfedup.com
 0.0.0.0 33across.com
 0.0.0.0 81.cn
@@ -32,6 +132,8 @@
 0.0.0.0 ansage.org
 0.0.0.0 apolut.net
 0.0.0.0 appnexus.com
+0.0.0.0 appsflyer.com
+0.0.0.0 apsalar.com
 0.0.0.0 ascensionwithearth.com
 0.0.0.0 auf1.info
 0.0.0.0 auf1.tv
@@ -49,6 +151,7 @@
 0.0.0.0 bitcoin-revolution.com
 0.0.0.0 bitcoin-up.live
 0.0.0.0 bitql.io
+0.0.0.0 bkrtx.com
 0.0.0.0 blu-news.org
 0.0.0.0 bluekai.com
 0.0.0.0 breitbart.com
@@ -61,6 +164,7 @@
 0.0.0.0 cfact.org
 0.0.0.0 cgtn.com
 0.0.0.0 cgtn.eu
+0.0.0.0 chartboost.com
 0.0.0.0 childrenshealthdefense.org
 0.0.0.0 chinadaily.com.cn
 0.0.0.0 chinafocus.com
@@ -93,6 +197,7 @@
 0.0.0.0 counter-currents.com
 0.0.0.0 covidvaccineinjuries.com
 0.0.0.0 covidvax.live
+0.0.0.0 crashlytics.com
 0.0.0.0 cri.cn
 0.0.0.0 criteo.com
 0.0.0.0 criteo.net
@@ -155,6 +260,7 @@
 0.0.0.0 firefox-update.org
 0.0.0.0 fixerrorsnow.com
 0.0.0.0 flashplayerupdate.cc
+0.0.0.0 flurry.com
 0.0.0.0 fondsk.ru
 0.0.0.0 forbiddenknowledgetv.net
 0.0.0.0 fourwinds10.com
@@ -198,6 +304,7 @@
 0.0.0.0 inforeactor.ru
 0.0.0.0 infowars.com
 0.0.0.0 infowars.net
+0.0.0.0 inmobi.com
 0.0.0.0 inotv.rt.com
 0.0.0.0 inteldinarchronicles.blogspot.com
 0.0.0.0 investmentwatchblog.com
@@ -206,6 +313,7 @@
 0.0.0.0 java-update.org
 0.0.0.0 joannenova.com.au
 0.0.0.0 journalistenwatch.com
+0.0.0.0 jumptap.com
 0.0.0.0 junge-freiheit.de
 0.0.0.0 katehon.com
 0.0.0.0 kenfm.de
@@ -232,6 +340,7 @@
 0.0.0.0 michael-mannheimer.net
 0.0.0.0 microsoftsupport-helpline.com
 0.0.0.0 minghui.org
+0.0.0.0 mixpanel.com
 0.0.0.0 mmnews.de
 0.0.0.0 moatads.com
 0.0.0.0 mod.gov.cn
@@ -381,6 +490,7 @@
 0.0.0.0 tagesstimme.com
 0.0.0.0 takimag.com
 0.0.0.0 takungpao.com
+0.0.0.0 tapjoy.com
 0.0.0.0 tass.com
 0.0.0.0 tass.ru
 0.0.0.0 teads.tv
@@ -441,6 +551,7 @@
 0.0.0.0 visiontimes.de
 0.0.0.0 visiontimes.fr
 0.0.0.0 voiceofeurope.com
+0.0.0.0 vungle.com
 0.0.0.0 warfiles.ru
 0.0.0.0 wattsupwiththat.com
 0.0.0.0 wenweipo.com

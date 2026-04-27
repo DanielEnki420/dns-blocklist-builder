@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Epoch Times / Falun Gong
 # Category: epoch
 # Format: RPZ (BIND9)
-# Generated: 2026-04-26
+# Generated: 2026-04-27
 # Domains: 40
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: AdGuard Home
-# Generated: 2026-04-26
+# Generated: 2026-04-27
 # Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

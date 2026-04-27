@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Chinese State Propaganda
 # Category: chinese_state
 # Format: hosts (/etc/hosts)
-# Generated: 2026-04-26
+# Generated: 2026-04-27
 # Domains: 35
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

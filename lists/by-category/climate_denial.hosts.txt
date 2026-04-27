@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Climate Change Denial
 # Category: climate_denial
 # Format: hosts (/etc/hosts)
-# Generated: 2026-04-26
+# Generated: 2026-04-27
 # Domains: 30
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
