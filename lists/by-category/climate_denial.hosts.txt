@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Climate Change Denial
 # Category: climate_denial
 # Format: hosts (/etc/hosts)
-# Generated: 2026-04-27
-# Domains: 30
+# Generated: 2026-05-04
+# Domains: 26
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 0.0.0.0 c3headlines.com
@@ -14,7 +14,6 @@
 0.0.0.0 climateconversation.wordpress.com
 0.0.0.0 climatedepot.com
 0.0.0.0 climaterealism.com
-0.0.0.0 climaterealismblogs.com
 0.0.0.0 climatesciencenews.com
 0.0.0.0 co2coalition.org
 0.0.0.0 co2is.life
@@ -22,12 +21,9 @@
 0.0.0.0 drroyspencer.com
 0.0.0.0 eike-klima-energie.eu
 0.0.0.0 friendsofscience.org
-0.0.0.0 globalwarmingpolicy.org
-0.0.0.0 globalwarmingpolicyfoundation.org
 0.0.0.0 heartland.org
 0.0.0.0 hockeyschtick.blogspot.com
 0.0.0.0 joannenova.com.au
-0.0.0.0 noclimate.org
 0.0.0.0 notalotofpeopleknowthat.wordpress.com
 0.0.0.0 notrickszone.com
 0.0.0.0 nzcpr.com

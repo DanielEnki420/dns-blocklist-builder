@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Climate Change Denial
 # Category: climate_denial
 # Format: Pi-hole adlist
-# Generated: 2026-04-27
-# Domains: 30
+# Generated: 2026-05-04
+# Domains: 26
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 c3headlines.com
@@ -14,7 +14,6 @@ climatechangedispatch.com
 climateconversation.wordpress.com
 climatedepot.com
 climaterealism.com
-climaterealismblogs.com
 climatesciencenews.com
 co2coalition.org
 co2is.life
@@ -22,12 +21,9 @@ co2science.org
 drroyspencer.com
 eike-klima-energie.eu
 friendsofscience.org
-globalwarmingpolicy.org
-globalwarmingpolicyfoundation.org
 heartland.org
 hockeyschtick.blogspot.com
 joannenova.com.au
-noclimate.org
 notalotofpeopleknowthat.wordpress.com
 notrickszone.com
 nzcpr.com

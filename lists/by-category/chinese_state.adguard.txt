@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Chinese State Propaganda
 # Category: chinese_state
 # Format: AdGuard Home
-# Generated: 2026-04-27
-# Domains: 35
+# Generated: 2026-05-04
+# Domains: 33
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 ||81.cn^
@@ -36,7 +36,5 @@
 ||takungpao.com^
 ||thepaper.cn^
 ||wenweipo.com^
-||xhpfmapi.com^
-||xinhua.net^
 ||xinhuanet.com^
 ||xuexi.cn^

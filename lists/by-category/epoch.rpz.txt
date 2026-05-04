@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Epoch Times / Falun Gong
 # Category: epoch
 # Format: RPZ (BIND9)
-# Generated: 2026-04-27
-# Domains: 40
+# Generated: 2026-05-04
+# Domains: 38
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 clearwisdom.net. CNAME .
@@ -33,14 +33,12 @@ minghui.org. CNAME .
 ntd.com. CNAME .
 ntd.tv. CNAME .
 ntdtv.com. CNAME .
-ntdtvusa.com. CNAME .
 pt.minghui.org. CNAME .
 pureinsight.org. CNAME .
 soundofhope.org. CNAME .
 thebl.com. CNAME .
 thebl.tv. CNAME .
 theepochtimes.com. CNAME .
-theepochtimes.fr. CNAME .
 tw.epochtimes.com. CNAME .
 visiontimes.com. CNAME .
 visiontimes.de. CNAME .

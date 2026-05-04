@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: RPZ (BIND9)
-# Generated: 2026-04-27
-# Domains: 61
+# Generated: 2026-05-04
+# Domains: 50
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 anna-news.info. CNAME .
@@ -21,9 +21,6 @@ inotv.rt.com. CNAME .
 katehon.com. CNAME .
 life.ru. CNAME .
 nahnews.org. CNAME .
-news-front.info. CNAME .
-odnarodyna.org. CNAME .
-orientalreview.org. CNAME .
 polit.info. CNAME .
 politros.com. CNAME .
 realtribune.ru. CNAME .
@@ -32,38 +29,30 @@ ren.tv. CNAME .
 rg.ru. CNAME .
 ria.ru. CNAME .
 riafan.ru. CNAME .
-rianovosti.pro. CNAME .
 rt.com. CNAME .
 rt.de. CNAME .
-rt.es. CNAME .
 rt.fr. CNAME .
 rt.ru. CNAME .
 rt.uk. CNAME .
 rubaltic.ru. CNAME .
 rusnext.ru. CNAME .
 rusplt.ru. CNAME .
-russia-feed.com. CNAME .
 russia-insider.com. CNAME .
 russland.news. CNAME .
 rusvesna.su. CNAME .
 slavyangrad.org. CNAME .
-southfront.org. CNAME .
 sputnik-news.de. CNAME .
 sputnik.by. CNAME .
 sputnikglobe.com. CNAME .
 sputniknews.com. CNAME .
 sputniknews.fr. CNAME .
-sputniknews.it. CNAME .
 sputniknews.lat. CNAME .
 stalkerzone.org. CNAME .
-strategic-culture.org. CNAME .
 svpressa.ru. CNAME .
 tass.com. CNAME .
 tass.ru. CNAME .
-thedailybeast.ru. CNAME .
 topwar.ru. CNAME .
 tsargrad.tv. CNAME .
 ukraina.ru. CNAME .
 vesti.ru. CNAME .
-voiceofeurope.com. CNAME .
 warfiles.ru. CNAME .

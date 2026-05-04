@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Far-Right (DACH)
 # Category: compact
 # Format: AdGuard Home
-# Generated: 2026-04-27
-# Domains: 50
+# Generated: 2026-05-04
+# Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 ||achgut.com^
@@ -18,11 +18,9 @@
 ||demokratischer-widerstand.de^
 ||der-dritte-weg.de^
 ||ef-magazin.de^
-||eigentumlich-frei.de^
 ||eingeschenkt.tv^
 ||exxpress.at^
 ||freie-sachsen.de^
-||freie-welt.net^
 ||heimatkurier.at^
 ||hintergrund.de^
 ||identitaere.at^

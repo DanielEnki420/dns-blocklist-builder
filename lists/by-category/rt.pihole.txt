@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: Pi-hole adlist
-# Generated: 2026-04-27
-# Domains: 61
+# Generated: 2026-05-04
+# Domains: 50
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 anna-news.info
@@ -21,9 +21,6 @@ inotv.rt.com
 katehon.com
 life.ru
 nahnews.org
-news-front.info
-odnarodyna.org
-orientalreview.org
 polit.info
 politros.com
 realtribune.ru
@@ -32,38 +29,30 @@ ren.tv
 rg.ru
 ria.ru
 riafan.ru
-rianovosti.pro
 rt.com
 rt.de
-rt.es
 rt.fr
 rt.ru
 rt.uk
 rubaltic.ru
 rusnext.ru
 rusplt.ru
-russia-feed.com
 russia-insider.com
 russland.news
 rusvesna.su
 slavyangrad.org
-southfront.org
 sputnik-news.de
 sputnik.by
 sputnikglobe.com
 sputniknews.com
 sputniknews.fr
-sputniknews.it
 sputniknews.lat
 stalkerzone.org
-strategic-culture.org
 svpressa.ru
 tass.com
 tass.ru
-thedailybeast.ru
 topwar.ru
 tsargrad.tv
 ukraina.ru
 vesti.ru
-voiceofeurope.com
 warfiles.ru

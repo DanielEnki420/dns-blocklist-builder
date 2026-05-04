@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Epoch Times / Falun Gong
 # Category: epoch
 # Format: Pi-hole adlist
-# Generated: 2026-04-27
-# Domains: 40
+# Generated: 2026-05-04
+# Domains: 38
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 clearwisdom.net
@@ -33,14 +33,12 @@ minghui.org
 ntd.com
 ntd.tv
 ntdtv.com
-ntdtvusa.com
 pt.minghui.org
 pureinsight.org
 soundofhope.org
 thebl.com
 thebl.tv
 theepochtimes.com
-theepochtimes.fr
 tw.epochtimes.com
 visiontimes.com
 visiontimes.de

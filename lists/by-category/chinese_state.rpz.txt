@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Chinese State Propaganda
 # Category: chinese_state
 # Format: RPZ (BIND9)
-# Generated: 2026-04-27
-# Domains: 35
+# Generated: 2026-05-04
+# Domains: 33
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 81.cn. CNAME .
@@ -36,7 +36,5 @@ stdaily.com. CNAME .
 takungpao.com. CNAME .
 thepaper.cn. CNAME .
 wenweipo.com. CNAME .
-xhpfmapi.com. CNAME .
-xinhua.net. CNAME .
 xinhuanet.com. CNAME .
 xuexi.cn. CNAME .

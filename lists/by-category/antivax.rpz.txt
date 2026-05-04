@@ -2,42 +2,34 @@
 # DNS Blocklist Builder – Anti-Vax / Medical Disinfo
 # Category: antivax
 # Format: RPZ (BIND9)
-# Generated: 2026-04-27
-# Domains: 40
+# Generated: 2026-05-04
+# Domains: 32
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 aerzte-fuer-aufklaerung.de. CNAME .
 ageofautism.com. CNAME .
 childrenshealthdefense.org. CNAME .
 corona-blog.net. CNAME .
-corona-doku.de. CNAME .
 covidvaccineinjuries.com. CNAME .
 covidvax.live. CNAME .
 dailyexpose.uk. CNAME .
 deswegen.net. CNAME .
 drrobertyoung.com. CNAME .
 endthevax.com. CNAME .
-exposenews.co.uk. CNAME .
 greenmedinfo.com. CNAME .
 healthimpactnews.com. CNAME .
 humansarefree.com. CNAME .
 impfen-nein-danke.de. CNAME .
 impfkritik.de. CNAME .
 infokrieg.tv. CNAME .
-jabs.news. CNAME .
 kla.tv. CNAME .
 mercola.com. CNAME .
 mwgfd.org. CNAME .
 nvic.org. CNAME .
-panda-online.org. CNAME .
 questioningcovid.com. CNAME .
-stoppt-die-impfung.de. CNAME .
 stopworldcontrol.com. CNAME .
-tele.bio. CNAME .
-the-highwire.com. CNAME .
 thinktwice.com. CNAME .
 ukcolumn.org. CNAME .
-ukdeclaration.org. CNAME .
 vaccinationinformationnetwork.com. CNAME .
 vaccine-injury.info. CNAME .
 vaccinedamage.news. CNAME .
