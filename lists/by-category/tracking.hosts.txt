@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Ad Tracking & Data Brokers
 # Category: tracking
 # Format: hosts (/etc/hosts)
-# Generated: 2026-05-11
+# Generated: 2026-05-18
 # Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

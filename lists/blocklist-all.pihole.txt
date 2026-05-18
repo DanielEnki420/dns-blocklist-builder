@@ -1,9 +1,9 @@
 # ============================================================
 # DNS Blocklist Builder – All Categories
 # Format: Pi-hole adlist
-# Generated: 2026-05-11
+# Generated: 2026-05-18
 # Categories: 11
-# Domains: 579
+# Domains: 679
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # Issues: https://github.com/DanielEnki420/dns-blocklist-builder/issues
 # ============================================================
@@ -21,6 +21,7 @@
 004783942.click
 005382.vu
 0066mtddd.com
+006d6321-9409-41c1-9134-80e2a25f7805-00-3fe7w13ink7au.kirk.replit.dev
 007mailbox.com
 00925552.liftmyresume.com
 00983.click
@@ -36,9 +37,11 @@
 010hetong.com
 011pxx0l-nexo4.lh4hjt.sbs
 0121.click
+01289523rt.shop
 0128990fb.lol
 0129xjaz.icu
 0133be5b.liftmyresume.com
+01384921634.shop
 014e479b-9b17-403a-ae26-a569d23f7e11-00-3vqkbom6kua7b.pike.replit.dev
 0155681.click
 017.65c.mytemp.website
@@ -65,10 +68,13 @@
 01gt4q.lat
 01hgtw.lat
 01hs7819681bdh1973891.cfd
+01ixpo1-4bgb.j2istg.top
 01ixpolpub-povi4.c5ljbc.qpon
 01jw63g.lol
+01l11xp801mr8f8.v5ixtr.cfd
 01r9181r1or18.cfd
 01u26wge.lat
+01xi-1plbox-za90.f1pujf.cfd
 0208420-390.icu
 0213233.cfd
 021934.cyou
@@ -93,6 +99,7 @@
 028d2h1884jdi2074d3.sbs
 029281251-53293828.cfd
 029323t23g.lat
+0293410.lat
 02982r772-f.sbs
 02988-092020soi.icu
 0298peyamzv.sbs
@@ -111,6 +118,7 @@
 02tsb5h.lol
 02uu02.top
 02uu05.top
+02yylpl-zfsb2.ah6lkn.lat
 030-zulassungsdienst-berlin.de
 030077629.xyz
 030455.click
@@ -155,31 +163,123 @@
 04f.org
 04gffrw.icu
 04r67yt.top
+0506.aktualisierung.sbs
+0523892h-23.lat
+052932prywanite-520539-33012192.sbs
+052uuu.top
+053prywatnieaukcje95121251-250191.sbs
+0542rfwd.icu
+054uuu.top
+0555.mur28a.pl
+05781.sbs
+0591aozi5q.icu
 05961487.euro-maconnerie.fr
+059s81-s019.bond
 05e2db94.liftmyresume.com
+05s195815151.cyou
 06029c6f.flyjasper.ca
+063uuu.top
 06467.click
 066b97ae.flyjasper.ca
+067690.cyou
+06uu05.top
+070uuu.top
+0728723889735.cyou
+074b79c1dd.nxcli.io
+07594-dt0912.sbs
 077uuu.top
 07849950.euro-maconnerie.fr
+07853789690320.cfd
 07nch9khbfjnw20i.fantom.neriobazzano.it
 0838288fh929procedure4allemployeemandatory08392928482.nassvsa.com
 0840e7f6.diabetes-bewegung.de
 0842wly91.shop
 0845799095.click
+08765t7.cyou
+089438943g3.cfd
 08f937ba.diabetes-bewegung.de
 08qhlz6ct.pro
+08uwuhye.lat
 09.2026x02find.shop
 0908456495868888.click
+092388g82.lol
 09239-174328543.shop
+092aukcj388.sbs
+092jtyw.lat
+0932823-g4.lat
 09348970146707413.xyz
 09381.click
+093juyrhf.lat
 09511.click
 09530.click
+095382-0dowi1.sbs
 09549.click
 097838r922r3r723r79823r2.shop
+097ey43.top
+09843.cyou
+09876tyg5.cfd
+099-00038pzn.cyou
 09958.click
+099b8876.xyz
+09qgwr2.lat
+09uu76.top
 09uu83.top
+09uu93.top
+09wuhuw.sbs
+0afc6457.flyjasper.ca
+0amsst.lat
+0auth2.1mb.site
+0b5f27f2.flyjasper.ca
+0bbc.irpa.com.pl
+0bd60e8c.liftmyresume.com
+0btu8g.icu
+0c02a93a.diabetes-bewegung.de
+0chnik-pl.shop
+0chnikpll.shop
+0chronakupujacego2819381983124.cfd
+0ddfd485.liftmyresume.com
+0ddu0rn9.top
+0e6489d1.diabetes-bewegung.de
+0e7h4hr.top
+0e87he.top
+0e928d9197fj28422.sbs
+0eh63g.lol
+0ej37yhe.cfd
+0ejnh4.icu
+0ek38je.icu
+0ek7er.lol
+0ekhyff.lol
+0equalsinfinity.org
+0fde401291120.click
+0fficialflfa-eusale.shop
+0g254fw.icu
+0gjsdga1.eu
+0gloszenie593d.cfd
+0gq42gg.lat
+0iijejnd.lol
+0iw26wyg.fun
+0iw87uwy.cfd
+0iw8hw2.fun
+0ixi-1pl-fbr94mod.ng6hax.qpon
+0j2y6wg.lol
+0j9h876we-7gtl3x3m8j.edgeone.dev
+0jnabshj.lat
+0js65.lat
+0jsa62jh9s.lat
+0jw7yew.lat
+0ke8u74.lat
+0keurh3.top
+0kew8u4.top
+0kv0vc.icu
+0kw7jd.lat
+0kxbcu6jpyri41z.grzegorzcwik.pl
+0l1x2j.asia
+0lixpo1-heu8kuat.je6unt.qpon
+0llaf.com
+0llxpl.a6zhdh.top
+0llxpl.azurra.lat
+0llxpl.expira.sbs
+0llxpl.hub09.sbs
 100percentfedup.com
 33across.com
 81.cn
