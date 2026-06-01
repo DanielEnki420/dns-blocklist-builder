@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Anti-Vax / Medical Disinfo
 # Category: antivax
 # Format: RPZ (BIND9)
-# Generated: 2026-05-25
-# Domains: 32
+# Generated: 2026-06-01
+# Domains: 31
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 aerzte-fuer-aufklaerung.de. CNAME .
@@ -28,7 +28,6 @@ mwgfd.org. CNAME .
 nvic.org. CNAME .
 questioningcovid.com. CNAME .
 stopworldcontrol.com. CNAME .
-thinktwice.com. CNAME .
 ukcolumn.org. CNAME .
 vaccinationinformationnetwork.com. CNAME .
 vaccine-injury.info. CNAME .

@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Anti-Vax / Medical Disinfo
 # Category: antivax
 # Format: Pi-hole adlist
-# Generated: 2026-05-25
-# Domains: 32
+# Generated: 2026-06-01
+# Domains: 31
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 aerzte-fuer-aufklaerung.de
@@ -28,7 +28,6 @@ mwgfd.org
 nvic.org
 questioningcovid.com
 stopworldcontrol.com
-thinktwice.com
 ukcolumn.org
 vaccinationinformationnetwork.com
 vaccine-injury.info
