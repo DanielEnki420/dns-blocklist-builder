@@ -27,6 +27,44 @@ git clone https://github.com/DanielEnki420/dns-blocklist-builder
 # Open index.html in your browser – no server needed
 ```
 
+## Raspberry Pi 5 Quickstart
+
+One command installs everything: clones the repo, generates all blocklist formats, configures Pi-hole, and sets up a weekly auto-update.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder/main/setup-pi5.sh | sudo bash
+```
+
+**What it does:**
+1. Installs Node.js 20 LTS and git (if needed)
+2. Clones the repo to `/opt/dns-blocklist-builder`
+3. Generates all 6 blocklist formats locally
+4. Adds the blocklist to Pi-hole's gravity database and updates gravity
+5. Installs a weekly cron job (`/etc/cron.d/dns-blocklist-builder`) for automatic updates
+
+**Prerequisites:** Raspberry Pi OS (or any Debian/Ubuntu system), Pi-hole already installed.
+
+**Options** (set as env vars before piping to bash):
+
+| Variable | Default | Description |
+|---|---|---|
+| `INSTALL_DIR` | `/opt/dns-blocklist-builder` | Where to clone the repo |
+| `CRON_SCHEDULE` | `0 3 * * 1` | Cron schedule for auto-updates |
+| `SKIP_PIHOLE` | `0` | Set to `1` to skip Pi-hole integration |
+| `SKIP_CRON` | `0` | Set to `1` to skip cron job installation |
+
+Example — custom install path, no auto-update:
+```bash
+curl -fsSL .../setup-pi5.sh | sudo INSTALL_DIR=~/blocklists SKIP_CRON=1 bash
+```
+
+Update manually at any time:
+```bash
+sudo /opt/dns-blocklist-builder/update-pi5.sh
+```
+
+---
+
 ## Install on your router
 
 ### Xiaomi / OpenWrt (dnsmasq)
