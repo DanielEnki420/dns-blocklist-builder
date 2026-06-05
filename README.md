@@ -52,10 +52,21 @@ curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder
 | `CRON_SCHEDULE` | `0 3 * * 1` | Cron schedule for auto-updates |
 | `SKIP_PIHOLE` | `0` | Set to `1` to skip Pi-hole integration |
 | `SKIP_CRON` | `0` | Set to `1` to skip cron job installation |
+| `TELEGRAM_BOT_TOKEN` | _(unset)_ | Telegram bot token for update notifications |
+| `TELEGRAM_CHAT_ID` | _(unset)_ | Telegram chat/user ID |
 
-Example — custom install path, no auto-update:
+After each weekly update you get a Telegram message like:
+```
+🛡 Blocklist updated
+➕ +8 domains added
+📊 Total: 412 domains
+📅 2026-06-09 03:00 UTC
+✅ Pi-hole gravity refreshed
+```
+
+Example — with Telegram notifications:
 ```bash
-curl -fsSL .../setup-pi5.sh | sudo INSTALL_DIR=~/blocklists SKIP_CRON=1 bash
+curl -fsSL .../setup-pi5.sh | sudo TELEGRAM_BOT_TOKEN=123:abc TELEGRAM_CHAT_ID=456789 bash
 ```
 
 Update manually at any time:
