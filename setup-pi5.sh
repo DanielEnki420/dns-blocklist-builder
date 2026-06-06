@@ -241,6 +241,34 @@ UPDATESCRIPT
   ok "Update script: $script"
 }
 
+install_bot_service() {
+  local service_file="/etc/systemd/system/dns-blocklist-bot.service"
+
+  cat > "$service_file" << UNIT
+[Unit]
+Description=DNS Blocklist Builder Telegram Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node $INSTALL_DIR/bot-listener.js
+Restart=always
+RestartSec=10
+User=root
+WorkingDirectory=$INSTALL_DIR
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+  systemctl daemon-reload
+  systemctl enable --now dns-blocklist-bot
+  ok "Bot service installed and started (dns-blocklist-bot)"
+}
+
 setup_cron() {
   if [ "$SKIP_CRON" = "1" ]; then
     warn "Cron setup skipped (SKIP_CRON=1)"
@@ -301,6 +329,9 @@ main() {
 
   header "6/6  Auto-update cron job"
   setup_cron
+
+  header "7/7  Telegram bot service"
+  install_bot_service
 
   print_summary
 }
