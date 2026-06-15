@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Ad Tracking & Data Brokers
 # Category: tracking
 # Format: RPZ (BIND9)
-# Generated: 2026-06-08
+# Generated: 2026-06-15
 # Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
