@@ -27,6 +27,55 @@ git clone https://github.com/DanielEnki420/dns-blocklist-builder
 # Open index.html in your browser – no server needed
 ```
 
+## Raspberry Pi 5 Quickstart
+
+One command installs everything: clones the repo, generates all blocklist formats, configures Pi-hole, and sets up a weekly auto-update.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder/main/setup-pi5.sh | sudo bash
+```
+
+**What it does:**
+1. Installs Node.js 20 LTS and git (if needed)
+2. Clones the repo to `/opt/dns-blocklist-builder`
+3. Generates all 6 blocklist formats locally
+4. Adds the blocklist to Pi-hole's gravity database and updates gravity
+5. Installs a weekly cron job (`/etc/cron.d/dns-blocklist-builder`) for automatic updates
+
+**Prerequisites:** Raspberry Pi OS (or any Debian/Ubuntu system), Pi-hole already installed.
+
+**Options** (set as env vars before piping to bash):
+
+| Variable | Default | Description |
+|---|---|---|
+| `INSTALL_DIR` | `/opt/dns-blocklist-builder` | Where to clone the repo |
+| `CRON_SCHEDULE` | `0 3 * * 1` | Cron schedule for auto-updates |
+| `SKIP_PIHOLE` | `0` | Set to `1` to skip Pi-hole integration |
+| `SKIP_CRON` | `0` | Set to `1` to skip cron job installation |
+| `TELEGRAM_BOT_TOKEN` | _(unset)_ | Telegram bot token for update notifications |
+| `TELEGRAM_CHAT_ID` | _(unset)_ | Telegram chat/user ID |
+
+After each weekly update you get a Telegram message like:
+```
+🛡 Blocklist updated
+➕ +8 domains added
+📊 Total: 412 domains
+📅 2026-06-09 03:00 UTC
+✅ Pi-hole gravity refreshed
+```
+
+Example — with Telegram notifications:
+```bash
+curl -fsSL .../setup-pi5.sh | sudo TELEGRAM_BOT_TOKEN=123:abc TELEGRAM_CHAT_ID=456789 bash
+```
+
+Update manually at any time:
+```bash
+sudo /opt/dns-blocklist-builder/update-pi5.sh
+```
+
+---
+
 ## Install on your router
 
 ### Xiaomi / OpenWrt (dnsmasq)
