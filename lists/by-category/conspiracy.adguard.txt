@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Conspiracy Theories
 # Category: conspiracy
 # Format: AdGuard Home
-# Generated: 2026-06-15
+# Generated: 2026-06-22
 # Domains: 36
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
