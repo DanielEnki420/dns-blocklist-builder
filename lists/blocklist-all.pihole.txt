@@ -1,9 +1,9 @@
 # ============================================================
 # DNS Blocklist Builder – All Categories
 # Format: Pi-hole adlist
-# Generated: 2026-06-22
+# Generated: 2026-06-29
 # Categories: 11
-# Domains: 873
+# Domains: 973
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # Issues: https://github.com/DanielEnki420/dns-blocklist-builder/issues
 # ============================================================
@@ -36,6 +36,7 @@
 010904.click
 010969233.cfd
 010hetong.com
+010ot1-1xplf4ax2.w6vxrd.sbs
 0111xp200l-bzjg2.gs5qkd.cfd
 0112576.com
 011pxx0l-nexo4.lh4hjt.sbs
@@ -68,6 +69,7 @@
 0196972.cfd
 01969792.icu
 019cb848-22df-7f62-aecf-088237139825.mochausercontent.com
+01b0439c-ba2b-4c7f-8641-b9865db23689-00-1emp6yfnk9mkw.worf.replit.dev
 01f23dwf.lat
 01gt4q.lat
 01hgtw.lat
@@ -157,6 +159,7 @@
 038743576906435.sbs
 039114.cyou
 0392oi0-19.club
+039456934.shop
 03eyg43e.sbs
 03g0g0.click
 03ke74.top
@@ -231,6 +234,7 @@
 097ey43.top
 09843.cyou
 09876tyg5.cfd
+0989lh6534f1.shop
 09958.click
 099b8876.xyz
 09qgwr2.lat
@@ -270,9 +274,11 @@
 0gloszenie593d.cfd
 0gq42gg.lat
 0i0tl1x6plgo-5hzhd.ad4gde.qpon
+0i0tl1x6plmod-moza3.w6vxrd.sbs
 0iijejnd.lol
 0ilpx0l-sim-ym2hj.gs5qkd.cfd
 0io71lx-p1-simka51.k9jmmt.qpon
+0io7l1xp1-wcke.w6vxrd.sbs
 0iotll1px-motu7.b7knms.top
 0ip7l1x-ppl-prvep6h6.n5xrpa.top
 0iw26wyg.fun
@@ -317,6 +323,7 @@
 0mwyg3.lat
 0nedrive.dropcloud.it
 0nlinebqnking-hunt1ngton.otzo.com
+0nlinetasks.info
 0o1k6wg.lat
 0o7llxpl-53mys.c5dvkc.sbs
 0oeiu7e.top
@@ -372,22 +379,27 @@
 1-eobuwie.shop
 1-inch-bandz.online
 1-nopsstz9zs-prev.je6unt.qpon
+1-nqpcotpdem-fesa5.f9tvsl.casa
 1-straussvipeu-online.shop
 10-2-4mail.org
 10-91kkkaa.cyou
 1000xball.site
 1001gezi.com
 1003uu.top
+100723.cfd
 100acreapps.com
 100cw.us
 100daysofyara.com
 100percentfedup.com
 100percentopens.com
 100percentopens.net
+101.immrtl-hlpr.shop
 1010uu.top
 101beautyboy.com
 101uu1.top
+10209j8j8.shop
 1020smart9381.baby
+1023010h04.shop
 10230374783013.lat
 103489.click
 10384977980745.shop
@@ -461,6 +473,8 @@
 121mai0088.com
 121mai0094.com
 121uu8.top
+121z2.catex.at
+12200h0592.xyz
 12304982h5.xyz
 12316kpu.com
 1231823812giri.lol
@@ -474,8 +488,94 @@
 1257.click
 125789.click
 125uu7.top
+126251.shop
 126325g2.sbs
 12666hj.cyou
+12739t71.sbs
+128310321342.pl
+12937.shop
+12939h74.xyz
+12949280466.xyz
+12972864.xyz
+12af8e63.diabetes-bewegung.de
+12f942fd.flyjasper.ca
+12gvty23.sbs
+12gyt3.ink
+12ytgygv.cfd
+13.accessbenefitscenter.com
+1305qwenrp.partnercenter-dataprocessinghub.me
+1305twrlpa.integradatalink.com
+1308plplplplplplplplplpl.site
+1308plplplplplplplplplpl2.site
+1308plplplplplplplplplpl3.site
+1308plplplplplplplplplpl4.site
+13264879.xyz
+13356ac7.flyjasper.ca
+134083.click
+13579842.xyz
+1357mqk.top
+13657084.xyz
+13687084.xyz
+1394zxt.skin
+13972864.xyz
+13c0c60838.nxcli.io
+13ritain.com
+13runtracker.com
+1405lkptar.adcampaign-identitycontrolgrid.me
+1405qzrwml.adcampaign-identitycontrolgrid.me
+14092857.xyz
+140aba.senes.at
+140bae.senes.at
+141c42e1f5.nxcli.io
+1420zra.top
+143holidays.com
+14593601.euro-maconnerie.fr
+1473xzn.hair
+14752093.xyz
+14759283.xyz
+147839f8.click
+1480wqm.hair
+1482zra.top
+1492lka.top
+1496pqr.cfd
+14e9568c.liftmyresume.com
+14edqrd42.top
+15039276.xyz
+15052233.com
+150years.org
+15212k5.click
+15253055.solarmonkey.sk
+1525hwyt.lat
+1527preservationproject.com
+1528lka.top
+15334265x2.sbs
+15367928.xyz
+15482067.xyz
+1562mqk.top
+15687094.xyz
+1579mka.top
+15820497.xyz
+1583c083.liftmyresume.com
+1583mqp.skin
+1584mwn.ink
+1586vkn.hair
+15876294.xyz
+1587wka.hair
+15893742.xyz
+1589kxe.top
+1593wzn.hair
+15d68540.podcasterpraha.cz
+15d89b7e.flyjasper.ca
+15s195j181-1s.sbs
+15tvw6tw.lat
+15w619qjr.pro
+1607296.cfd
+16097483.xyz
+161230971.cfd
+16195784.xyz
+16254363.xyz
+1626eye3.lat
+16278885.euro-maconnerie.fr
 33across.com
 81.cn
 8kun.top
