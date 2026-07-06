@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Ad Tracking & Data Brokers
 # Category: tracking
 # Format: AdGuard Home
-# Generated: 2026-06-29
+# Generated: 2026-07-06
 # Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

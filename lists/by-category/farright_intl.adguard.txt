@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Far-Right (International)
 # Category: farright_intl
 # Format: AdGuard Home
-# Generated: 2026-06-29
-# Domains: 49
+# Generated: 2026-07-06
+# Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 ||100percentfedup.com^
@@ -33,7 +33,6 @@
 ||occidentaldissent.com^
 ||patriotpulse.net^
 ||pjmedia.com^
-||prisonplanet.com^
 ||radixjournal.com^
 ||realamericasvoice.com^
 ||realnews24.com^

@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Far-Right (International)
 # Category: farright_intl
 # Format: RPZ (BIND9)
-# Generated: 2026-06-29
-# Domains: 49
+# Generated: 2026-07-06
+# Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 100percentfedup.com. CNAME .
@@ -33,7 +33,6 @@ oann.com. CNAME .
 occidentaldissent.com. CNAME .
 patriotpulse.net. CNAME .
 pjmedia.com. CNAME .
-prisonplanet.com. CNAME .
 radixjournal.com. CNAME .
 realamericasvoice.com. CNAME .
 realnews24.com. CNAME .
