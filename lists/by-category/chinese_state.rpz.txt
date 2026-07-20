@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Chinese State Propaganda
 # Category: chinese_state
 # Format: RPZ (BIND9)
-# Generated: 2026-07-13
+# Generated: 2026-07-20
 # Domains: 33
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
