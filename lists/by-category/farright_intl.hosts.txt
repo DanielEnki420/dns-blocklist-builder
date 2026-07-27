@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Far-Right (International)
 # Category: farright_intl
 # Format: hosts (/etc/hosts)
-# Generated: 2026-07-20
+# Generated: 2026-07-27
 # Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
