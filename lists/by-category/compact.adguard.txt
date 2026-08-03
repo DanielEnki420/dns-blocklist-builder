@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Far-Right (DACH)
 # Category: compact
 # Format: AdGuard Home
-# Generated: 2026-07-27
+# Generated: 2026-08-03
 # Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
