@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Chinese State Propaganda
 # Category: chinese_state
 # Format: Pi-hole adlist
-# Generated: 2026-08-03
+# Generated: 2026-08-10
 # Domains: 33
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

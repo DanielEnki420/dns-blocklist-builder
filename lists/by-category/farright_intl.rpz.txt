@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Far-Right (International)
 # Category: farright_intl
 # Format: RPZ (BIND9)
-# Generated: 2026-08-03
+# Generated: 2026-08-10
 # Domains: 48
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
