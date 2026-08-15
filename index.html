@@ -215,16 +215,22 @@ a:hover{text-decoration:underline}
     <a href="https://github.com/DanielEnki420/dns-blocklist-builder/blob/main/README.md" target="_blank">Docs</a>
   </div>
 </div>
+<div style="text-align:center; padding: 0 20px 20px; font-size: 0.72em; opacity:.72;">
+  <label style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+    <input type="checkbox" id="analytics-toggle" onchange="toggleAnalytics(this.checked)" style="width:auto;margin:0;">
+    <span id="t-analytics-toggle">📊 Anonyme Nutzungsstatistik helfen (optional, standardmäßig aus)</span>
+  </label>
+</div>
 </div>
 
 <script>
 const I18N={
-  de:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Kategorien wählen',fmtLabel:'Format',statsLabel:'Statistik',prevLabel:'Vorschau',empty:'← Kategorie wählen',dl:'Download blocklist',copy:'In Zwischenablage kopieren',copied:'Kopiert!',all:'Alle auswählen',none:'Keine',sd:'Domains',sc:'Kategorien',sl:'Zeilen',issueTitle:'Domain vorschlagen',issueDesc:'Kennst du eine fehlende Domain oder eine neue Kategorie? Erstelle ein GitHub Issue!',issueBtn:'GitHub Issue öffnen',footer:'Open Source · MIT Lizenz · Contributions willkommen'},
-  en:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Select categories',fmtLabel:'Format',statsLabel:'Statistics',prevLabel:'Preview',empty:'← Select a category',dl:'Download blocklist',copy:'Copy to clipboard',copied:'Copied!',all:'Select all',none:'None',sd:'Domains',sc:'Categories',sl:'Lines',issueTitle:'Suggest a domain',issueDesc:'Know a missing domain or category? Open a GitHub issue!',issueBtn:'Open GitHub Issue',footer:'Open Source · MIT License · Contributions welcome'},
-  it:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Scegli categorie',fmtLabel:'Formato',statsLabel:'Statistiche',prevLabel:'Anteprima',empty:'← Seleziona una categoria',dl:'Scarica blocklist',copy:'Copia negli appunti',copied:'Copiato!',all:'Seleziona tutto',none:'Nessuno',sd:'Domini',sc:'Categorie',sl:'Righe',issueTitle:'Proponi un dominio',issueDesc:'Conosci un dominio mancante o una nuova categoria? Apri una Issue su GitHub!',issueBtn:'Apri Issue GitHub',footer:'Open Source · Licenza MIT · Contributi benvenuti'},
-  es:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Elegir categorías',fmtLabel:'Formato',statsLabel:'Estadísticas',prevLabel:'Vista previa',empty:'← Elige una categoría',dl:'Descargar blocklist',copy:'Copiar al portapapeles',copied:'¡Copiado!',all:'Seleccionar todo',none:'Ninguno',sd:'Dominios',sc:'Categorías',sl:'Líneas',issueTitle:'Sugerir un dominio',issueDesc:'¿Conoces un dominio que falta? ¡Abre un Issue en GitHub!',issueBtn:'Abrir Issue en GitHub',footer:'Open Source · Licencia MIT · Contribuciones bienvenidas'},
-  fr:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Choisir les catégories',fmtLabel:'Format',statsLabel:'Statistiques',prevLabel:'Aperçu',empty:'← Choisir une catégorie',dl:'Télécharger la blocklist',copy:'Copier dans le presse-papiers',copied:'Copié!',all:'Tout sélectionner',none:'Aucun',sd:'Domaines',sc:'Catégories',sl:'Lignes',issueTitle:'Proposer un domaine',issueDesc:'Vous connaissez un domaine manquant ? Ouvrez une Issue GitHub !',issueBtn:'Ouvrir une Issue GitHub',footer:'Open Source · Licence MIT · Contributions bienvenues'},
-  pt:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Escolher categorias',fmtLabel:'Formato',statsLabel:'Estatísticas',prevLabel:'Pré-visualização',empty:'← Escolha uma categoria',dl:'Baixar blocklist',copy:'Copiar para área de transferência',copied:'Copiado!',all:'Selecionar tudo',none:'Nenhum',sd:'Domínios',sc:'Categorias',sl:'Linhas',issueTitle:'Sugerir um domínio',issueDesc:'Conhece um domínio em falta? Abra uma Issue no GitHub!',issueBtn:'Abrir Issue no GitHub',footer:'Open Source · Licença MIT · Contribuições bem-vindas'},
+  de:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Kategorien wählen',fmtLabel:'Format',statsLabel:'Statistik',prevLabel:'Vorschau',empty:'← Kategorie wählen',dl:'Download blocklist',copy:'In Zwischenablage kopieren',copied:'Kopiert!',all:'Alle auswählen',none:'Keine',sd:'Domains',sc:'Kategorien',sl:'Zeilen',issueTitle:'Domain vorschlagen',issueDesc:'Kennst du eine fehlende Domain oder eine neue Kategorie? Erstelle ein GitHub Issue!',issueBtn:'GitHub Issue öffnen',footer:'Open Source · MIT Lizenz · Contributions willkommen',analyticsToggle:'📊 Anonyme Nutzungsstatistik helfen (optional, standardmäßig aus)'},
+  en:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Select categories',fmtLabel:'Format',statsLabel:'Statistics',prevLabel:'Preview',empty:'← Select a category',dl:'Download blocklist',copy:'Copy to clipboard',copied:'Copied!',all:'Select all',none:'None',sd:'Domains',sc:'Categories',sl:'Lines',issueTitle:'Suggest a domain',issueDesc:'Know a missing domain or category? Open a GitHub issue!',issueBtn:'Open GitHub Issue',footer:'Open Source · MIT License · Contributions welcome',analyticsToggle:'📊 Help with anonymous usage stats (optional, off by default)'},
+  it:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Scegli categorie',fmtLabel:'Formato',statsLabel:'Statistiche',prevLabel:'Anteprima',empty:'← Seleziona una categoria',dl:'Scarica blocklist',copy:'Copia negli appunti',copied:'Copiato!',all:'Seleziona tutto',none:'Nessuno',sd:'Domini',sc:'Categorie',sl:'Righe',issueTitle:'Proponi un dominio',issueDesc:'Conosci un dominio mancante o una nuova categoria? Apri una Issue su GitHub!',issueBtn:'Apri Issue GitHub',footer:'Open Source · Licenza MIT · Contributi benvenuti',analyticsToggle:'📊 Aiuta con statistiche d\'uso anonime (opzionale, disattivato di default)'},
+  es:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Elegir categorías',fmtLabel:'Formato',statsLabel:'Estadísticas',prevLabel:'Vista previa',empty:'← Elige una categoría',dl:'Descargar blocklist',copy:'Copiar al portapapeles',copied:'¡Copiado!',all:'Seleccionar todo',none:'Ninguno',sd:'Dominios',sc:'Categorías',sl:'Líneas',issueTitle:'Sugerir un dominio',issueDesc:'¿Conoces un dominio que falta? ¡Abre un Issue en GitHub!',issueBtn:'Abrir Issue en GitHub',footer:'Open Source · Licencia MIT · Contribuciones bienvenidas',analyticsToggle:'📊 Ayuda con estadísticas de uso anónimas (opcional, desactivado por defecto)'},
+  fr:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Choisir les catégories',fmtLabel:'Format',statsLabel:'Statistiques',prevLabel:'Aperçu',empty:'← Choisir une catégorie',dl:'Télécharger la blocklist',copy:'Copier dans le presse-papiers',copied:'Copié!',all:'Tout sélectionner',none:'Aucun',sd:'Domaines',sc:'Catégories',sl:'Lignes',issueTitle:'Proposer un domaine',issueDesc:'Vous connaissez un domaine manquant ? Ouvrez une Issue GitHub !',issueBtn:'Ouvrir une Issue GitHub',footer:'Open Source · Licence MIT · Contributions bienvenues',analyticsToggle:'📊 Aider avec des statistiques d\'usage anonymes (optionnel, désactivé par défaut)'},
+  pt:{title:'DNS Blocklist Builder',sub:'dnsmasq · hosts · Pi-hole · RPZ',catLabel:'Escolher categorias',fmtLabel:'Formato',statsLabel:'Estatísticas',prevLabel:'Pré-visualização',empty:'← Escolha uma categoria',dl:'Baixar blocklist',copy:'Copiar para área de transferência',copied:'Copiado!',all:'Selecionar tudo',none:'Nenhum',sd:'Domínios',sc:'Categorias',sl:'Linhas',issueTitle:'Sugerir um domínio',issueDesc:'Conhece um domínio em falta? Abra uma Issue no GitHub!',issueBtn:'Abrir Issue no GitHub',footer:'Open Source · Licença MIT · Contribuições bem-vindas',analyticsToggle:'📊 Ajude com estatísticas de uso anônimas (opcional, desativado por padrão)'},
 };
 
 const CATS=[
@@ -254,8 +260,38 @@ let active=new Set();
 let fmt=FMTS[0];
 let lang='de';
 
+const ANALYTICS_KEY = 'dnsbl_analytics_consent';
+const UMAMI_WEBSITE_ID = '87891cab-098e-43c9-84ff-be0bdefbcb02';
+
+function analyticsEnabled() {
+    return localStorage.getItem(ANALYTICS_KEY) === '1';
+}
+
+function loadAnalytics() {
+    if (window.umami || document.getElementById('umami-script')) return;
+    const s = document.createElement('script');
+    s.id = 'umami-script';
+    s.defer = true;
+    s.src = 'https://analytics.oli-vera.eu/script.js';
+    s.setAttribute('data-website-id', UMAMI_WEBSITE_ID);
+    s.setAttribute('data-auto-track', 'false');
+    s.setAttribute('data-do-not-track', 'true');
+    document.head.appendChild(s);
+}
+
+function track(eventName) {
+    if (!analyticsEnabled()) return;
+    if (window.umami && window.umami.track) window.umami.track(eventName);
+}
+
+function toggleAnalytics(enabled) {
+    localStorage.setItem(ANALYTICS_KEY, enabled ? '1' : '0');
+    if (enabled) loadAnalytics();
+}
+
 function setLang(l){
   lang=l;
+  track('language_selected');
   document.documentElement.lang=l;
   document.querySelectorAll('.lang-btn').forEach((b,i)=>{
     b.classList.toggle('active',['de','en','it','es','fr','pt'][i]===l);
@@ -279,6 +315,7 @@ function setLang(l){
   document.getElementById('t-issue-btn').textContent=t.issueBtn;
   document.getElementById('t-footer').textContent=t.footer;
   document.getElementById('t-empty').textContent=t.empty;
+  document.getElementById('t-analytics-toggle').textContent=t.analyticsToggle;
   renderCats();
   renderPreview();
 }
@@ -369,6 +406,7 @@ function download(){
   const a=document.createElement('a');
   a.href=u;a.download=`blocklist_${new Date().toISOString().split('T')[0]}.${fmt.ext}`;a.click();
   URL.revokeObjectURL(u);
+  track('blocklist_downloaded');
   const btn=document.getElementById('t-dl');
   const orig=btn.textContent;
   btn.textContent='✓ Downloaded!';
@@ -379,6 +417,7 @@ function copyClip(){
   const c=getContent();
   if(!c){alert(lang==='de'?'Bitte eine Kategorie wählen.':'Please select a category.');return;}
   navigator.clipboard.writeText(c).then(()=>{
+    track('blocklist_copied');
     const btn=document.getElementById('t-copy');
     btn.textContent=I18N[lang].copied;
     setTimeout(()=>btn.textContent=I18N[lang].copy,1800);
@@ -394,6 +433,10 @@ function openIssue(){
 }
 
 renderCats();renderFmts();renderPreview();
+
+const analyticsToggle = document.getElementById('analytics-toggle');
+if (analyticsToggle) analyticsToggle.checked = analyticsEnabled();
+if (analyticsEnabled()) loadAnalytics();
 </script>
 
 <!-- Datenschutzhinweis — Angaben am Code geprueft, nicht anwaltlich abgenommen. -->
@@ -401,27 +444,28 @@ renderCats();renderFmts();renderPreview();
   font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;opacity:.72">
 <summary style="cursor:pointer;letter-spacing:.05em">Datenschutz / Privacy</summary>
 <div style="margin-top:1rem">
-<p><b>Diese Seite läuft vollständig in deinem Browser.</b> Sie setzt keine Cookies, bindet
-keine Analyse- oder Tracking-Dienste ein und lädt beim Aufruf keine externen Ressourcen —
-Schriften und Skripte werden mitgeliefert.</p>
+<p><b>Diese Seite läuft vollständig in deinem Browser.</b> Sie setzt keine Cookies und lädt
+beim Aufruf keine externen Ressourcen — Schriften und Skripte werden mitgeliefert.</p>
 <p><b>Hosting:</b> Die Seite liegt auf GitHub Pages (GitHub Inc., USA). Beim Abruf
 protokolliert GitHub technisch notwendige Zugriffsdaten einschließlich deiner IP-Adresse.
 Darauf hat der Betreiber dieser Seite keinen Einfluss —
 <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
 <p><b>Was lokal bleibt:</b> Deine Auswahl wird ausschließlich im localStorage deines Browsers gespeichert und niemals an den Betreiber übertragen. Es gibt
 keinen Server hinter dieser Seite.</p>
-<p><b>Was hinausgeht:</b> Diese Seite ruft <b>keine</b> externen Schnittstellen auf. Die Listen werden vollständig in deinem Browser erzeugt.</p>
+<p><b>Was hinausgeht:</b> Diese Seite ruft von sich aus <b>keine</b> externen Schnittstellen auf. Die Listen werden vollständig in deinem Browser erzeugt.</p>
+<p><b>Optionale Statistik (standardmäßig AUS):</b> Über den Schalter im Footer kannst du eine anonyme Nutzungsstatistik aktivieren (selbstgehostetes Umami, kein Google Analytics, keine Cookies, keine IP-Speicherung). Erst dann werden einzelne Aktionen wie "Blocklist heruntergeladen" an <code>analytics.oli-vera.eu</code> übertragen — ohne Aktivierung passiert nichts.</p>
 <p><b>Verantwortlich / Kontakt:</b>
 <a href="https://github.com/DanielEnki420" target="_blank" rel="noopener">github.com/DanielEnki420</a></p>
 <hr style="border:0;border-top:1px solid currentColor;opacity:.2;margin:1.2rem 0">
-<p><b>This page runs entirely in your browser.</b> No cookies, no analytics, no tracking,
-and no external resources are loaded — fonts and scripts ship with the page.</p>
+<p><b>This page runs entirely in your browser.</b> No cookies, and no external resources
+are loaded — fonts and scripts ship with the page.</p>
 <p><b>Hosting:</b> served from GitHub Pages (GitHub Inc., USA). GitHub logs technically
 necessary access data including your IP address; the operator of this page has no control
 over that — <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub privacy statement</a>.</p>
 <p><b>Stays local:</b> Your selection is stored only in your browser's localStorage, and is never transmitted to the operator. There is no
 server behind this page.</p>
-<p><b>Leaves the page:</b> This page calls <b>no</b> external services. The lists are generated entirely in your browser.</p>
+<p><b>Leaves the page:</b> By default, this page calls <b>no</b> external services. The lists are generated entirely in your browser.</p>
+<p><b>Optional analytics (off by default):</b> The toggle in the footer lets you enable anonymous usage statistics (self-hosted Umami, no Google Analytics, no cookies, no IP storage). Only then are individual actions like "blocklist downloaded" sent to <code>analytics.oli-vera.eu</code> — nothing happens unless you turn it on.</p>
 <p><b>Controller / contact:</b>
 <a href="https://github.com/DanielEnki420" target="_blank" rel="noopener">github.com/DanielEnki420</a></p>
 </div>
