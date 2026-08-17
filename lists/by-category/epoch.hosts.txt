@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Epoch Times / Falun Gong
 # Category: epoch
 # Format: hosts (/etc/hosts)
-# Generated: 2026-08-10
+# Generated: 2026-08-17
 # Domains: 38
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Ad Tracking & Data Brokers
 # Category: tracking
 # Format: Pi-hole adlist
-# Generated: 2026-08-10
+# Generated: 2026-08-17
 # Domains: 61
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

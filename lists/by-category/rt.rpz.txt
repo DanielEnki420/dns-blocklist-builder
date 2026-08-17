@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: RPZ (BIND9)
-# Generated: 2026-08-10
+# Generated: 2026-08-17
 # Domains: 50
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
