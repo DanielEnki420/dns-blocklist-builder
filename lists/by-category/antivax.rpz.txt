@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Anti-Vax / Medical Disinfo
 # Category: antivax
 # Format: RPZ (BIND9)
-# Generated: 2026-08-17
+# Generated: 2026-08-24
 # Domains: 31
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
