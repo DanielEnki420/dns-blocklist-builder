@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Anti-Vax / Medical Disinfo
 # Category: antivax
 # Format: AdGuard Home
-# Generated: 2026-08-24
+# Generated: 2026-08-31
 # Domains: 31
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
