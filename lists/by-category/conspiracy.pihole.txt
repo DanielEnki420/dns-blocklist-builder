@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Conspiracy Theories
 # Category: conspiracy
 # Format: Pi-hole adlist
-# Generated: 2026-09-07
+# Generated: 2026-09-14
 # Domains: 36
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
