@@ -2,7 +2,7 @@
 # DNS Blocklist Builder – Climate Change Denial
 # Category: climate_denial
 # Format: RPZ (BIND9)
-# Generated: 2026-09-28
+# Generated: 2026-10-05
 # Domains: 26
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
