@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: RPZ (BIND9)
-# Generated: 2026-10-26
-# Domains: 50
+# Generated: 2026-11-02
+# Domains: 49
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 anna-news.info. CNAME .
@@ -45,7 +45,6 @@ sputnik-news.de. CNAME .
 sputnik.by. CNAME .
 sputnikglobe.com. CNAME .
 sputniknews.com. CNAME .
-sputniknews.fr. CNAME .
 sputniknews.lat. CNAME .
 stalkerzone.org. CNAME .
 svpressa.ru. CNAME .

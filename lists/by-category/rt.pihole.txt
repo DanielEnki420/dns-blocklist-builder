@@ -2,8 +2,8 @@
 # DNS Blocklist Builder – Russian Propaganda
 # Category: rt
 # Format: Pi-hole adlist
-# Generated: 2026-10-26
-# Domains: 50
+# Generated: 2026-11-02
+# Domains: 49
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 anna-news.info
@@ -45,7 +45,6 @@ sputnik-news.de
 sputnik.by
 sputnikglobe.com
 sputniknews.com
-sputniknews.fr
 sputniknews.lat
 stalkerzone.org
 svpressa.ru
