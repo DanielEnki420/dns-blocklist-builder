@@ -10,6 +10,7 @@ on:
     paths:
       - setup-pi5.sh
       - fetch-domains.js
+      - allowlist.txt
       - generate-lists.js
       - tests/**
       - .github/workflows/tests.yml
@@ -17,6 +18,7 @@ on:
     paths:
       - setup-pi5.sh
       - fetch-domains.js
+      - allowlist.txt
       - generate-lists.js
       - tests/**
       - .github/workflows/tests.yml

@@ -68,18 +68,21 @@ async function serve(routes, hits = {}) {
   return { base, close: () => new Promise(r => server.close(r)) };
 }
 
-// run SOURCES ROUTES [ARGV] - fetch-domains on a copy of index.html, in its own
-// process (its output stays out of the test report); returns what main() returned,
-// its output, the resulting index.html and the failed-sources file
-async function run(sources, routes, argv = ['node', 'fetch-domains.js'], hits = {}) {
+// run SOURCES ROUTES [{ argv, hits, allowlist }] - fetch-domains on a copy of
+// index.html with ALLOWLIST as allowlist.txt, in its own process (its output
+// stays out of the test report); returns what main() returned, its output, the
+// resulting index.html and the failed-sources file
+async function run(sources, routes, { argv = ['node', 'fetch-domains.js'], hits = {}, allowlist = '' } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fetch-domains-'));
   const indexPath = path.join(dir, 'index.html');
   fs.copyFileSync(path.join(root, 'index.html'), indexPath);
+  fs.writeFileSync(path.join(dir, 'allowlist.txt'), allowlist);
   const srv = await serve(routes, hits);
   try {
     const opts = {
       sources: sources.map(s => ({ ...s, url: srv.base + s.url })),
       indexPath,
+      allowlistPath: path.join(dir, 'allowlist.txt'),
       cacheFile:  path.join(dir, 'cache', 'source-cache.json'),
       failedFile:  path.join(dir, 'failed-sources.txt'),
       summaryFile: path.join(dir, 'summary.md'),
@@ -105,6 +108,9 @@ async function run(sources, routes, argv = ['node', 'fetch-domains.js'], hits = 
 }
 
 const trackingIn = html => html.match(/\{id:'tracking'.*?domains:\[([^\]]*)\]/)[1];
+const realCats   = () => eval(fs.readFileSync(path.join(root, 'index.html'), 'utf8')
+                                .match(/const CATS=(\[[\s\S]*?\]);/)[1]);
+const catOf      = id => realCats().find(c => c.id === id).domains;
 const src = (name, url, extra = {}) => ({ cat: 'tracking', maxNew: 300, name, url, ...extra });
 
 test('every configured source has a sample of its real format, and it parses', () => {
@@ -192,7 +198,7 @@ test('a 503 or a cut connection is tried once more, a 410 is not', async () => {
     { '/a': n => (n === 1 ? [503, 'busy'] : [200, 'both-ab.net\n']),
       '/b': n => (n === 1 ? 'drop' : [200, 'both-ab.net\n']),
       '/gone': [410, 'Gone'] },
-    undefined, hits,
+    { hits },
   );
   assert.deepEqual(r.additions.tracking, ['both-ab.net']);
   assert.deepEqual(hits, { '/a': 2, '/b': 2, '/gone': 1 });
@@ -217,7 +223,67 @@ test('a dry run reports failures but writes no domains', async () => {
   const before = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const r = await run([src('A', '/a'), src('B', '/b'), src('Gone', '/gone')],
                       { '/a': [200, 'both-ab.net\n'], '/b': [200, 'both-ab.net\n'], '/gone': [404, ''] },
-                      ['node', 'fetch-domains.js', '--dry-run']);
+                      { argv: ['node', 'fetch-domains.js', '--dry-run'] });
   assert.equal(r.html, before);
   assert.deepEqual(r.failed.map(f => f.name), ['Gone']);
+});
+
+// --- allowlist -------------------------------------------------------------
+
+const both = { '/a': [200, 'both-ab.net\nfalse-positive.net\n'], '/b': [200, 'both-ab.net\nfalse-positive.net\n'] };
+
+test('an allowlisted domain is not added, even when both sources list it', async () => {
+  const r = await run([src('A', '/a'), src('B', '/b')], both,
+                      { allowlist: 'false-positive.net   # not a tracker\n' });
+  assert.deepEqual(r.additions.tracking, ['both-ab.net']);
+  assert.doesNotMatch(trackingIn(r.html), /false-positive/);
+  assert.equal(r.failedText, '');
+});
+
+test('an allowlisted domain already in an automatic category is removed from it', async () => {
+  const [gone, stays] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')], both, { allowlist: `${gone}\n` });
+  assert.deepEqual(r.allowlist.removed, { tracking: [gone] });
+  assert.doesNotMatch(trackingIn(r.html), new RegExp(`'${gone.replace(/\./g, '\\.')}'`));
+  assert.match(trackingIn(r.html), new RegExp(`'${stays.replace(/\./g, '\\.')}'`));
+});
+
+test('--allowlist-only removes without fetching anything', async () => {
+  const [gone] = catOf('tracking');
+  const hits = {};
+  const r = await run([src('A', '/a'), src('B', '/b')], both,
+                      { argv: ['node', 'fetch-domains.js', '--allowlist-only'], hits, allowlist: `${gone}\n` });
+  assert.deepEqual(hits, {});
+  assert.deepEqual(r.additions, {});
+  assert.deepEqual(r.allowlist.removed, { tracking: [gone] });
+  assert.doesNotMatch(trackingIn(r.html), new RegExp(`'${gone.replace(/\./g, '\\.')}'`));
+  assert.equal(r.failedText, '');
+});
+
+test('a hand-curated domain on the allowlist stays and fails the run', async () => {
+  const [curated] = catOf('rt');
+  const r = await run([src('A', '/a'), src('B', '/b')], both, { allowlist: `${curated}\n` });
+  assert.ok(r.html.includes(`'${curated}'`));
+  assert.match(r.failedText, new RegExp(`${curated.replace(/\./g, '\\.')} is in the hand-curated category rt`));
+});
+
+test('an allowed name under a listed parent fails the run with the reason', async () => {
+  const [parent] = catOf('rt');
+  const r = await run([src('A', '/a'), src('B', '/b')], both, { allowlist: `news.${parent}\n` });
+  assert.match(r.failedText, new RegExp(`news\\.${parent.replace(/\./g, '\\.')} stays blocked .* through ${parent.replace(/\./g, '\\.')} \\(category rt\\)`));
+});
+
+test('a line that is no domain fails the run, the update itself goes on', async () => {
+  const r = await run([src('A', '/a'), src('B', '/b')], both,
+                      { allowlist: '# comment\n\nhttps://shop.example.org/login\n' });
+  assert.deepEqual(r.additions.tracking, ['both-ab.net', 'false-positive.net']);
+  assert.match(r.failedText, /^allowlist\.txt line 3: "https:\/\/shop\.example\.org\/login" is not a domain/m);
+});
+
+test("the repository's allowlist.txt is valid against the current lists", async () => {
+  // the real sources decide which categories are automatic; nothing is fetched
+  const r = await run(fd.SOURCES.map(x => ({ ...x, url: '/unused' })), {},
+                      { argv: ['node', 'fetch-domains.js', '--allowlist-only'],
+                        allowlist: fs.readFileSync(path.join(root, 'allowlist.txt'), 'utf8') });
+  assert.deepEqual(r.allowlist.problems, []);
 });

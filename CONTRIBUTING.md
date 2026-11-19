@@ -23,7 +23,12 @@ Open an issue with the title `[category] Category Name` and describe:
 
 If a domain was added by mistake (e.g. legitimate site), open an issue with:
 - Title: `[remove] example.com`
-- Why it should be removed
+- Why it should be removed, and what breaks while it is blocked
+
+Domains in tracking, malware and phishing come from public lists every week, so
+deleting them in `index.html` does not last. They go into `allowlist.txt` instead
+(one exact domain per line, with the reason and the issue); a push of that file
+rebuilds the lists. A pull request that adds such a line is welcome.
 
 ## Pull Requests
 

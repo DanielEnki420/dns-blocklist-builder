@@ -1,0 +1,15 @@
+# allowlist.txt - false positives in the automatic categories
+#
+# The weekly update fills tracking, malware and phishing from public lists.
+# A domain here is dropped from those categories and never added again, even if
+# the sources keep listing it. Pushing a change to this file rebuilds the lists
+# within minutes (the Update Blocklists workflow applies only this file then).
+#
+# One exact domain per line; subdomains are not included, so allow each name
+# that is wrongly blocked. Say why, and link the report:
+#
+#   shop.example.org   # legitimate shop, listed by mistake - issue #12
+#
+# Hand-curated categories are not touched by this file: a domain from one of
+# them is removed in index.html by hand. Listing one here, or a name whose
+# parent domain stays blocked, fails the run with a message saying so.

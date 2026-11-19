@@ -4,9 +4,17 @@ on:
   schedule:
     - cron: '0 3 * * 1'  # Every Monday at 03:00 UTC
   workflow_dispatch:       # Manual trigger via GitHub UI
+  push:                    # a new false positive: apply allowlist.txt right away
+    branches: [main]
+    paths: [allowlist.txt]
 
 permissions:
   contents: write
+
+# a push and the Monday run at the same time would race for the push to main
+concurrency:
+  group: update-lists
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -36,7 +44,10 @@ jobs:
           FAILED_SOURCES_FILE: ${{ runner.temp }}/failed-sources.txt
         run: |
           DAY=$(date +%d)
-          if [ "$DAY" -le 7 ]; then
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            echo "allowlist.txt changed — applying it, fetching nothing"
+            node fetch-domains.js --allowlist-only
+          elif [ "$DAY" -le 7 ]; then
             echo "First Monday of month — running with --cleanup"
             node fetch-domains.js --cleanup
           else
@@ -51,7 +62,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html lists/
-          git diff --staged --quiet || git commit -m "chore: auto-update blocklists [$(date -u +%Y-%m-%d)]"
+          if [ "$GITHUB_EVENT_NAME" = push ]; then what="apply allowlist"; else what="auto-update blocklists"; fi
+          git diff --staged --quiet || git commit -m "chore: $what [$(date -u +%Y-%m-%d)]"
           git push
 
       # The lists above were built and pushed from the sources that worked. A red

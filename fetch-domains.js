@@ -6,6 +6,10 @@
 //   node fetch-domains.js             fetch new domains
 //   node fetch-domains.js --cleanup   also remove domains that no longer resolve via DNS
 //   node fetch-domains.js --dry-run   preview changes without writing any files
+//   node fetch-domains.js --allowlist-only   only apply allowlist.txt, fetch nothing
+//
+// allowlist.txt holds false positives: the automatic categories (those with
+// sources) drop these domains and never add them again. See the file itself.
 //
 // A source that fails (HTTP error, timeout, too few valid domains) is skipped so the
 // others still update, and it is reported: listed at the end, as a GitHub
@@ -21,6 +25,7 @@ const fs    = require('fs');
 const path  = require('path');
 
 const INDEX_PATH = path.join(__dirname, 'index.html');
+const ALLOWLIST_PATH = path.join(__dirname, 'allowlist.txt');
 const CACHE_DIR  = path.join(__dirname, '.cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'source-cache.json');
 
@@ -208,6 +213,55 @@ function setCatDomains(html, catId, domains) {
   return out;
 }
 
+// ── Allowlist ─────────────────────────────────────────────────────────────────
+// readAllowlist FILE - { domains, problems }; one exact domain per line, "#"
+// starts a comment. A missing file is an empty list.
+function readAllowlist(file) {
+  let text;
+  try { text = fs.readFileSync(file, 'utf8'); }
+  catch (err) { if (err.code === 'ENOENT') return { domains: new Set(), problems: [] }; throw err; }
+  const domains = new Set(), problems = [];
+  text.split('\n').forEach((line, i) => {
+    const d = line.replace(/#.*/, '').trim().toLowerCase();
+    if (!d) return;
+    if (isValidDomain(d)) domains.add(d);
+    else problems.push(`allowlist.txt line ${i + 1}: "${d}" is not a domain`);
+  });
+  return { domains, problems };
+}
+
+// applyAllowlist - drops allowlisted domains from the automatic categories and
+// names what it may not or cannot drop: a domain in a hand-curated category
+// (an editorial decision, removed by hand) and a domain whose parent stays
+// listed (dnsmasq, AdGuard and Unbound block subdomains along with it).
+function applyAllowlist(html, CATS, allow, autoCats) {
+  const removed = {}, problems = [];
+  for (const cat of CATS) {
+    const hit = cat.domains.filter(d => allow.has(d));
+    if (!hit.length) continue;
+    if (autoCats.has(cat.id)) {
+      html = setCatDomains(html, cat.id, cat.domains.filter(d => !allow.has(d)));
+      removed[cat.id] = hit;
+    } else {
+      for (const d of hit)
+        problems.push(`allowlist.txt: ${d} is in the hand-curated category ${cat.id} — remove it there by hand`);
+    }
+  }
+  const listed = new Map();
+  for (const cat of CATS)
+    for (const d of cat.domains)
+      if (!(autoCats.has(cat.id) && allow.has(d))) listed.set(d, cat.id);
+  for (const d of allow) {
+    const parts = d.split('.');
+    for (let i = 1; i < parts.length - 1; i++) {
+      const parent = parts.slice(i).join('.');
+      if (listed.has(parent))
+        problems.push(`allowlist.txt: ${d} stays blocked in dnsmasq, AdGuard and Unbound through ${parent} (category ${listed.get(parent)})`);
+    }
+  }
+  return { html, removed, problems };
+}
+
 // ── Dead-domain cleanup ───────────────────────────────────────────────────────
 async function removeDeadDomains(html, CATS) {
   const allDomains = [...new Set(CATS.flatMap(c => c.domains))];
@@ -242,6 +296,7 @@ async function removeDeadDomains(html, CATS) {
 async function main({
   sources     = SOURCES,
   indexPath   = INDEX_PATH,
+  allowlistPath = ALLOWLIST_PATH,
   cacheFile   = CACHE_FILE,
   failedFile  = process.env.FAILED_SOURCES_FILE,
   summaryFile = process.env.GITHUB_STEP_SUMMARY,
@@ -250,10 +305,27 @@ async function main({
 } = {}) {
   const DRY_RUN = argv.includes('--dry-run');
   const CLEANUP = argv.includes('--cleanup');
-  console.log(`fetch-domains.js${DRY_RUN ? ' [DRY RUN]' : ''}${CLEANUP ? ' [+CLEANUP]' : ''}\n`);
+  const ALLOWLIST_ONLY = argv.includes('--allowlist-only');
+  console.log(`fetch-domains.js${DRY_RUN ? ' [DRY RUN]' : ''}${CLEANUP ? ' [+CLEANUP]' : ''}${ALLOWLIST_ONLY ? ' [ALLOWLIST ONLY]' : ''}\n`);
 
   let html   = fs.readFileSync(indexPath, 'utf8');
   const CATS = extractCats(html);
+
+  // Allowlist first: what it drops must not come back below
+  const allow   = readAllowlist(allowlistPath);
+  const applied = applyAllowlist(html, CATS, allow.domains, new Set(sources.map(s => s.cat)));
+  const allowlist = { entries: allow.domains.size, removed: applied.removed,
+                      problems: [...allow.problems, ...applied.problems] };
+  html = applied.html;
+  for (const [catId, gone] of Object.entries(applied.removed))
+    console.log(`Allowlist: ${catId} -${gone.length} (${gone.join(', ')})`);
+
+  if (ALLOWLIST_ONLY) {
+    if (!DRY_RUN) fs.writeFileSync(indexPath, html);
+    else console.log('[DRY RUN] No files written.');
+    report([], [], [], allowlist, failedFile, summaryFile);
+    return { additions: {}, failed: [], frozen: [], allowlist };
+  }
 
   // Global existing-domain set — new domains must not already live in any category
   const allExisting = new Set(CATS.flatMap(c => c.domains.map(d => d.toLowerCase())));
@@ -290,7 +362,7 @@ async function main({
     if (!seen[source.cat]) seen[source.cat] = new Map();
     const catMap = seen[source.cat];
     for (const d of domains) {
-      if (allExisting.has(d)) continue;
+      if (allExisting.has(d) || allow.domains.has(d)) continue;
       if (!catMap.has(d)) catMap.set(d, new Set());
       catMap.get(d).add(source.name);
     }
@@ -359,16 +431,21 @@ async function main({
     console.log('\n[DRY RUN] No files written.');
   }
 
-  report(failed, frozen, status, failedFile, summaryFile);
-  return { additions, failed, frozen };
+  report(failed, frozen, status, allowlist, failedFile, summaryFile);
+  return { additions, failed, frozen, allowlist };
 }
 
 // Lists failed sources and frozen categories. The file gets one line per problem
 // and is written on every run, empty if all is well, so the workflow can fail
 // on a non-empty file and on a missing one.
-function report(failed, frozen, status, failedFile, summaryFile) {
+function report(failed, frozen, status, allowlist, failedFile, summaryFile) {
   const gh = !!process.env.GITHUB_ACTIONS;
   const lines = [];
+  for (const msg of allowlist.problems) {
+    lines.push(msg);
+    console.log(`\n${msg}`);
+    if (gh) console.log(`::error title=Allowlist::${msg}`);
+  }
   for (const f of frozen) {
     const msg = `category ${f.cat}: only ${f.working} of ${f.of} sources working — it gets no new domains`;
     lines.push(msg);
@@ -385,11 +462,14 @@ function report(failed, frozen, status, failedFile, summaryFile) {
   if (summaryFile) {
     const rows = status.map(x => `| ${x.ok ? '✅' : '❌'} | ${x.cat} | ${x.name} | ${x.ok ? x.count : x.reason} |`);
     fs.appendFileSync(summaryFile, ['### Sources', '', '| | Category | Source | Domains |', '|---|---|---|---|', ...rows,
-      ...frozen.map(f => `\n**${f.cat}: only ${f.working} of ${f.of} sources working.**`), ''].join('\n') + '\n');
+      ...frozen.map(f => `\n**${f.cat}: only ${f.working} of ${f.of} sources working.**`),
+      '', `Allowlist: ${allowlist.entries} entries` +
+        Object.entries(allowlist.removed).map(([c, d]) => `, ${c} -${d.length}`).join(''),
+      ...allowlist.problems.map(p => `\n**${p}**`), ''].join('\n') + '\n');
   }
 }
 
-module.exports = { SOURCES, parseDomains, isValidDomain, main };
+module.exports = { SOURCES, parseDomains, isValidDomain, readAllowlist, main };
 
 if (require.main === module) {
   main().catch(err => { console.error(err.message); process.exit(1); });
