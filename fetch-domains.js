@@ -240,7 +240,7 @@ function readAllowlist(file) {
 // applyAllowlist - drops allowlisted domains from the automatic categories and
 // names what it may not or cannot drop: a domain in a hand-curated category
 // (an editorial decision, removed by hand) and a domain whose parent stays
-// listed (dnsmasq, AdGuard and Unbound block subdomains along with it).
+// listed (dnsmasq, AdGuard, Unbound and RPZ block subdomains along with it).
 function applyAllowlist(html, CATS, allow, autoCats) {
   const removed = {}, problems = [];
   for (const cat of CATS) {
@@ -263,7 +263,7 @@ function applyAllowlist(html, CATS, allow, autoCats) {
     for (let i = 1; i < parts.length - 1; i++) {
       const parent = parts.slice(i).join('.');
       if (listed.has(parent))
-        problems.push(`allowlist.txt: ${d} stays blocked in dnsmasq, AdGuard and Unbound through ${parent} (category ${listed.get(parent)})`);
+        problems.push(`allowlist.txt: ${d} stays blocked in dnsmasq, AdGuard, Unbound and RPZ through ${parent} (category ${listed.get(parent)})`);
     }
   }
   return { html, removed, problems };

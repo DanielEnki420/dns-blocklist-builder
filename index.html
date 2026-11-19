@@ -252,7 +252,7 @@ const FMTS=[
   {id:'dnsmasq',label:'dnsmasq',desc:'.conf · OpenWrt/Xiaomi',ext:'conf',fn:(d)=>`address=/${d}/0.0.0.0`},
   {id:'hosts',label:'hosts',desc:'/etc/hosts · Universal',ext:'txt',fn:(d)=>`0.0.0.0 ${d}`},
   {id:'pihole',label:'Pi-hole',desc:'Adlist · Plain domains',ext:'txt',fn:(d)=>d},
-  {id:'rpz',label:'RPZ Zone',desc:'BIND9 · Response Policy',ext:'txt',fn:(d)=>`${d}. CNAME .`,c:';'},
+  {id:'rpz',label:'RPZ Zone',desc:'BIND9 · Response Policy',ext:'txt',fn:(d)=>`${d} CNAME .\n*.${d} CNAME .`,c:';',zone:true},
   {id:'adguard',label:'AdGuard',desc:'Home · Filter rules',ext:'txt',fn:(d)=>`||${d}^`},
   {id:'unbound',label:'Unbound',desc:'local-zone blocked',ext:'conf',fn:(d)=>`local-zone: "${d}." static`},
 ];
@@ -365,6 +365,8 @@ function getContent(){
     `${k} ============================================================`,
     ``
   ];
+  // RPZ is a zone file: SOA and NS, relative rules, "*." for subdomains (same as generate-lists.js)
+  if(fmt.zone)lines.push('$TTL 3600',`@ IN SOA localhost. hostmaster.localhost. ${Math.floor(Date.now()/1000)} 86400 900 2592000 7200`,'@ IN NS localhost.','');
   sel.forEach(c=>{
     lines.push(`${k} --- ${c.name.en} (${c.domains.length} domains) ---`);
     c.domains.forEach(d=>lines.push(fmt.fn(d)));

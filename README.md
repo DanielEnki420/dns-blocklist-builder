@@ -112,6 +112,23 @@ Go to Filters → DNS blocklists → Add blocklist → Add a custom list, with t
 https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder/main/lists/blocklist-all.adguard.txt
 ```
 
+### BIND 9 (RPZ)
+Save [`lists/blocklist-all.rpz.txt`](lists/blocklist-all.rpz.txt) as
+`/etc/bind/blocklist-all.rpz.txt` and add this to `named.conf` (if you already have an
+`options` block, put the `response-policy` line into it), then run `rndc reload`:
+```
+options {
+    response-policy { zone "rpz.blocklist"; };
+};
+zone "rpz.blocklist" {
+    type primary;
+    file "/etc/bind/blocklist-all.rpz.txt";
+    allow-query { none; };
+};
+```
+Every listed domain and its subdomains then answer NXDOMAIN. Until 19 November 2026
+the RPZ files had no SOA record and absolute names, so BIND could not use them.
+
 ### /etc/hosts (any system)
 ```bash
 # Append to your hosts file ("sudo cat … >> /etc/hosts" fails: the redirect runs without sudo)

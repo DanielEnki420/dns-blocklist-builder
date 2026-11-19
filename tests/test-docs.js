@@ -4,7 +4,7 @@
 //
 //   node --test tests/test-docs.js
 //
-// README.md linked to two templates that did not exist (until 20 Nov 2026), so
+// README.md linked to two templates that did not exist (until 19 Nov 2026), so
 // every "Open a GitHub Issue" link opened an empty issue.
 
 const test   = require('node:test');

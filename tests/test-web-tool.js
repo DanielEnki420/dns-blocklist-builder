@@ -6,7 +6,7 @@
 // Runs the tool's own getContent() and renderPreview() from index.html in a
 // sandbox with every category selected. WEB_TOOL=<path> tests another copy.
 //
-// Zone files (RPZ) only know ";" comments: until 20 Nov 2026 the RPZ download
+// Zone files (RPZ) only know ";" comments: until 19 Nov 2026 the RPZ download
 // had "#" lines, which BIND reads as broken records.
 
 const test   = require('node:test');
@@ -50,9 +50,26 @@ for (const id of ['dnsmasq', 'hosts', 'pihole', 'rpz', 'adguard', 'unbound']) {
     assert.ok(lines[0].startsWith(c + ' ====='), `first line: ${lines[0]}`);
     assert.deepEqual(lines.filter(l => l.startsWith(other)), [], `lines starting with "${other}"`);
     assert.equal(lines.filter(l => l.startsWith(c + ' --- ')).length, box.CATS.length, 'one separator per category');
-    assert.deepEqual(lines.filter(l => l && !l.startsWith(c)), Array.from(domains, d => f.fn(d)));
+    const zone = id === 'rpz' ? 3 : 0; // $TTL, SOA, NS
+    assert.deepEqual(lines.filter(l => l && !l.startsWith(c)).slice(zone), Array.from(domains, d => f.fn(d)).flatMap(x => x.split('\n')));
   });
 }
+
+// Two copies of the RPZ format exist: the download here and lists/ from
+// generate-lists.js. They must give the same zone (apart from the serial).
+test('the RPZ download is the same zone as the generated RPZ file', () => {
+  const os = require('node:os'), { execFileSync } = require('node:child_process');
+  const root = path.join(__dirname, '..');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'web-rpz-'));
+  try {
+    for (const f of ['index.html', 'fetch-domains.js', 'generate-lists.js']) fs.copyFileSync(path.join(root, f), path.join(dir, f));
+    if (process.env.WEB_TOOL) fs.copyFileSync(process.env.WEB_TOOL, path.join(dir, 'index.html'));
+    execFileSync(process.execPath, [path.join(dir, 'generate-lists.js')], { cwd: dir, stdio: 'ignore' });
+    const zone = text => text.split('\n').filter(l => l && !l.startsWith(';'))
+      .map(l => l.replace(/^(@ IN SOA \S+ \S+ )\d+ /, '$1SERIAL ')).sort();
+    assert.deepEqual(zone(run('rpz').join('\n')), zone(fs.readFileSync(path.join(dir, 'lists', 'blocklist-all.rpz.txt'), 'utf8')));
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
 
 test('the preview shows the RPZ comments as comments', () => {
   run('rpz');
@@ -64,7 +81,7 @@ test('the preview shows the RPZ comments as comments', () => {
   assert.doesNotMatch(html, /<span class="c-(dom|key)">;/, 'a ";" line is shown as a rule');
 });
 
-// 81.cn stood twice in Chinese State Media (until 20 Nov 2026): the category
+// 81.cn stood twice in Chinese State Media (until 19 Nov 2026): the category
 // showed 33 domains for 32, and the download listed it twice.
 test('every domain appears once in the whole tool', () => {
   const seen = new Map(), twice = [];
@@ -76,7 +93,7 @@ test('every domain appears once in the whole tool', () => {
 });
 
 // The footer said "MIT License" in every language, but the automatic categories
-// are not MIT (until 20 Nov 2026). It now says the code is MIT and links to the
+// are not MIT (until 19 Nov 2026). It now says the code is MIT and links to the
 // license notes in the README, in all six languages.
 const I18N = vm.runInContext(`(${grab(/const I18N=(\{[\s\S]*?\n\});/, 'I18N').replace(/^const I18N=/, '').replace(/;$/, '')})`, box);
 const LANGS = ['de', 'en', 'it', 'es', 'fr', 'pt'];

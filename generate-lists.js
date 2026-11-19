@@ -46,6 +46,27 @@ const header = (fmt, c) => comment(c, [
   ''
 ]);
 
+// RPZ is a zone file. BIND and Unbound load it only with SOA and NS, and take its
+// name from the zone the user configures in named.conf: so the rules are relative
+// names (no trailing dot, no $ORIGIN), with "*." for the subdomains, as in the
+// BIND manual. Refresh is one day (the list changes weekly). The serial is the
+// Unix time of the last change of the rules; it stays when they stay.
+const RPZ_ZONE = serial => [
+  '$TTL 3600',
+  `@ IN SOA localhost. hostmaster.localhost. ${serial} 86400 900 2592000 7200`,
+  '@ IN NS localhost.',
+  ''
+].join('\n');
+const rpzRules = text => text.split('\n').filter(l => l && !/^[;$@]/.test(l)).join('\n');
+function rpzSerial(file, rules) {
+  let old = '';
+  try { old = fs.readFileSync(file, 'utf8'); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+  const prev = Number((old.match(/^@ IN SOA \S+ \S+ (\d+) /m) || [])[1] || 0);
+  if (prev && rpzRules(old) === rules) return prev;
+  return Math.max(prev + 1, Math.floor(Date.now() / 1000));
+}
+const zoneFor = (file, zone, body) => zone ? RPZ_ZONE(rpzSerial(file, rpzRules(body))) : '';
+
 const listsDir = path.join(__dirname, 'lists');
 if (!fs.existsSync(listsDir)) fs.mkdirSync(listsDir);
 
@@ -55,12 +76,13 @@ const files = {
   'blocklist-all.dnsmasq.conf': { fmt: 'dnsmasq',             fn: d => `address=/${d}/0.0.0.0` },
   'blocklist-all.adguard.txt':  { fmt: 'AdGuard Home',        fn: d => `||${d}^` },
   'blocklist-all.unbound.conf': { fmt: 'Unbound',             fn: d => `local-zone: "${d}." static` },
-  'blocklist-all.rpz.txt':      { fmt: 'RPZ (BIND9)',         fn: d => `${d}. CNAME .`, c: ';' },
+  'blocklist-all.rpz.txt':      { fmt: 'RPZ (BIND9)',         fn: d => `${d} CNAME .\n*.${d} CNAME .`, c: ';', zone: true },
 };
 
-for (const [filename, { fmt, fn, c = '#' }] of Object.entries(files)) {
-  const content = header(fmt, c) + allDomains.map(fn).join('\n') + '\n';
-  fs.writeFileSync(path.join(listsDir, filename), content);
+for (const [filename, { fmt, fn, c = '#', zone }] of Object.entries(files)) {
+  const target = path.join(listsDir, filename);
+  const body = allDomains.map(fn).join('\n');
+  fs.writeFileSync(target, header(fmt, c) + zoneFor(target, zone, body) + body + '\n');
   console.log(`✓ ${filename} (${allDomains.length} domains)`);
 }
 
@@ -86,11 +108,13 @@ const catHeader = (cat, fmt, c) => comment(c, [
 let fileCount = 0;
 for (const cat of CATS) {
   const domains = [...new Set(cat.domains)].sort();
-  for (const [allFile, { fmt, fn, c = '#' }] of Object.entries(files)) {
+  for (const [allFile, { fmt, fn, c = '#', zone }] of Object.entries(files)) {
     // e.g. 'blocklist-all.pihole.txt' → 'tracking.pihole.txt'
     const ext      = allFile.replace('blocklist-all.', '');
     const filename = `${cat.id}.${ext}`;
-    fs.writeFileSync(path.join(byCatDir, filename), catHeader(cat, fmt, c) + domains.map(fn).join('\n') + '\n');
+    const target = path.join(byCatDir, filename);
+    const body = domains.map(fn).join('\n');
+    fs.writeFileSync(target, catHeader(cat, fmt, c) + zoneFor(target, zone, body) + body + '\n');
     fileCount++;
   }
 }

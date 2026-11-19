@@ -51,7 +51,7 @@ jobs:
           node-version: '24'   # the version setup-pi5.sh installs
 
       - name: shellcheck
-        run: shellcheck --severity=warning setup-pi5.sh tests/test-setup-pi5.sh
+        run: shellcheck --severity=warning setup-pi5.sh tests/test-setup-pi5.sh tests/test-rpz-zone.sh
 
       - name: Tests for setup-pi5.sh
         run: bash tests/test-setup-pi5.sh
@@ -64,6 +64,12 @@ jobs:
 
       - name: Tests for the web tool (downloads)
         run: node --test tests/test-web-tool.js
+
+      - name: BIND loads the RPZ files
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bind9-utils >/dev/null
+          bash tests/test-rpz-zone.sh
 
       - name: Tests for the docs (issue templates, links, source licenses)
         run: node --test tests/test-docs.js

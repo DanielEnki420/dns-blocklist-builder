@@ -73,8 +73,49 @@ test('the domain lines are unchanged: one per domain, no comment among them', ()
   const all = [...new Set(CATS.flatMap(c => c.domains))];
   const pihole = fs.readFileSync(path.join(lists, 'blocklist-all.pihole.txt'), 'utf8').split('\n').filter(l => l && !l.startsWith('#'));
   assert.deepEqual(pihole, [...all].sort());
-  const rpz = fs.readFileSync(path.join(lists, 'blocklist-all.rpz.txt'), 'utf8').split('\n').filter(l => l && !l.startsWith(';'));
-  assert.deepEqual(rpz, [...all].sort().map(d => `${d}. CNAME .`));
+  const rpz = fs.readFileSync(path.join(lists, 'blocklist-all.rpz.txt'), 'utf8').split('\n').filter(l => l && !/^[;$@]/.test(l));
+  assert.deepEqual(rpz, [...all].sort().flatMap(d => [`${d} CNAME .`, `*.${d} CNAME .`]));
+});
+
+// RPZ files are zone files. Until 19 Nov 2026 they had no SOA and NS (BIND does
+// not load such a file) and absolute owner names ("rt.com."), which lie outside
+// the zone the user names in named.conf: BIND skipped every rule. The rules are
+// relative now, with a "*." rule for the subdomains, as in the BIND manual.
+const SOA = /^@ IN SOA localhost\. hostmaster\.localhost\. (\d+) 86400 900 2592000 7200$/;
+const rpzFiles = files.filter(f => f.endsWith('.rpz.txt'));
+
+test('every RPZ file is a zone: $TTL, SOA and NS before the rules, no $ORIGIN', () => {
+  assert.equal(rpzFiles.length, 1 + CATS.length);
+  for (const f of rpzFiles) {
+    const lines = fs.readFileSync(f, 'utf8').split('\n').filter(l => l && !l.startsWith(';'));
+    assert.equal(lines[0], '$TTL 3600', path.basename(f));
+    assert.match(lines[1], SOA, path.basename(f));
+    assert.equal(lines[2], '@ IN NS localhost.', path.basename(f));
+    const rules = lines.slice(3);
+    assert.deepEqual(rules.filter(l => /^[$@]/.test(l)), [], `${path.basename(f)}: a second directive or apex record`);
+    for (const r of rules) assert.match(r, /^(\*\.)?[a-z0-9][a-z0-9.-]*[a-z0-9] CNAME \.$/, `${path.basename(f)}: ${r}`);
+  }
+});
+
+test('the RPZ serial stays while the rules stay, and grows when they change', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-serial-'));
+  for (const f of ['index.html', 'fetch-domains.js']) fs.copyFileSync(path.join(root, f), path.join(dir, f));
+  fs.copyFileSync(gen, path.join(dir, 'generate-lists.js'));
+  const runGen = () => execFileSync(process.execPath, [path.join(dir, 'generate-lists.js')], { cwd: dir, stdio: 'ignore' });
+  const serial = f => +fs.readFileSync(path.join(dir, 'lists', f), 'utf8').match(/^@ IN SOA \S+ \S+ (\d+) /m)[1];
+  try {
+    runGen();
+    const first = { all: serial('blocklist-all.rpz.txt'), rt: serial('by-category/rt.rpz.txt') };
+    assert.ok(first.all > 1700000000 && first.all < 2 ** 32, `serial ${first.all}`);
+    runGen();
+    assert.equal(serial('blocklist-all.rpz.txt'), first.all, 'same rules, new serial');
+    const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+    const one = CATS.find(c => c.id === 'tracking').domains[0];
+    fs.writeFileSync(path.join(dir, 'index.html'), html.replace(`'${one}',`, ''));
+    runGen();
+    assert.ok(serial('blocklist-all.rpz.txt') > first.all, 'rules changed, serial did not grow');
+    assert.equal(serial('by-category/rt.rpz.txt'), first.rt, 'an unchanged category got a new serial');
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
 test.after(() => fs.rmSync(tmp, { recursive: true, force: true }));
