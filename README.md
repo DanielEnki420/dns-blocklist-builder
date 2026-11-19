@@ -38,13 +38,17 @@ curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder
 ```
 
 **What it does:**
-1. Installs Node.js 20 LTS and git (if needed)
+1. Installs git and Node.js 24 LTS if needed (an installed Node.js 22 or newer is kept)
 2. Clones the repo to `/opt/dns-blocklist-builder`
 3. Generates all 6 blocklist formats locally
-4. Adds the blocklist to Pi-hole's gravity database and updates gravity
+4. Adds the blocklist to Pi-hole and updates gravity: Pi-hole installed on the host gets the
+   local file, Pi-hole in a Docker container (named `pihole`, see `PIHOLE_CONTAINER`) gets the
+   published list by URL
 5. Installs a weekly cron job (`/etc/cron.d/dns-blocklist-builder`) for automatic updates
+6. With Telegram set up: a message after every update, and a bot service (`dns-blocklist-bot`)
 
-**Prerequisites:** Raspberry Pi OS (or any Debian/Ubuntu system), Pi-hole already installed.
+**Prerequisites:** Raspberry Pi OS (or any Debian/Ubuntu system), Pi-hole already installed
+(on the host or in Docker).
 
 **Options** (set as env vars before piping to bash):
 
@@ -54,6 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder
 | `CRON_SCHEDULE` | `0 3 * * 1` | Cron schedule for auto-updates |
 | `SKIP_PIHOLE` | `0` | Set to `1` to skip Pi-hole integration |
 | `SKIP_CRON` | `0` | Set to `1` to skip cron job installation |
+| `PIHOLE_CONTAINER` | `pihole` | Name of your Pi-hole Docker container |
 | `TELEGRAM_BOT_TOKEN` | _(unset)_ | Telegram bot token for update notifications |
 | `TELEGRAM_CHAT_ID` | _(unset)_ | Telegram chat/user ID |
 
@@ -65,6 +70,9 @@ After each weekly update you get a Telegram message like:
 📅 2026-11-16 03:00 UTC
 ✅ Pi-hole gravity refreshed
 ```
+
+If an update fails, the message says `🔴 Blocklist update failed`, with the exit code and
+the line, instead of the update stopping without a word.
 
 Example — with Telegram notifications:
 ```bash
@@ -146,6 +154,13 @@ Want a new category? → [Open a GitHub Issue](https://github.com/DanielEnki420/
 2. Edit `index.html` – the domain lists are in the `CATS` array in the `<script>` section
 3. Make sure domains are valid (no spaces, correct TLD)
 4. Open a Pull Request
+
+Changing `setup-pi5.sh`? Run its tests first (they need git and Node.js, and change
+nothing outside a temporary directory):
+
+```bash
+bash tests/test-setup-pi5.sh
+```
 
 ## Note on editorial choices
 
