@@ -1,11 +1,12 @@
-# ============================================================
-# DNS Blocklist Builder – Ad Tracking & Data Brokers
-# Category: tracking
-# Format: RPZ (BIND9)
-# Generated: 2026-11-19
-# Domains: 161
-# Source: https://github.com/DanielEnki420/dns-blocklist-builder
-# ============================================================
+; ============================================================
+; DNS Blocklist Builder – Ad Tracking & Data Brokers
+; Category: tracking
+; Format: RPZ (BIND9)
+; Generated: 2026-11-19
+; Domains: 161
+; License: not MIT. These domains come from third-party lists with their own terms: https://github.com/DanielEnki420/dns-blocklist-builder#license
+; Source: https://github.com/DanielEnki420/dns-blocklist-builder
+; ============================================================
 33across.com. CNAME .
 50websads.com. CNAME .
 ad.xrea.com. CNAME .

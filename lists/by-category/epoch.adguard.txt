@@ -4,6 +4,7 @@
 # Format: AdGuard Home
 # Generated: 2026-11-19
 # Domains: 38
+# License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 ||clearwisdom.net^

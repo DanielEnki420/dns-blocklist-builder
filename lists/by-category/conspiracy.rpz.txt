@@ -1,11 +1,12 @@
-# ============================================================
-# DNS Blocklist Builder – Conspiracy Theories
-# Category: conspiracy
-# Format: RPZ (BIND9)
-# Generated: 2026-11-19
-# Domains: 36
-# Source: https://github.com/DanielEnki420/dns-blocklist-builder
-# ============================================================
+; ============================================================
+; DNS Blocklist Builder – Conspiracy Theories
+; Category: conspiracy
+; Format: RPZ (BIND9)
+; Generated: 2026-11-19
+; Domains: 36
+; License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
+; Source: https://github.com/DanielEnki420/dns-blocklist-builder
+; ============================================================
 8kun.top. CNAME .
 abundanthope.net. CNAME .
 activistpost.com. CNAME .

@@ -4,6 +4,7 @@
 # Format: AdGuard Home
 # Generated: 2026-11-19
 # Domains: 820
+# License: not MIT. These domains come from third-party lists with their own terms: https://github.com/DanielEnki420/dns-blocklist-builder#license
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 ||0-230-23.rest^

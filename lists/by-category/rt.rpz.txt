@@ -1,11 +1,12 @@
-# ============================================================
-# DNS Blocklist Builder – Russian Propaganda
-# Category: rt
-# Format: RPZ (BIND9)
-# Generated: 2026-11-19
-# Domains: 49
-# Source: https://github.com/DanielEnki420/dns-blocklist-builder
-# ============================================================
+; ============================================================
+; DNS Blocklist Builder – Russian Propaganda
+; Category: rt
+; Format: RPZ (BIND9)
+; Generated: 2026-11-19
+; Domains: 49
+; License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
+; Source: https://github.com/DanielEnki420/dns-blocklist-builder
+; ============================================================
 anna-news.info. CNAME .
 baltnews.com. CNAME .
 cont.ws. CNAME .

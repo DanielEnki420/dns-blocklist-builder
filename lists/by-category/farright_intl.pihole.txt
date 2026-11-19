@@ -4,6 +4,7 @@
 # Format: Pi-hole adlist
 # Generated: 2026-11-19
 # Domains: 48
+# License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 100percentfedup.com

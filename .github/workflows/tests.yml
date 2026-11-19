@@ -59,5 +59,8 @@ jobs:
       - name: Tests for fetch-domains.js
         run: node --test tests/test-fetch-domains.js
 
+      - name: Tests for generate-lists.js (file headers)
+        run: node --test tests/test-generate-lists.js
+
       - name: Tests for the docs (issue templates, links, source licenses)
         run: node --test tests/test-docs.js

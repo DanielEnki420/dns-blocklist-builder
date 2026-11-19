@@ -199,7 +199,8 @@ if it is in the first source and, for tracking and malware, also in a second sou
 that serves only as a filter. Single domain names are facts, but the source lists
 may be protected as collections. If you redistribute these categories (the files in
 `lists/` or the automatic categories in `index.html`), check the terms below. None
-of these maintainers endorse this project.
+of these maintainers endorse this project. Every file in `lists/` says in its header
+which license applies to it.
 
 | Source | Category | Terms |
 |--------|----------|-------|

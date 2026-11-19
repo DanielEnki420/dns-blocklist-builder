@@ -1,11 +1,12 @@
-# ============================================================
-# DNS Blocklist Builder – Far-Right (DACH)
-# Category: compact
-# Format: RPZ (BIND9)
-# Generated: 2026-11-19
-# Domains: 48
-# Source: https://github.com/DanielEnki420/dns-blocklist-builder
-# ============================================================
+; ============================================================
+; DNS Blocklist Builder – Far-Right (DACH)
+; Category: compact
+; Format: RPZ (BIND9)
+; Generated: 2026-11-19
+; Domains: 48
+; License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
+; Source: https://github.com/DanielEnki420/dns-blocklist-builder
+; ============================================================
 achgut.com. CNAME .
 alles-schallundrauch.blogspot.com. CNAME .
 ansage.org. CNAME .

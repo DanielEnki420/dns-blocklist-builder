@@ -1,11 +1,12 @@
-# ============================================================
-# DNS Blocklist Builder – Investment Fraud & Crypto Scam
-# Category: phishing
-# Format: RPZ (BIND9)
-# Generated: 2026-11-19
-# Domains: 820
-# Source: https://github.com/DanielEnki420/dns-blocklist-builder
-# ============================================================
+; ============================================================
+; DNS Blocklist Builder – Investment Fraud & Crypto Scam
+; Category: phishing
+; Format: RPZ (BIND9)
+; Generated: 2026-11-19
+; Domains: 820
+; License: not MIT. These domains come from third-party lists with their own terms: https://github.com/DanielEnki420/dns-blocklist-builder#license
+; Source: https://github.com/DanielEnki420/dns-blocklist-builder
+; ============================================================
 0-230-23.rest. CNAME .
 0-ilxrc-w285.p9bckp.sbs. CNAME .
 0-lix-a8sbqnxt.d1cdej.top. CNAME .

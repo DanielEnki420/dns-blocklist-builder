@@ -4,6 +4,7 @@
 # Format: hosts (/etc/hosts)
 # Generated: 2026-11-19
 # Domains: 49
+# License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================
 0.0.0.0 anna-news.info
