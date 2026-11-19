@@ -12,6 +12,7 @@ on:
       - setup-pi5.sh
       - fetch-domains.js
       - allowlist.txt
+      - auto-domains.json
       - generate-lists.js
       - index.html
       - README.md
@@ -24,6 +25,7 @@ on:
       - setup-pi5.sh
       - fetch-domains.js
       - allowlist.txt
+      - auto-domains.json
       - generate-lists.js
       - index.html
       - README.md

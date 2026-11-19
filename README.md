@@ -141,8 +141,11 @@ The eight editorial categories are curated by hand. The last three are filled
 automatically: a domain must appear in at least two sources of its category before
 it is added (where the category has two or more). For tracking the second source is
 a filter more than an independent check: Hagezi uses yoyo.org as one of its inputs
-and keeps only popular, well-checked domains. On the first Monday of each month the
-update also drops domains that no longer resolve.
+and keeps only popular, well-checked domains. A domain the update added leaves again
+once its sources have not confirmed it for four weekly runs in a row; a run in which
+one of the category's sources failed does not count. Domains added by hand never
+expire. [`auto-domains.json`](auto-domains.json) keeps the count. On the first Monday
+of each month the update also drops domains that no longer resolve.
 
 If a source fails or suddenly delivers almost nothing, the weekly update still
 builds the lists from the others, and the run is marked as failed so it gets fixed.

@@ -30,6 +30,9 @@ deleting them in `index.html` does not last. They go into `allowlist.txt` instea
 (one exact domain per line, with the reason and the issue); a push of that file
 rebuilds the lists. A pull request that adds such a line is welcome.
 
+Do not edit `auto-domains.json` by hand: the update keeps it, and it decides which
+domains may expire. Domains you add to `index.html` yourself are not in it and stay.
+
 ## Pull Requests
 
 Pull requests for domain additions are welcome. Please:

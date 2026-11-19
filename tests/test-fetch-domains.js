@@ -68,21 +68,25 @@ async function serve(routes, hits = {}) {
   return { base, close: () => new Promise(r => server.close(r)) };
 }
 
-// run SOURCES ROUTES [{ argv, hits, allowlist }] - fetch-domains on a copy of
-// index.html with ALLOWLIST as allowlist.txt, in its own process (its output
+// run SOURCES ROUTES [{ argv, hits, allowlist, state }] - fetch-domains on a copy
+// of index.html with ALLOWLIST as allowlist.txt and STATE ({ cat: { domain:
+// missedRuns } }, or none) as auto-domains.json, in its own process (its output
 // stays out of the test report); returns what main() returned, its output, the
-// resulting index.html and the failed-sources file
-async function run(sources, routes, { argv = ['node', 'fetch-domains.js'], hits = {}, allowlist = '' } = {}) {
+// resulting index.html, the failed-sources file and auto-domains.json
+async function run(sources, routes, { argv = ['node', 'fetch-domains.js'], hits = {}, allowlist = '', state } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'fetch-domains-'));
   const indexPath = path.join(dir, 'index.html');
+  const statePath = path.join(dir, 'auto-domains.json');
   fs.copyFileSync(path.join(root, 'index.html'), indexPath);
   fs.writeFileSync(path.join(dir, 'allowlist.txt'), allowlist);
+  if (state) fs.writeFileSync(statePath, JSON.stringify({ domains: state }));
   const srv = await serve(routes, hits);
   try {
     const opts = {
       sources: sources.map(s => ({ ...s, url: srv.base + s.url })),
       indexPath,
       allowlistPath: path.join(dir, 'allowlist.txt'),
+      autoStatePath: statePath,
       cacheFile:  path.join(dir, 'cache', 'source-cache.json'),
       failedFile:  path.join(dir, 'failed-sources.txt'),
       summaryFile: path.join(dir, 'summary.md'),
@@ -100,7 +104,8 @@ async function run(sources, routes, { argv = ['node', 'fetch-domains.js'], hits 
     return { ...JSON.parse(fs.readFileSync(path.join(dir, 'result.json'), 'utf8')), out,
              html: fs.readFileSync(indexPath, 'utf8'),
              failedText: fs.readFileSync(opts.failedFile, 'utf8'),
-             summary: fs.readFileSync(opts.summaryFile, 'utf8') };
+             summary: fs.readFileSync(opts.summaryFile, 'utf8'),
+             stateFile: fs.existsSync(statePath) ? JSON.parse(fs.readFileSync(statePath, 'utf8')) : null };
   } finally {
     await srv.close();
     fs.rmSync(dir, { recursive: true, force: true });
@@ -286,4 +291,104 @@ test("the repository's allowlist.txt is valid against the current lists", async 
                       { argv: ['node', 'fetch-domains.js', '--allowlist-only'],
                         allowlist: fs.readFileSync(path.join(root, 'allowlist.txt'), 'utf8') });
   assert.deepEqual(r.allowlist.problems, []);
+});
+
+// --- expiry of automatically added domains ----------------------------------
+
+const onlyAB = { '/a': [200, 'both-ab.net\n'], '/b': [200, 'both-ab.net\n'] };
+const inTracking = (html, d) => trackingIn(html).split(',').includes(`'${d}'`);
+
+test('a domain its sources stopped listing goes in the 4th complete run, not before', async () => {
+  const [t1, t2] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB, { state: { tracking: { [t1]: 3, [t2]: 2 } } });
+  assert.deepEqual(r.expiry.removed, { tracking: [t1] });
+  assert.ok(!inTracking(r.html, t1), `${t1} still listed`);
+  assert.ok(inTracking(r.html, t2), `${t2} gone too early`);
+  assert.equal(r.stateFile.domains.tracking[t2], 3);
+  assert.ok(!(t1 in r.stateFile.domains.tracking));
+});
+
+test('a domain its sources list again starts from zero', async () => {
+  const [t1] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')],
+                      { '/a': [200, `${t1}\n`], '/b': [200, `${t1}\n`] }, { state: { tracking: { [t1]: 3 } } });
+  assert.ok(inTracking(r.html, t1));
+  assert.equal(r.stateFile.domains.tracking[t1], 0);
+});
+
+test('one source listing it is not enough where the category needs two', async () => {
+  const [t1] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')],
+                      { '/a': [200, `${t1}\n`], '/b': [200, 'both-ab.net\n'] }, { state: { tracking: { [t1]: 1 } } });
+  assert.equal(r.stateFile.domains.tracking[t1], 2);
+});
+
+test('a run with a failed source in the category does not count', async () => {
+  const [t1] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('Gone', '/gone')], { '/a': [200, 'both-ab.net\n'], '/gone': [410, 'Gone'] },
+                      { state: { tracking: { [t1]: 3 } } });
+  assert.deepEqual(r.expiry.paused, ['tracking']);
+  assert.ok(inTracking(r.html, t1));
+  assert.equal(r.stateFile.domains.tracking[t1], 3);
+});
+
+test('a domain added by hand (not in auto-domains.json) never expires', async () => {
+  const [t1, , t3] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB, { state: { tracking: { [t1]: 3 } } });
+  assert.ok(inTracking(r.html, t3));
+  assert.ok(!(t3 in r.stateFile.domains.tracking));
+});
+
+test('a new domain is tracked from zero', async () => {
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB, { state: { tracking: {} } });
+  assert.equal(r.stateFile.domains.tracking['both-ab.net'], 0);
+});
+
+test('more than half of a category due at once: nothing goes, the run fails', async () => {
+  const twenty = catOf('tracking').slice(0, 20);
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB,
+                      { state: { tracking: Object.fromEntries(twenty.map(d => [d, 3])) } });
+  assert.deepEqual(r.expiry.removed, {});
+  for (const d of twenty) assert.ok(inTracking(r.html, d), `${d} removed`);
+  assert.match(r.failedText, /^expiry: 20 of 20 automatic tracking domains are due at once/m);
+});
+
+test('without auto-domains.json nothing expires, and the file is started', async () => {
+  const before = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB);
+  for (const d of before) assert.ok(inTracking(r.html, d));
+  assert.deepEqual(r.stateFile.domains, { tracking: { 'both-ab.net': 0 } });
+  assert.equal(r.stateFile.expireAfter, 4);
+});
+
+test('a dry run changes neither the list nor auto-domains.json', async () => {
+  const [t1] = catOf('tracking');
+  const state = { tracking: { [t1]: 3 } };
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB,
+                      { state, argv: ['node', 'fetch-domains.js', '--dry-run'] });
+  assert.deepEqual(r.expiry.removed, { tracking: [t1] }, 'reported');
+  assert.ok(inTracking(r.html, t1));
+  assert.deepEqual(r.stateFile, { domains: state });
+});
+
+test('a domain put on the allowlist is forgotten in auto-domains.json', async () => {
+  const [t1, t2] = catOf('tracking');
+  const r = await run([src('A', '/a'), src('B', '/b')], onlyAB,
+                      { state: { tracking: { [t1]: 0, [t2]: 0 } }, allowlist: `${t1}\n`,
+                        argv: ['node', 'fetch-domains.js', '--allowlist-only'] });
+  assert.deepEqual(Object.keys(r.stateFile.domains.tracking), [t2]);
+});
+
+test("the repository's auto-domains.json matches index.html", () => {
+  const file = JSON.parse(fs.readFileSync(path.join(root, 'auto-domains.json'), 'utf8'));
+  const cats = Object.fromEntries(realCats().map(c => [c.id, new Set(c.domains)]));
+  const auto = new Set(fd.SOURCES.map(s => s.cat));
+  for (const [cat, tracked] of Object.entries(file.domains)) {
+    assert.ok(auto.has(cat), `${cat} is no automatic category`);
+    for (const [d, n] of Object.entries(tracked)) {
+      assert.ok(cats[cat].has(d), `${d} is in auto-domains.json but not in ${cat} in index.html. Removed by ` +
+        'hand? The sources would bring it back next week: put it in allowlist.txt instead.');
+      assert.ok(Number.isInteger(n) && n >= 0 && n < file.expireAfter, `${d}: ${n}`);
+    }
+  }
 });

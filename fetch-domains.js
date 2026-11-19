@@ -10,6 +10,8 @@
 //
 // allowlist.txt holds false positives: the automatic categories (those with
 // sources) drop these domains and never add them again. See the file itself.
+// auto-domains.json remembers which domains the update added itself; they are
+// dropped again once their sources stop listing them (see EXPIRE_AFTER).
 //
 // A source that fails (HTTP error, timeout, too few valid domains) is skipped so the
 // others still update, and it is reported: listed at the end, as a GitHub
@@ -26,12 +28,17 @@ const path  = require('path');
 
 const INDEX_PATH = path.join(__dirname, 'index.html');
 const ALLOWLIST_PATH = path.join(__dirname, 'allowlist.txt');
+const AUTO_STATE_PATH = path.join(__dirname, 'auto-domains.json');
 const CACHE_DIR  = path.join(__dirname, '.cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'source-cache.json');
 
 // Domain must appear in ≥MIN_SOURCES sources within its category before being added.
 // Only applied when a category has ≥2 sources; otherwise all valid domains are candidates.
 const MIN_SOURCES  = 2;
+// A domain the update added itself is removed after this many complete runs in a
+// row (every source of its category delivered) in which the sources no longer
+// confirm it - with the weekly run, four weeks. Hand-added domains never expire.
+const EXPIRE_AFTER = 4;
 const DNS_BATCH    = 30; // concurrent DNS lookups during cleanup
 
 // ── Sources ───────────────────────────────────────────────────────────────────
@@ -262,6 +269,47 @@ function applyAllowlist(html, CATS, allow, autoCats) {
   return { html, removed, problems };
 }
 
+// ── Expiry of automatically added domains ─────────────────────────────────────
+// auto-domains.json: { domains: { catId: { domain: missedRuns } } } for every
+// domain the update added to an automatic category. It lives in the repository,
+// not in the actions cache, which GitHub drops after 7 days without use. A
+// missing file means nothing is known, so nothing expires; a broken one stops
+// the run before anything is written.
+const AUTO_STATE_ABOUT =
+  'Written by fetch-domains.js: the domains the weekly update added to the automatic ' +
+  'categories, each with the number of complete runs in a row in which its sources no ' +
+  'longer listed it. At expireAfter it is removed. Hand-added domains are not listed ' +
+  'here and never expire.';
+
+function loadAutoState(file) {
+  let text;
+  try { text = fs.readFileSync(file, 'utf8'); }
+  catch (err) { if (err.code === 'ENOENT') return {}; throw err; }
+  const state = JSON.parse(text).domains;
+  if (!state || typeof state !== 'object') throw new Error(`${file}: no "domains" object`);
+  return state;
+}
+
+function saveAutoState(file, state) {
+  const domains = {};
+  for (const cat of Object.keys(state).sort()) {
+    domains[cat] = {};
+    for (const d of Object.keys(state[cat]).sort()) domains[cat][d] = state[cat][d];
+  }
+  fs.writeFileSync(file, JSON.stringify({ about: AUTO_STATE_ABOUT, expireAfter: EXPIRE_AFTER, domains }, null, 2) + '\n');
+}
+
+// forgets tracked domains that are no longer in their category (allowlist,
+// cleanup, removed by hand)
+function reconcileAutoState(state, html) {
+  for (const cat of extractCats(html)) {
+    const tracked = state[cat.id];
+    if (!tracked) continue;
+    const present = new Set(cat.domains);
+    for (const d of Object.keys(tracked)) if (!present.has(d)) delete tracked[d];
+  }
+}
+
 // ── Dead-domain cleanup ───────────────────────────────────────────────────────
 async function removeDeadDomains(html, CATS) {
   const allDomains = [...new Set(CATS.flatMap(c => c.domains))];
@@ -297,6 +345,7 @@ async function main({
   sources     = SOURCES,
   indexPath   = INDEX_PATH,
   allowlistPath = ALLOWLIST_PATH,
+  autoStatePath = AUTO_STATE_PATH,
   cacheFile   = CACHE_FILE,
   failedFile  = process.env.FAILED_SOURCES_FILE,
   summaryFile = process.env.GITHUB_STEP_SUMMARY,
@@ -320,11 +369,15 @@ async function main({
   for (const [catId, gone] of Object.entries(applied.removed))
     console.log(`Allowlist: ${catId} -${gone.length} (${gone.join(', ')})`);
 
+  const state = loadAutoState(autoStatePath);
+  const noExpiry = { removed: {}, pending: {}, paused: [], problems: [] };
+
   if (ALLOWLIST_ONLY) {
-    if (!DRY_RUN) fs.writeFileSync(indexPath, html);
+    reconcileAutoState(state, html);
+    if (!DRY_RUN) { fs.writeFileSync(indexPath, html); saveAutoState(autoStatePath, state); }
     else console.log('[DRY RUN] No files written.');
-    report([], [], [], allowlist, failedFile, summaryFile);
-    return { additions: {}, failed: [], frozen: [], allowlist };
+    report([], [], [], allowlist, noExpiry, failedFile, summaryFile);
+    return { additions: {}, failed: [], frozen: [], allowlist, expiry: noExpiry, state };
   }
 
   // Global existing-domain set — new domains must not already live in any category
@@ -341,6 +394,8 @@ async function main({
 
   // Collect: catId → Map<domain, Set<sourceName>>
   const seen = {};
+  // and for the domains in auto-domains.json: catId → Map<domain, sources listing it>
+  const confirm = {};
 
   for (const source of sources) {
     process.stdout.write(`Fetching ${source.name}... `);
@@ -360,8 +415,10 @@ async function main({
     }
 
     if (!seen[source.cat]) seen[source.cat] = new Map();
-    const catMap = seen[source.cat];
+    if (!confirm[source.cat]) confirm[source.cat] = new Map();
+    const catMap = seen[source.cat], tracked = state[source.cat] || {};
     for (const d of domains) {
+      if (d in tracked) confirm[source.cat].set(d, (confirm[source.cat].get(d) || 0) + 1);
       if (allExisting.has(d) || allow.domains.has(d)) continue;
       if (!catMap.has(d)) catMap.set(d, new Set());
       catMap.get(d).add(source.name);
@@ -406,13 +463,47 @@ async function main({
   for (const [catId, domains] of Object.entries(additions))
     console.log(`  ${catId}: +${domains.length}`);
 
-  // Write additions to index.html
+  // Expiry: count a missed run for each tracked domain its sources no longer
+  // confirm (same rule as for adding), reset it for the confirmed ones, and
+  // remove those at EXPIRE_AFTER. Only runs in which every source of the
+  // category delivered count, so an outage cannot empty a category. More than
+  // half of a category due at once looks like a broken source: nothing goes.
+  const expiry = { removed: {}, pending: {}, paused: [], problems: [] };
+  for (const [catId, tracked] of Object.entries(state)) {
+    const doms = Object.keys(tracked);
+    if (!doms.length || !srcCount[catId]) continue;
+    if (status.some(x => x.cat === catId && !x.ok)) { expiry.paused.push(catId); continue; }
+    const minApp = srcCount[catId] >= MIN_SOURCES ? MIN_SOURCES : 1;
+    for (const d of doms) tracked[d] = (confirm[catId]?.get(d) || 0) >= minApp ? 0 : tracked[d] + 1;
+    const due   = doms.filter(d => tracked[d] >= EXPIRE_AFTER);
+    const limit = Math.max(10, Math.floor(doms.length / 2));
+    if (due.length > limit)
+      expiry.problems.push(`expiry: ${due.length} of ${doms.length} automatic ${catId} domains are due at once, more than ${limit} — none removed; check the sources`);
+    else if (due.length) expiry.removed[catId] = due;
+    expiry.pending[catId] = doms.filter(d => tracked[d] > 0 && tracked[d] < EXPIRE_AFTER).length;
+  }
+  for (const catId of expiry.paused)
+    console.log(`Expiry paused for ${catId}: a source failed, this run does not count`);
+  for (const [catId, gone] of Object.entries(expiry.removed))
+    console.log(`Expired (not confirmed for ${EXPIRE_AFTER} runs): ${catId} -${gone.length} (${gone.slice(0, 5).join(', ')}${gone.length > 5 ? '…' : ''})`);
+
+  if (!DRY_RUN) {
+    for (const [catId, gone] of Object.entries(expiry.removed)) {
+      const g = new Set(gone);
+      html = setCatDomains(html, catId, getCatDomains(html, catId).filter(d => !g.has(d)));
+      for (const d of gone) delete state[catId][d];
+    }
+  }
+
+  // Write additions to index.html; they are tracked for expiry from now on
   if (!DRY_RUN && totalNew > 0) {
     for (const [catId, newDomains] of Object.entries(additions)) {
       const current = getCatDomains(html, catId);
       if (!current) { console.error(`  WARNING: '${catId}' not found — skipping`); continue; }
       html = setCatDomains(html, catId, [...new Set([...current, ...newDomains])].sort());
       newDomains.forEach(d => allExisting.add(d));
+      state[catId] ||= {};
+      for (const d of newDomains) state[catId][d] = 0;
     }
   }
 
@@ -424,24 +515,26 @@ async function main({
   }
 
   if (!DRY_RUN) {
+    reconcileAutoState(state, html);
     fs.writeFileSync(indexPath, html);
+    saveAutoState(autoStatePath, state);
     const total = [...new Set(extractCats(html).flatMap(c => c.domains))].length;
     console.log(`\nindex.html updated — total unique domains: ${total}`);
   } else {
     console.log('\n[DRY RUN] No files written.');
   }
 
-  report(failed, frozen, status, allowlist, failedFile, summaryFile);
-  return { additions, failed, frozen, allowlist };
+  report(failed, frozen, status, allowlist, expiry, failedFile, summaryFile);
+  return { additions, failed, frozen, allowlist, expiry, state };
 }
 
 // Lists failed sources and frozen categories. The file gets one line per problem
 // and is written on every run, empty if all is well, so the workflow can fail
 // on a non-empty file and on a missing one.
-function report(failed, frozen, status, allowlist, failedFile, summaryFile) {
+function report(failed, frozen, status, allowlist, expiry, failedFile, summaryFile) {
   const gh = !!process.env.GITHUB_ACTIONS;
   const lines = [];
-  for (const msg of allowlist.problems) {
+  for (const msg of [...allowlist.problems, ...expiry.problems]) {
     lines.push(msg);
     console.log(`\n${msg}`);
     if (gh) console.log(`::error title=Allowlist::${msg}`);
@@ -465,7 +558,11 @@ function report(failed, frozen, status, allowlist, failedFile, summaryFile) {
       ...frozen.map(f => `\n**${f.cat}: only ${f.working} of ${f.of} sources working.**`),
       '', `Allowlist: ${allowlist.entries} entries` +
         Object.entries(allowlist.removed).map(([c, d]) => `, ${c} -${d.length}`).join(''),
-      ...allowlist.problems.map(p => `\n**${p}**`), ''].join('\n') + '\n');
+      ...allowlist.problems.map(p => `\n**${p}**`),
+      '', `Expiry after ${EXPIRE_AFTER} runs: ` +
+        (Object.entries(expiry.pending).map(([c, n]) => `${c} ${n} missing, -${(expiry.removed[c] || []).length}`).join(' · ') || 'nothing tracked') +
+        (expiry.paused.length ? ` · paused: ${expiry.paused.join(', ')}` : ''),
+      ...expiry.problems.map(p => `\n**${p}**`), ''].join('\n') + '\n');
   }
 }
 

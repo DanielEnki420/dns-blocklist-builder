@@ -61,7 +61,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html lists/
+          git add index.html lists/ auto-domains.json
           if [ "$GITHUB_EVENT_NAME" = push ]; then what="apply allowlist"; else what="auto-update blocklists"; fi
           git diff --staged --quiet || git commit -m "chore: $what [$(date -u +%Y-%m-%d)]"
           git push
