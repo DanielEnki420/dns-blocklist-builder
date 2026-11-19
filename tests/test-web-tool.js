@@ -74,3 +74,34 @@ test('every domain appears once in the whole tool', () => {
   }
   assert.deepEqual(twice, []);
 });
+
+// The footer said "MIT License" in every language, but the automatic categories
+// are not MIT (until 20 Nov 2026). It now says the code is MIT and links to the
+// license notes in the README, in all six languages.
+const I18N = vm.runInContext(`(${grab(/const I18N=(\{[\s\S]*?\n\});/, 'I18N').replace(/^const I18N=/, '').replace(/;$/, '')})`, box);
+const LANGS = ['de', 'en', 'it', 'es', 'fr', 'pt'];
+
+test('every language has every text, none empty', () => {
+  assert.deepEqual(Object.keys(I18N).sort(), [...LANGS].sort());
+  const keys = new Set(LANGS.flatMap(l => Object.keys(I18N[l])));
+  for (const l of LANGS) for (const k of keys)
+    assert.ok(typeof I18N[l][k] === 'string' && I18N[l][k].trim(), `${l}: "${k}" missing or empty`);
+});
+
+test('the footer links to the license notes and is set in every language', () => {
+  const footer = grab(/<div class="footer">[\s\S]*?\n<\/div>/, 'footer');
+  const link = footer.match(/<a [^>]*id="t-footer-lic"[^>]*>/);
+  assert.ok(link, 'no link with id t-footer-lic in the footer');
+  assert.match(link[0], /href="https:\/\/github\.com\/DanielEnki420\/dns-blocklist-builder#license"/);
+  const set = {};
+  const doc = { documentElement: {}, querySelectorAll: () => [],
+    getElementById: id => (set[id] ||= { textContent: '', childNodes: [{}] }) };
+  const ctx = vm.createContext({ I18N, document: doc, track() {}, renderCats() {}, renderPreview() {}, lang: '' });
+  vm.runInContext(grab(/function setLang\(l\)\{[\s\S]*?\n\}/, 'setLang'), ctx);
+  for (const l of LANGS) {
+    vm.runInContext(`setLang(${JSON.stringify(l)})`, ctx);
+    assert.equal(set['t-footer-lic'].textContent, I18N[l].footerLic, `${l}: link text not set`);
+    assert.equal(set['t-footer'].textContent, I18N[l].footer, `${l}: footer not set`);
+    assert.match(I18N[l].footer, /MIT/, `${l}: footer does not mention MIT`);
+  }
+});
