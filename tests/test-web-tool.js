@@ -1,0 +1,65 @@
+'use strict';
+// tests/test-web-tool.js - what the web tool (index.html) puts into a download
+//
+//   node --test tests/test-web-tool.js
+//
+// Runs the tool's own getContent() and renderPreview() from index.html in a
+// sandbox with every category selected. WEB_TOOL=<path> tests another copy.
+//
+// Zone files (RPZ) only know ";" comments: until 20 Nov 2026 the RPZ download
+// had "#" lines, which BIND reads as broken records.
+
+const test   = require('node:test');
+const assert = require('node:assert/strict');
+const fs     = require('node:fs');
+const path   = require('node:path');
+const vm     = require('node:vm');
+
+const src  = fs.readFileSync(process.env.WEB_TOOL || path.join(__dirname, '..', 'index.html'), 'utf8');
+const grab = (re, what) => { const m = src.match(re); assert.ok(m, `index.html: ${what} not found`); return m[0]; };
+const code = [
+  grab(/const CATS=\[[\s\S]*?\];/, 'CATS'),
+  grab(/const FMTS=\[[\s\S]*?\n\];/, 'FMTS'),
+  grab(/function getDomains\(\)\{.*\}/, 'getDomains'),
+  grab(/function getContent\(\)\{[\s\S]*?\n\}/, 'getContent'),
+  grab(/function renderPreview\(\)\{[\s\S]*?\n\}/, 'renderPreview'),
+  grab(/function esc\(s\)\{.*\}/, 'esc'),
+  'this.CATS = CATS; this.FMTS = FMTS; this.getContent = getContent; this.renderPreview = renderPreview;',
+].join('\n');
+
+const els = {};
+const box = { lang: 'en', I18N: { en: { empty: '' } },
+  document: { getElementById: id => (els[id] ||= { textContent: '', innerHTML: '' }) } };
+vm.createContext(box);
+vm.runInContext(code, box);
+vm.runInContext('var active = new Set(CATS.map(c => c.id)); var fmt = FMTS[0];', box);
+
+const run = id => { vm.runInContext(`fmt = FMTS.find(f => f.id === ${JSON.stringify(id)});`, box); return box.getContent().split('\n'); };
+const cmtOf = id => id === 'rpz' ? ';' : '#';
+// Arrays from the sandbox have its own prototype: copy them before deepEqual.
+const domains = Array.from(box.CATS.flatMap(c => c.domains));
+
+test('the tool offers the six formats', () => {
+  assert.deepEqual(Array.from(box.FMTS, f => f.id).sort(), ['adguard', 'dnsmasq', 'hosts', 'pihole', 'rpz', 'unbound']);
+});
+
+for (const id of ['dnsmasq', 'hosts', 'pihole', 'rpz', 'adguard', 'unbound']) {
+  test(`${id}: header and category lines are "${cmtOf(id)}" comments, one line per domain`, () => {
+    const f = box.FMTS.find(x => x.id === id);
+    const lines = run(id), c = cmtOf(id), other = c === ';' ? '#' : ';';
+    assert.ok(lines[0].startsWith(c + ' ====='), `first line: ${lines[0]}`);
+    assert.deepEqual(lines.filter(l => l.startsWith(other)), [], `lines starting with "${other}"`);
+    assert.equal(lines.filter(l => l.startsWith(c + ' --- ')).length, box.CATS.length, 'one separator per category');
+    assert.deepEqual(lines.filter(l => l && !l.startsWith(c)), Array.from(domains, d => f.fn(d)));
+  });
+}
+
+test('the preview shows the RPZ comments as comments', () => {
+  run('rpz');
+  box.renderPreview();
+  const html = els.preview.innerHTML;
+  const shown = [...html.matchAll(/<span class="c-cmt">(.*?)<\/span>/g)].map(m => m[1]);
+  const comments = box.getContent().split('\n').filter(l => l.startsWith(';'));
+  assert.equal(shown.length, comments.length, 'every ";" line is shown as a comment');
+  assert.doesNotMatch(html, /<span class="c-(dom|key)">;/, 'a ";" line is shown as a rule');
+});

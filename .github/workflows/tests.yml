@@ -62,5 +62,8 @@ jobs:
       - name: Tests for generate-lists.js (file headers)
         run: node --test tests/test-generate-lists.js
 
+      - name: Tests for the web tool (downloads)
+        run: node --test tests/test-web-tool.js
+
       - name: Tests for the docs (issue templates, links, source licenses)
         run: node --test tests/test-docs.js

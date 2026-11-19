@@ -251,7 +251,7 @@ const FMTS=[
   {id:'dnsmasq',label:'dnsmasq',desc:'.conf · OpenWrt/Xiaomi',ext:'conf',fn:(d)=>`address=/${d}/0.0.0.0`},
   {id:'hosts',label:'hosts',desc:'/etc/hosts · Universal',ext:'txt',fn:(d)=>`0.0.0.0 ${d}`},
   {id:'pihole',label:'Pi-hole',desc:'Adlist · Plain domains',ext:'txt',fn:(d)=>d},
-  {id:'rpz',label:'RPZ Zone',desc:'BIND9 · Response Policy',ext:'txt',fn:(d)=>`${d}. CNAME .`},
+  {id:'rpz',label:'RPZ Zone',desc:'BIND9 · Response Policy',ext:'txt',fn:(d)=>`${d}. CNAME .`,c:';'},
   {id:'adguard',label:'AdGuard',desc:'Home · Filter rules',ext:'txt',fn:(d)=>`||${d}^`},
   {id:'unbound',label:'Unbound',desc:'local-zone blocked',ext:'conf',fn:(d)=>`local-zone: "${d}." static`},
 ];
@@ -351,19 +351,20 @@ function getContent(){
   const domains=sel.flatMap(c=>c.domains);
   if(!domains.length)return '';
   const now=new Date().toISOString().split('T')[0];
+  const k=fmt.c||'#'; // zone files (RPZ) only know ";" comments
   const lines=[
-    `# ============================================================`,
-    `# DNS Blocklist – Format: ${fmt.label}`,
-    `# Generated: ${now}`,
-    `# Categories: ${sel.map(c=>c.name.en).join(', ')}`,
-    `# Domains: ${domains.length}`,
-    `# Generator: https://github.com/DanielEnki420/dns-blocklist-builder`,
-    `# Issues/Suggestions: https://github.com/DanielEnki420/dns-blocklist-builder/issues`,
-    `# ============================================================`,
+    `${k} ============================================================`,
+    `${k} DNS Blocklist – Format: ${fmt.label}`,
+    `${k} Generated: ${now}`,
+    `${k} Categories: ${sel.map(c=>c.name.en).join(', ')}`,
+    `${k} Domains: ${domains.length}`,
+    `${k} Generator: https://github.com/DanielEnki420/dns-blocklist-builder`,
+    `${k} Issues/Suggestions: https://github.com/DanielEnki420/dns-blocklist-builder/issues`,
+    `${k} ============================================================`,
     ``
   ];
   sel.forEach(c=>{
-    lines.push(`# --- ${c.name.en} (${c.domains.length} domains) ---`);
+    lines.push(`${k} --- ${c.name.en} (${c.domains.length} domains) ---`);
     c.domains.forEach(d=>lines.push(fmt.fn(d)));
     lines.push('');
   });
@@ -382,8 +383,7 @@ function renderPreview(){
     return;
   }
   const html=getContent().split('\n').map(l=>{
-    if(l.startsWith('#==='))return`<span class="c-cmt">${esc(l)}</span>`;
-    if(l.startsWith('#'))return`<span class="c-cmt">${esc(l)}</span>`;
+    if(l.startsWith(fmt.c||'#'))return`<span class="c-cmt">${esc(l)}</span>`;
     if(l.startsWith('address=')||l.startsWith('0.0.0.0')||l.startsWith('||')||l.startsWith('local-zone'))return`<span class="c-dom">${esc(l)}</span>`;
     if(l.trim())return`<span class="c-key">${esc(l)}</span>`;
     return'';
