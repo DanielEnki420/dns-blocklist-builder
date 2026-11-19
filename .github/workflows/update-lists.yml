@@ -82,4 +82,4 @@ jobs:
             while IFS= read -r line; do echo "::error title=Source problem::$line"; done < "$FAILED_SOURCES_FILE"
             exit 1
           fi
-          echo "All sources delivered."
+          if [ "$GITHUB_EVENT_NAME" = push ]; then echo "Allowlist applied, no problems."; else echo "All sources delivered."; fi

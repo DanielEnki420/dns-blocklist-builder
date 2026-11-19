@@ -157,11 +157,13 @@ Found a missing domain? → [Open a GitHub Issue](https://github.com/DanielEnki4
 
 Want a new category? → [Open a GitHub Issue](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=category_suggestion.md)
 
-A legitimate site is blocked? → [Open a GitHub Issue](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new)
+A legitimate site is blocked? → [Open a GitHub Issue](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=false_positive.md)
 titled `[remove] example.com` and say what breaks. In the automatic categories
 (tracking, malware, phishing) the domain goes into [`allowlist.txt`](allowlist.txt):
 the lists are rebuilt within minutes, and the public sources cannot bring it back.
 Domains in the hand-curated categories are removed by hand.
+
+Something does not work? → [Open a GitHub Issue](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=bug_report.md)
 
 ## Contributing
 

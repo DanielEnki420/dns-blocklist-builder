@@ -4,7 +4,7 @@ Thank you for helping improve this project! There are several ways to contribute
 
 ## Suggesting a Domain
 
-1. Go to [Issues → New Issue](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new)
+1. Open an issue with the [domain template](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=domain_suggestion.md)
 2. Use the title: `[suggestion] example.com`
 3. Include:
    - The domain(s) to add
@@ -15,13 +15,13 @@ Thank you for helping improve this project! There are several ways to contribute
 
 ## Suggesting a New Category
 
-Open an issue with the title `[category] Category Name` and describe:
+Open an issue with the [category template](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=category_suggestion.md), title `[category] Category Name`, and describe:
 - What kind of sites the category covers
 - At least 10 example domains with sources
 
 ## Reporting an Incorrect Domain
 
-If a domain was added by mistake (e.g. legitimate site), open an issue with:
+If a domain was added by mistake (e.g. legitimate site), open an issue with the [false positive template](https://github.com/DanielEnki420/dns-blocklist-builder/issues/new?template=false_positive.md):
 - Title: `[remove] example.com`
 - Why it should be removed, and what breaks while it is blocked
 
