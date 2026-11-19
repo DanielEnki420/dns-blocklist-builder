@@ -1,0 +1,40 @@
+name: Tests
+
+# setup-pi5.sh runs as root on other people's machines. Its tests run on every
+# change to it, to the generator it calls, or to the tests themselves. The
+# weekly list update touches only index.html and lists/, so it starts none.
+on:
+  push:
+    branches: [main]
+    paths:
+      - setup-pi5.sh
+      - generate-lists.js
+      - tests/**
+      - .github/workflows/tests.yml
+  pull_request:
+    paths:
+      - setup-pi5.sh
+      - generate-lists.js
+      - tests/**
+      - .github/workflows/tests.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  setup-pi5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'   # the version setup-pi5.sh installs
+
+      - name: shellcheck
+        run: shellcheck --severity=warning setup-pi5.sh tests/test-setup-pi5.sh
+
+      - name: Tests for setup-pi5.sh
+        run: bash tests/test-setup-pi5.sh
