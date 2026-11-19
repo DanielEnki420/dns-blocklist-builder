@@ -88,7 +88,8 @@ fresh() {
   rm -rf "$tmp/up" "$tmp/inst" "$log"
   mkdir -p "$log"
   git clone -q "$root" "$tmp/up"
-  (cd "$tmp/up" && find lists -type f -exec sed -i.bak 's/^# Generated: .*/# Generated: 2000-01-01/' {} + &&
+  # "#" or ";": the RPZ files use ";" for their header (since 19 Nov 2026)
+  (cd "$tmp/up" && find lists -type f -exec sed -i.bak 's/^\([#;]\) Generated: .*/\1 Generated: 2000-01-01/' {} + &&
     find lists -name '*.bak' -delete && "${G[@]}" commit -qam "lists of 1 Jan 2000")
   git clone -q "$tmp/up" "$tmp/inst"
   (INSTALL_DIR=$tmp/inst PIHOLE_CONTAINER=pihole SKIP_PIHOLE=${1:-0}
