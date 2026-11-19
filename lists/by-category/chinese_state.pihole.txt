@@ -3,7 +3,7 @@
 # Category: chinese_state
 # Format: Pi-hole adlist
 # Generated: 2026-11-19
-# Domains: 33
+# Domains: 32
 # License: MIT, see https://github.com/DanielEnki420/dns-blocklist-builder#license
 # Source: https://github.com/DanielEnki420/dns-blocklist-builder
 # ============================================================

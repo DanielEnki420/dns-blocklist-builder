@@ -133,9 +133,9 @@ Counts as of 19 November 2026. The current number is in the header of every file
 | 💉 Anti-Vax / Medical Disinfo | 31 | Impfkritik, Mercola, CHD, NVIC |
 | 🇨🇳 Chinese State Media | 32 | CGTN, Xinhua, China Daily, Global Times |
 | 🌡️ Climate Denial | 26 | EIKE, Heartland, GWPF, Watts Up |
-| 📡 Ad Tracking & Data Brokers | 61 | ads and trackers from yoyo.org that Hagezi Multi Light (or Disconnect) also lists, up to 100 new per week |
-| 🎣 Investment Fraud & Crypto Scam | 720 | from Phishing Army, up to 100 new per week |
-| 🦠 Malware & Adware Distributors | 14 | URLhaus hosts that are online (via malware-filter), confirmed by Hagezi's threat feeds, up to 300 new per week |
+| 📡 Ad Tracking & Data Brokers | 161 | ads and trackers from yoyo.org that Hagezi Multi Light (or Disconnect) also lists, up to 100 new per week |
+| 🎣 Investment Fraud & Crypto Scam | 820 | from Phishing Army, up to 100 new per week |
+| 🦠 Malware & Adware Distributors | 314 | URLhaus hosts that are online (via malware-filter), confirmed by Hagezi's threat feeds, up to 300 new per week |
 
 The eight editorial categories are curated by hand. The last three are filled
 automatically: a domain must appear in at least two sources of its category before

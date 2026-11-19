@@ -63,3 +63,14 @@ test('the preview shows the RPZ comments as comments', () => {
   assert.equal(shown.length, comments.length, 'every ";" line is shown as a comment');
   assert.doesNotMatch(html, /<span class="c-(dom|key)">;/, 'a ";" line is shown as a rule');
 });
+
+// 81.cn stood twice in Chinese State Media (until 20 Nov 2026): the category
+// showed 33 domains for 32, and the download listed it twice.
+test('every domain appears once in the whole tool', () => {
+  const seen = new Map(), twice = [];
+  for (const c of box.CATS) for (const d of c.domains) {
+    if (seen.has(d)) twice.push(`${d} (${seen.get(d)} and ${c.id})`);
+    else seen.set(d, c.id);
+  }
+  assert.deepEqual(twice, []);
+});
