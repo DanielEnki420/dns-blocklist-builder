@@ -1,7 +1,9 @@
 # 🛡️ DNS Blocklist Builder
 
-> Generate DNS blocklists to block disinformation, propaganda and conspiracy websites.
-> No tracking. No dependencies. Works offline.
+> Generate DNS blocklists against disinformation, state propaganda and conspiracy sites,
+> and against trackers, scams and malware.
+> No tracking by default (anonymous usage stats only if you switch them on).
+> No dependencies. Works offline.
 
 **Live:** https://danielenki420.github.io/dns-blocklist-builder/
 
@@ -9,10 +11,10 @@
 
 ## Features
 
-- **8 categories** – Russian propaganda, Epoch Times/Falun Gong, Far-right DACH, Far-right International, Conspiracy theories, Anti-vax, Chinese state media, Climate denial
+- **11 categories** – eight curated by hand (Russian propaganda, Epoch Times/Falun Gong, Far-right DACH, Far-right International, Conspiracy theories, Anti-vax, Chinese state media, Climate denial) and three filled from public lists (Ad tracking & data brokers, Investment fraud & crypto scams, Malware & adware)
 - **6 formats** – dnsmasq, hosts file, Pi-hole, AdGuard Home, Unbound, RPZ Zone
 - **6 languages** – DE, EN, IT, ES, FR, PT
-- **250+ domains** curated and validated
+- **About 1,000 domains**, updated every week from the public lists; once a month, domains that no longer resolve are dropped
 - **Zero dependencies** – pure HTML/CSS/JS, works offline
 - **Open Source** – MIT License, contributions welcome
 
@@ -58,9 +60,9 @@ curl -fsSL https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder
 After each weekly update you get a Telegram message like:
 ```
 🛡 Blocklist updated
-➕ +8 domains added
-📊 Total: 412 domains
-📅 2026-06-09 03:00 UTC
+➕ +100 domains added
+📊 Total: 1003 domains
+📅 2026-11-16 03:00 UTC
 ✅ Pi-hole gravity refreshed
 ```
 
@@ -80,39 +82,57 @@ sudo /opt/dns-blocklist-builder/update-pi5.sh
 
 ### Xiaomi / OpenWrt (dnsmasq)
 ```bash
-# Copy the downloaded blocklist.conf to your router
-scp blocklist.conf root@192.168.31.1:/etc/dnsmasq.d/
+# Copy the downloaded file to your router (use your router's address)
+scp blocklist_*.conf root@ROUTER_IP:/etc/dnsmasq.d/
 # Restart dnsmasq
-ssh root@192.168.31.1 "/etc/init.d/dnsmasq restart"
+ssh root@ROUTER_IP "/etc/init.d/dnsmasq restart"
 ```
 
 ### Pi-hole
-1. Download in Pi-hole format
-2. Go to Pi-hole Admin → Group Management → Adlists
-3. Add the URL or paste the domains
+Add this URL as an adlist (Pi-hole 6: Lists; Pi-hole 5: Group Management → Adlists),
+then update gravity. It always
+serves the latest weekly list:
+```
+https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder/main/lists/blocklist-all.pihole.txt
+```
+Only some categories? Use the files in [`lists/by-category/`](lists/by-category/), or pick
+them in the tool and download the result.
 
 ### AdGuard Home
-1. Download in AdGuard format  
-2. Go to AdGuard → Filters → DNS blocklists → Add blocklist
+Go to Filters → DNS blocklists → Add blocklist → Add a custom list, with this URL:
+```
+https://raw.githubusercontent.com/DanielEnki420/dns-blocklist-builder/main/lists/blocklist-all.adguard.txt
+```
 
 ### /etc/hosts (any system)
 ```bash
-# Append to your hosts file
-sudo cat blocklist.txt >> /etc/hosts
+# Append to your hosts file ("sudo cat … >> /etc/hosts" fails: the redirect runs without sudo)
+cat blocklist_*.txt | sudo tee -a /etc/hosts >/dev/null
 ```
 
 ## Categories
 
+Counts as of 16 November 2026. The current number is in the header of every file in
+`lists/` (`# Domains: …`).
+
 | Category | Domains | Description |
 |----------|---------|-------------|
-| 🇷🇺 Russian Propaganda | 40 | RT, Sputnik, TASS, Voice of Europe |
-| 📰 Epoch Times / Falun Gong | 29 | NTD, Epoch Times (all languages), Minghui |
-| 🇩🇪 Far-right DACH | 37 | Compact, Junge Freiheit, PI-News, AUF1 |
-| 🌍 Far-right International | 33 | InfoWars, Breitbart, Daily Stormer |
-| 🌀 Conspiracy Theories | 31 | NaturalNews, Rense, BeforeItsNews |
-| 💉 Anti-Vax / Medical Disinfo | 30 | Impfkritik, Mercola, CHD, NVIC |
-| 🇨🇳 Chinese State Media | 21 | CGTN, Xinhua, China Daily, Global Times |
-| 🌡️ Climate Denial | 23 | EIKE, Heartland, GWPF, Watts Up |
+| 🇷🇺 Russian Propaganda | 49 | RT, Sputnik, TASS, Voice of Europe |
+| 📰 Epoch Times / Falun Gong | 38 | NTD, Epoch Times (all languages), Minghui |
+| 🇩🇪 Far-right DACH | 48 | Compact, Junge Freiheit, PI-News, AUF1 |
+| 🌍 Far-right International | 48 | InfoWars, Breitbart, Daily Stormer |
+| 🌀 Conspiracy Theories | 36 | NaturalNews, Rense, BeforeItsNews |
+| 💉 Anti-Vax / Medical Disinfo | 31 | Impfkritik, Mercola, CHD, NVIC |
+| 🇨🇳 Chinese State Media | 32 | CGTN, Xinhua, China Daily, Global Times |
+| 🌡️ Climate Denial | 26 | EIKE, Heartland, GWPF, Watts Up |
+| 📡 Ad Tracking & Data Brokers | 61 | from yoyo.org, Disconnect and Hagezi, weekly |
+| 🎣 Investment Fraud & Crypto Scam | 620 | from Phishing Army, up to 100 new per week |
+| 🦠 Malware & Adware Distributors | 14 | from URLhaus and Disconnect, weekly |
+
+The eight editorial categories are curated by hand. The last three are filled
+automatically: a domain must appear in at least two sources of its category before
+it is added (where the category has two or more). On the first Monday of each month
+the update also drops domains that no longer resolve.
 
 ## Suggest a domain or category
 
