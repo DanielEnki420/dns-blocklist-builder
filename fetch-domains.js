@@ -6,15 +6,20 @@
 //   node fetch-domains.js             fetch new domains
 //   node fetch-domains.js --cleanup   also remove domains that no longer resolve via DNS
 //   node fetch-domains.js --dry-run   preview changes without writing any files
+//
+// A source that fails (HTTP error, timeout, too few valid domains) is skipped so the
+// others still update, and it is reported: listed at the end, as a GitHub
+// warning in Actions, and written to $FAILED_SOURCES_FILE if that is set (the
+// weekly workflow turns a non-empty file into a failed run, so it is noticed).
+// Tests: node --test tests/test-fetch-domains.js
 
+const crypto = require('crypto');
 const https = require('https');
 const http  = require('http');
 const dns   = require('dns').promises;
 const fs    = require('fs');
 const path  = require('path');
 
-const DRY_RUN    = process.argv.includes('--dry-run');
-const CLEANUP    = process.argv.includes('--cleanup');
 const INDEX_PATH = path.join(__dirname, 'index.html');
 const CACHE_DIR  = path.join(__dirname, '.cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'source-cache.json');
@@ -26,36 +31,48 @@ const DNS_BATCH    = 30; // concurrent DNS lookups during cleanup
 
 // ── Sources ───────────────────────────────────────────────────────────────────
 // Each source maps to a category id from the CATS array in index.html.
-// maxNew caps how many new domains are added per category per run after filtering.
+// maxNew caps how many new domains are added per category per run after filtering
+// (a safety valve should a source go bad; the rest follows in the next runs).
+// minEntries: fewer valid domains than this counts as a failed source - a 200
+// with an error page, a changed format or an abandoned list (Disconnect Malware
+// shrank to one test domain and went unnoticed that way).
+// Every source needs a sample of its format in tests/test-fetch-domains.js.
 const SOURCES = [
+  // tracking: ads and tracking. Hagezi takes yoyo as one of its inputs, so here
+  // the second source is Hagezi's curation of yoyo (popular domains only, few
+  // false positives) rather than an independent confirmation.
   {
-    cat: 'tracking', maxNew: 300,
+    cat: 'tracking', maxNew: 100, minEntries: 1000,
     name: "Peter Lowe's Ad & Tracking List",
     url: 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=nohtml&showintro=0&mimetype=plaintext',
   },
   {
-    cat: 'tracking', maxNew: 300,
+    cat: 'tracking', maxNew: 100, minEntries: 10,
     name: 'Disconnect.me Tracking',
     url: 'https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt',
   },
   {
-    cat: 'tracking', maxNew: 300,
-    name: 'Hagezi Tracking',
-    url: 'https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tracking.txt',
+    cat: 'tracking', maxNew: 100, minEntries: 10000,
+    name: 'Hagezi Multi Light',
+    url: 'https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/light-onlydomains.txt',
+  },
+  // malware: URLhaus hosts that are online now (abuse.ch ended its free hostfile,
+  // malware-filter rebuilds it from the URLhaus API twice a day and leaves out
+  // popular domains), confirmed by Hagezi's threat feeds, which do not use URLhaus.
+  // Online only: cleaned-up sites still resolve and would never leave the list.
+  {
+    cat: 'malware', maxNew: 300, minEntries: 50,
+    name: 'malware-filter (URLhaus)',
+    url: 'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts-online.txt',
+    hostsFormat: true, // "0.0.0.0 domain" lines
   },
   {
-    cat: 'malware', maxNew: 300,
-    name: 'URLhaus Malware Hosts (abuse.ch)',
-    url: 'https://urlhaus.abuse.ch/downloads/hostfile/',
-    hostsFormat: true, // "127.0.0.1 domain" lines
+    cat: 'malware', maxNew: 300, minEntries: 10000,
+    name: 'Hagezi Threat Intelligence Feeds (mini)',
+    url: 'https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.mini-onlydomains.txt',
   },
   {
-    cat: 'malware', maxNew: 300,
-    name: 'Disconnect.me Malware',
-    url: 'https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt',
-  },
-  {
-    cat: 'phishing', maxNew: 100,
+    cat: 'phishing', maxNew: 100, minEntries: 10000,
     name: 'Phishing Army Blocklist',
     url: 'https://phishing.army/download/phishing_army_blocklist.txt',
   },
@@ -88,14 +105,14 @@ function parseDomains(text, hostsFormat) {
 // Persists parsed domains + conditional-request headers between runs.
 // GitHub Actions caches .cache/ via actions/cache so 304s are effective in CI.
 
-function loadCache() {
-  try { return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8')); }
+function loadCache(file) {
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
   catch { return {}; }
 }
 
-function saveCache(cache) {
-  fs.mkdirSync(CACHE_DIR, { recursive: true });
-  fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+function saveCache(file, cache) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, JSON.stringify(cache, null, 2));
 }
 
 // ── HTTP ──────────────────────────────────────────────────────────────────────
@@ -105,7 +122,7 @@ function httpGet(urlStr, headers = {}, hops = 0) {
     const u   = new URL(urlStr);
     const mod = u.protocol === 'https:' ? https : http;
     const req = mod.get(
-      { hostname: u.hostname, path: u.pathname + u.search,
+      { hostname: u.hostname, port: u.port || undefined, path: u.pathname + u.search,
         headers: { 'User-Agent': 'dns-blocklist-builder/2.0', ...headers },
         timeout: 20000 },
       res => {
@@ -119,7 +136,9 @@ function httpGet(urlStr, headers = {}, hops = 0) {
         }
         if (res.statusCode !== 200) {
           res.resume();
-          return reject(new Error(`HTTP ${res.statusCode} for ${urlStr}`));
+          const err = new Error(`HTTP ${res.statusCode} for ${urlStr}`);
+          err.status = res.statusCode;
+          return reject(err);
         }
         const buf = [];
         res.on('data', c => buf.push(c));
@@ -133,13 +152,24 @@ function httpGet(urlStr, headers = {}, hops = 0) {
   });
 }
 
-async function fetchSource(source, cache) {
+// Timeouts, network errors, 429 and 5xx may pass; 404 or 410 will not.
+const retryable = err => !err.status || err.status === 429 || err.status >= 500;
+
+async function fetchSource(source, cache, retryDelayMs) {
   const cached = cache[source.url];
   const condHeaders = {};
   if (cached?.etag)          condHeaders['If-None-Match']     = cached.etag;
   else if (cached?.lm)       condHeaders['If-Modified-Since'] = cached.lm;
 
-  const res = await httpGet(source.url, condHeaders);
+  let res;
+  try {
+    res = await httpGet(source.url, condHeaders);
+  } catch (err) {
+    if (!retryable(err)) throw err;
+    process.stdout.write(`${err.message}, retrying... `);
+    await new Promise(r => setTimeout(r, retryDelayMs));
+    res = await httpGet(source.url, condHeaders);
+  }
 
   if (res.status === 304 && cached?.domains) {
     process.stdout.write('304 Not Modified → ');
@@ -208,10 +238,21 @@ async function removeDeadDomains(html, CATS) {
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
-async function main() {
+// opts are for the tests; the defaults are the real run
+async function main({
+  sources     = SOURCES,
+  indexPath   = INDEX_PATH,
+  cacheFile   = CACHE_FILE,
+  failedFile  = process.env.FAILED_SOURCES_FILE,
+  summaryFile = process.env.GITHUB_STEP_SUMMARY,
+  argv        = process.argv,
+  retryDelayMs = 10000,
+} = {}) {
+  const DRY_RUN = argv.includes('--dry-run');
+  const CLEANUP = argv.includes('--cleanup');
   console.log(`fetch-domains.js${DRY_RUN ? ' [DRY RUN]' : ''}${CLEANUP ? ' [+CLEANUP]' : ''}\n`);
 
-  let html   = fs.readFileSync(INDEX_PATH, 'utf8');
+  let html   = fs.readFileSync(indexPath, 'utf8');
   const CATS = extractCats(html);
 
   // Global existing-domain set — new domains must not already live in any category
@@ -220,21 +261,29 @@ async function main() {
 
   // Source count per category (used to decide whether to apply MIN_SOURCES filter)
   const srcCount = {};
-  for (const s of SOURCES) srcCount[s.cat] = (srcCount[s.cat] || 0) + 1;
+  for (const s of sources) srcCount[s.cat] = (srcCount[s.cat] || 0) + 1;
 
-  const cache = loadCache();
+  const cache  = loadCache(cacheFile);
+  const failed = []; // { name, reason }
+  const status = []; // { name, cat, ok, count, reason } for the run summary
 
   // Collect: catId → Map<domain, Set<sourceName>>
   const seen = {};
 
-  for (const source of SOURCES) {
+  for (const source of sources) {
     process.stdout.write(`Fetching ${source.name}... `);
     let domains;
     try {
-      domains = await fetchSource(source, cache);
+      domains = await fetchSource(source, cache, retryDelayMs);
+      const min = source.minEntries ?? 1;
+      if (domains.length < min)
+        throw new Error(`only ${domains.length} valid domains, expected at least ${min}`);
       console.log(`${domains.length.toLocaleString()} domains`);
+      status.push({ name: source.name, cat: source.cat, ok: true, count: domains.length });
     } catch (err) {
       console.log(`SKIP — ${err.message}`);
+      failed.push({ name: source.name, reason: err.message });
+      status.push({ name: source.name, cat: source.cat, ok: false, reason: err.message });
       continue;
     }
 
@@ -247,18 +296,36 @@ async function main() {
     }
   }
 
-  saveCache(cache);
+  saveCache(cacheFile, cache);
 
-  // Filter by min appearances and apply per-category cap
+  // A category whose filter needs two sources but has fewer than two working
+  // ones cannot grow at all - the silent state this check exists for.
+  const frozen = [];
+  for (const [catId, n] of Object.entries(srcCount)) {
+    const working = status.filter(x => x.cat === catId && x.ok).length;
+    if (n >= MIN_SOURCES && working < MIN_SOURCES) frozen.push({ cat: catId, working, of: n });
+  }
+
+  // Filter by min appearances (counted against the configured sources, so a
+  // failed source never loosens the filter) and apply the per-category cap.
+  // Over the cap, candidates are taken in the order of a hash of the name: a
+  // fixed but spread-out order. Alphabetical order took only names starting
+  // with a digit, week after week.
   const additions = {};
   for (const [catId, domainMap] of Object.entries(seen)) {
-    const minApp   = srcCount[catId] >= MIN_SOURCES ? MIN_SOURCES : 1;
-    const maxNew   = Math.max(...SOURCES.filter(s => s.cat === catId).map(s => s.maxNew));
-    const filtered = [...domainMap.entries()]
+    const minApp     = srcCount[catId] >= MIN_SOURCES ? MIN_SOURCES : 1;
+    const maxNew     = Math.max(...sources.filter(s => s.cat === catId).map(s => s.maxNew));
+    const candidates = [...domainMap.entries()]
       .filter(([, srcs]) => srcs.size >= minApp)
-      .map(([d]) => d)
-      .sort()
-      .slice(0, maxNew);
+      .map(([d]) => d);
+    const filtered = candidates
+      .map(d => [crypto.createHash('sha256').update(d).digest('hex'), d])
+      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+      .slice(0, maxNew)
+      .map(([, d]) => d)
+      .sort();
+    if (candidates.length > maxNew)
+      console.log(`  ${catId}: ${candidates.length} candidates, cap ${maxNew} per run — the rest follows in later runs`);
     if (filtered.length) additions[catId] = filtered;
   }
 
@@ -285,12 +352,45 @@ async function main() {
   }
 
   if (!DRY_RUN) {
-    fs.writeFileSync(INDEX_PATH, html);
+    fs.writeFileSync(indexPath, html);
     const total = [...new Set(extractCats(html).flatMap(c => c.domains))].length;
     console.log(`\nindex.html updated — total unique domains: ${total}`);
   } else {
     console.log('\n[DRY RUN] No files written.');
   }
+
+  report(failed, frozen, status, failedFile, summaryFile);
+  return { additions, failed, frozen };
 }
 
-main().catch(err => { console.error(err.message); process.exit(1); });
+// Lists failed sources and frozen categories. The file gets one line per problem
+// and is written on every run, empty if all is well, so the workflow can fail
+// on a non-empty file and on a missing one.
+function report(failed, frozen, status, failedFile, summaryFile) {
+  const gh = !!process.env.GITHUB_ACTIONS;
+  const lines = [];
+  for (const f of frozen) {
+    const msg = `category ${f.cat}: only ${f.working} of ${f.of} sources working — it gets no new domains`;
+    lines.push(msg);
+    console.log(`\n${msg}`);
+    if (gh) console.log(`::error title=Category frozen::${msg}`);
+  }
+  if (failed.length) console.log(`\n${failed.length} source(s) failed:`);
+  for (const f of failed) {
+    lines.push(`${f.name}: ${f.reason}`);
+    console.log(`  ${f.name}: ${f.reason}`);
+    if (gh) console.log(`::warning title=Source failed::${f.name}: ${f.reason}`);
+  }
+  if (failedFile) fs.writeFileSync(failedFile, lines.map(l => l + '\n').join(''));
+  if (summaryFile) {
+    const rows = status.map(x => `| ${x.ok ? '✅' : '❌'} | ${x.cat} | ${x.name} | ${x.ok ? x.count : x.reason} |`);
+    fs.appendFileSync(summaryFile, ['### Sources', '', '| | Category | Source | Domains |', '|---|---|---|---|', ...rows,
+      ...frozen.map(f => `\n**${f.cat}: only ${f.working} of ${f.of} sources working.**`), ''].join('\n') + '\n');
+  }
+}
+
+module.exports = { SOURCES, parseDomains, isValidDomain, main };
+
+if (require.main === module) {
+  main().catch(err => { console.error(err.message); process.exit(1); });
+}

@@ -14,7 +14,7 @@
 - **11 categories** – eight curated by hand (Russian propaganda, Epoch Times/Falun Gong, Far-right DACH, Far-right International, Conspiracy theories, Anti-vax, Chinese state media, Climate denial) and three filled from public lists (Ad tracking & data brokers, Investment fraud & crypto scams, Malware & adware)
 - **6 formats** – dnsmasq, hosts file, Pi-hole, AdGuard Home, Unbound, RPZ Zone
 - **6 languages** – DE, EN, IT, ES, FR, PT
-- **About 1,000 domains**, updated every week from the public lists; once a month, domains that no longer resolve are dropped
+- **More than 1,000 domains**, updated every week from the public lists; once a month, domains that no longer resolve are dropped
 - **Zero dependencies** – pure HTML/CSS/JS, works offline
 - **Open Source** – MIT License, contributions welcome
 
@@ -120,7 +120,7 @@ cat blocklist_*.txt | sudo tee -a /etc/hosts >/dev/null
 
 ## Categories
 
-Counts as of 16 November 2026. The current number is in the header of every file in
+Counts as of 19 November 2026. The current number is in the header of every file in
 `lists/` (`# Domains: …`).
 
 | Category | Domains | Description |
@@ -133,14 +133,23 @@ Counts as of 16 November 2026. The current number is in the header of every file
 | 💉 Anti-Vax / Medical Disinfo | 31 | Impfkritik, Mercola, CHD, NVIC |
 | 🇨🇳 Chinese State Media | 32 | CGTN, Xinhua, China Daily, Global Times |
 | 🌡️ Climate Denial | 26 | EIKE, Heartland, GWPF, Watts Up |
-| 📡 Ad Tracking & Data Brokers | 61 | from yoyo.org, Disconnect and Hagezi, weekly |
-| 🎣 Investment Fraud & Crypto Scam | 620 | from Phishing Army, up to 100 new per week |
-| 🦠 Malware & Adware Distributors | 14 | from URLhaus and Disconnect, weekly |
+| 📡 Ad Tracking & Data Brokers | 61 | ads and trackers from yoyo.org that Hagezi Multi Light (or Disconnect) also lists, up to 100 new per week |
+| 🎣 Investment Fraud & Crypto Scam | 720 | from Phishing Army, up to 100 new per week |
+| 🦠 Malware & Adware Distributors | 14 | URLhaus hosts that are online (via malware-filter), confirmed by Hagezi's threat feeds, up to 300 new per week |
 
 The eight editorial categories are curated by hand. The last three are filled
 automatically: a domain must appear in at least two sources of its category before
-it is added (where the category has two or more). On the first Monday of each month
-the update also drops domains that no longer resolve.
+it is added (where the category has two or more). For tracking the second source is
+a filter more than an independent check: Hagezi uses yoyo.org as one of its inputs
+and keeps only popular, well-checked domains. On the first Monday of each month the
+update also drops domains that no longer resolve.
+
+If a source fails or suddenly delivers almost nothing, the weekly update still
+builds the lists from the others, and the run is marked as failed so it gets fixed.
+Until 19 November 2026 this went unnoticed: the Hagezi tracking list had moved
+(August 2026), URLhaus ended its free host file (October 2026) and the Disconnect
+malware list had shrunk to a single test domain, so tracking and malware got almost
+no new domains.
 
 ## Suggest a domain or category
 

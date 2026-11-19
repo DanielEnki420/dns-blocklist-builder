@@ -1,19 +1,22 @@
 name: Tests
 
-# setup-pi5.sh runs as root on other people's machines. Its tests run on every
-# change to it, to the generator it calls, or to the tests themselves. The
-# weekly list update touches only index.html and lists/, so it starts none.
+# setup-pi5.sh runs as root on other people's machines, and fetch-domains.js
+# decides which domains everyone's lists get. Their tests run on every change to
+# them, to the generator, or to the tests themselves. The weekly list update
+# touches only index.html and lists/, so it starts none.
 on:
   push:
     branches: [main]
     paths:
       - setup-pi5.sh
+      - fetch-domains.js
       - generate-lists.js
       - tests/**
       - .github/workflows/tests.yml
   pull_request:
     paths:
       - setup-pi5.sh
+      - fetch-domains.js
       - generate-lists.js
       - tests/**
       - .github/workflows/tests.yml
@@ -38,3 +41,6 @@ jobs:
 
       - name: Tests for setup-pi5.sh
         run: bash tests/test-setup-pi5.sh
+
+      - name: Tests for fetch-domains.js
+        run: node --test tests/test-fetch-domains.js

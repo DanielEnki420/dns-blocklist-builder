@@ -30,7 +30,10 @@ jobs:
             source-cache-${{ runner.os }}-
 
       - name: Fetch new domains from external sources
-        # Run --cleanup on the first Monday of each month (day 1-7) to remove dead domains
+        # Run --cleanup on the first Monday of each month (day 1-7) to remove dead domains.
+        # Failed sources are skipped and written to FAILED_SOURCES_FILE (empty: all fine).
+        env:
+          FAILED_SOURCES_FILE: ${{ runner.temp }}/failed-sources.txt
         run: |
           DAY=$(date +%d)
           if [ "$DAY" -le 7 ]; then
@@ -50,3 +53,21 @@ jobs:
           git add index.html lists/
           git diff --staged --quiet || git commit -m "chore: auto-update blocklists [$(date -u +%Y-%m-%d)]"
           git push
+
+      # The lists above were built and pushed from the sources that worked. A red
+      # run is what makes GitHub send an e-mail; a skipped source alone went
+      # unnoticed for months (Hagezi 404 from Aug 2026, URLhaus 410 from Oct 2026).
+      # A missing status file means the fetch step did not report: also red.
+      - name: Fail if a source is down
+        env:
+          FAILED_SOURCES_FILE: ${{ runner.temp }}/failed-sources.txt
+        run: |
+          if [ ! -f "$FAILED_SOURCES_FILE" ]; then
+            echo "::error title=No source status::fetch-domains.js wrote no status file"
+            exit 1
+          fi
+          if [ -s "$FAILED_SOURCES_FILE" ]; then
+            while IFS= read -r line; do echo "::error title=Source problem::$line"; done < "$FAILED_SOURCES_FILE"
+            exit 1
+          fi
+          echo "All sources delivered."
