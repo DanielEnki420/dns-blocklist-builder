@@ -190,4 +190,26 @@ If you disagree with a categorization, please open an Issue to discuss.
 
 ## License
 
-MIT © [Daniel Enki](https://github.com/DanielEnki420)
+The code, the web tool and the eight hand-curated categories: MIT ©
+[Daniel Enki](https://github.com/DanielEnki420).
+
+The MIT license does not cover the three automatic categories (tracking, malware,
+phishing). They are selected from the public lists below: a domain is included only
+if it is in the first source and, for tracking and malware, also in a second source
+that serves only as a filter. Single domain names are facts, but the source lists
+may be protected as collections. If you redistribute these categories (the files in
+`lists/` or the automatic categories in `index.html`), check the terms below. None
+of these maintainers endorse this project.
+
+| Source | Category | Terms |
+|--------|----------|-------|
+| [Peter Lowe's Ad & Tracking List](https://pgl.yoyo.org/adservers/) | tracking | no formal license; the site says "Feel free to combine this list with yours or lists from other sites" and to put the result on the web |
+| [Disconnect.me Tracking](https://disconnect.me/) | tracking (filter only) | GPL-3.0, stated in the list |
+| [Hagezi Multi Light](https://github.com/hagezi/dns-blocklists) | tracking (filter only) | [GPL-3.0](https://github.com/hagezi/dns-blocklists/blob/main/LICENSE) |
+| [malware-filter (URLhaus)](https://gitlab.com/malware-filter/urlhaus-filter) | malware | [CC0 and MIT](https://gitlab.com/malware-filter/urlhaus-filter#license); the [URLhaus](https://urlhaus.abuse.ch/) data is CC0 |
+| [Hagezi Threat Intelligence Feeds (mini)](https://github.com/hagezi/dns-blocklists) | malware (filter only) | [GPL-3.0](https://github.com/hagezi/dns-blocklists/blob/main/LICENSE) |
+| [Phishing Army Blocklist](https://phishing.army/) | phishing | no extra restrictions of its own; the terms of its [upstream sources](https://phishing.army/sources/) (PhishTank, OpenPhish, CERT.PL and others) apply, see [usage and licensing](https://phishing.army/license/) |
+
+Checked on 19 November 2026. Terms can change; the linked pages are what counts.
+Thanks to everyone who maintains these lists: without them there would be no
+automatic categories.

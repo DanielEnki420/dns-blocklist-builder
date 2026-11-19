@@ -3,7 +3,8 @@ name: Tests
 # setup-pi5.sh runs as root on other people's machines, and fetch-domains.js
 # decides which domains everyone's lists get. Their tests run on every change to
 # them, to the generator, or to the tests themselves; the docs test on changes
-# to the docs, the issue templates or the categories in index.html. The weekly
+# to the docs, the issue templates, the categories in index.html or the sources
+# in fetch-domains.js (each needs its terms in the README). The weekly
 # list update commits with the workflow token, which starts no workflow.
 on:
   push:
@@ -58,5 +59,5 @@ jobs:
       - name: Tests for fetch-domains.js
         run: node --test tests/test-fetch-domains.js
 
-      - name: Tests for the issue templates and links
+      - name: Tests for the docs (issue templates, links, source licenses)
         run: node --test tests/test-docs.js
